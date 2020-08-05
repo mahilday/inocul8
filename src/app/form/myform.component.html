@@ -1,0 +1,341 @@
+<!-- choose most preferred option -->
+<body>
+<ul class="nav nav-tabs" >
+    <li class="nav-item " (click)="clickBack()" [ngClass]="(myself || family) || corporate?'':'d-none'">
+        <a class="nav-link" data-toggle="tooltip" title="back"
+            href="#"><i class="fa fa-arrow-left"></i></a>
+    </li>
+    <li class="nav-item" [ngClass]="(myself || family) || corporate?'d-none':''">
+        <a class="nav-link" data-toggle="tooltip" title="back" href="#"><i class="fa fa-arrow-left"></i></a>
+    </li>
+    <li class="nav-item " [ngClass]="myself?'':'d-none'">
+        <a  class="nav-link colornav" data-toggle="tooltip"
+            title="For Myself alone" href="#">{{"Just For Myself"| uppercase}}</a>
+    </li>
+    <li [ngClass]="family?'':'d-none'" class="nav-item border-right border-left"  data-select="family">
+        <a class="nav-link colornav"  data-toggle="tooltip"
+            title="Minimum of Five(5) persons" href="#">
+            {{"Myself and Family or Friends" | uppercase}}</a>
+    </li>
+    <li class="nav-item" [ngClass]="corporate?'':'d-none'" data-toggle="tooltip" data-select="corporate"
+        title="Minimum of Twenty(20) persons">
+        <a class="nav-link colornav" href="#">{{"Corporate"| uppercase}}</a>
+    </li>
+</ul>
+<div class="deepblue"></div>
+<h6 class="floatedtext animated fadeIn slow"  [ngClass]="(myself || family) || corporate?'d-none':''">Please pick a form that best suites what you need and we'll get back to you.</h6>
+<div class="displaymedic">
+    <img src="https://res.cloudinary.com/matsxript/image/upload/v1596229459/undraw_medical_care_movn_sbj431.svg" alt="medic"/>
+</div>
+
+<div class="fill" [ngClass]="(myself || family) || corporate? 'd-none': ''">
+    <div class="choose" >
+        <div>
+            <button class="btn text-center animated jello" (click)="clickMyself()">For Myself</button>
+        </div>
+        <div >
+            <button class="btn text-center animated jello " (click)="clickFamily()">Myself and Family or Friends</button>
+        </div>
+        <div>
+            <button class="btn text-center animated jello" (click)="clickCorporate()">Corporate</button>
+        </div>
+    </div>
+</div>
+<!-- begin form  -->
+
+<form [ngClass]="(family && corporate) || !myself? 'd-none':''">
+    <h3 class="text-center new"><strong>For Just Myself</strong></h3>
+    <small>
+        <p class="text-center text-secondary mb-3">For Yourself Alone</p>
+    </small>
+    <div class="form-group service-offer">
+        <label>How would you want your service:</label><br>
+        <div>
+        <div class="custom-control custom-radio custom-control" (click)="clickHome()">
+            <input type="radio" class="custom-control-input" id="customRadio" name="example" value="customEx">
+            <label class="custom-control-label" for="customRadio">Home Service</label>
+        </div>
+        <div class="custom-control custom-radio custom-control" (click)="clickHub()">
+            <input type="radio" class="custom-control-input" id="customRadio2" name="example" value="customEx">
+            <label class="custom-control-label" for="customRadio2">I will visit the nearby hub</label>
+        </div>
+        </div>
+    </div>
+    <!-- select state -->
+    <div class="statelocal row" [ngClass]="home?'d-none':''">
+        <div class="form-group  col">
+            <label for="state">Select Your State:</label>
+            <select class="custom-select">
+                <option selected>Select your State</option>
+                <option *ngFor="let state of states">{{ state }}</option>
+            </select>
+        </div>
+        <div class="form-group col">
+            <label for="lga">Select Your LGA:</label>
+            <select class="custom-select">
+                <option selected>Select your LGA</option>
+                <option *ngFor="let local of lga">{{ local }}</option>
+            </select>
+        </div>
+    </div>
+    <div class=" form-group hub" [ngClass]="home?'d-none':''">
+        <label for="hub">Choose Your Preferred Hub:</label>
+        <select class="custom-select col-sm-12">
+            <option selected>Select your preferred hub</option>
+            <option *ngFor="let state of states">{{ state }}</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <!-- <select class="custom-select mx-5 col-sm-2">
+        <option selected>Select your Vaccine(s)</option>
+        <option *ngFor="let vacc of vaccine">
+            
+       </option>
+    </select> -->
+        <label for="custom vacc my-2">Choose Your Vaccine(s)</label>
+        <div class="custom-control custom-checkbox my-2" *ngFor="let vacc of vaccine">
+            <input type="checkbox" class="custom-control-input" *ngFor="let vacc of vaccine" id="customCheck"
+                name="example1">
+            <label class="custom-control-label" for="customCheck">{{vacc}}</label>
+        </div>
+        <button class="btn addbtn btn-sm mt-3 px-3">Add</button>
+    </div>
+    <div class="form-group" [ngClass]="!family? 'd-none':''">
+        <div class="row">
+            <div class="col-8">
+                <label for="address">Address:</label>
+                <input type="text" class="form-control" id="address" placeholder="Enter address" name="address">
+            </div>
+            <div class="col">
+                <label for="time">Time:</label>
+                <input type="datetime" class="form-control" placeholder="Time And Date" name="Time">
+            </div>
+        </div>
+    </div>
+    <!-- profile -->
+    <h5 class="my-3 mt-5 blue"><strong>Profile(s)</strong></h5>
+    <div class="form-group " [ngClass]= "family? 'squeeze':''">
+        <p [ngClass]="family? '':'d-none'"><span class="mx-1">Add person</span><i class="fa fa-plus"></i></p>
+        <div class="row">
+            <div class="col">
+                <label for="firstname">First Name:</label>
+                <input type="text" class="form-control" id="firstname" placeholder="First name" name="firstname">
+            </div>
+            <div class="col">
+                <label for="lastname">Last Name:</label>
+                <input type="text" class="form-control" placeholder="Last name" name="lastname">
+            </div>
+        </div>
+        <div class="row my-3">
+            <div class="col-8">
+                <label for="email">Email:</label>
+                <input type="text" class="form-control" id="email" placeholder="Enter your Email" name="email">
+            </div>
+            <div class="col">
+                <label for="phone">Phone:</label>
+                <input type="tel" class="form-control" placeholder="Phone Number" name="phone">
+            </div>
+        </div>
+        <div class="row my-3">
+            <div class="col">
+                <label for="age">Age:</label>
+                <input type="text" class="form-control" id="Age" placeholder="Enter your Age" name="age">
+            </div>
+            <div class="col">
+                <label for="gender">Gender:</label>
+                <select class="custom-select">
+                    <option selected>Select your Gender</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                </select>
+            </div>
+            <div class="col" [ngClass]="family? 'd-none':''">
+                <label for="time">Time:</label>
+                <input type="time" class="form-control" id="Time" placeholder="Enter Time" name="time">
+            </div>
+        </div>
+        <h5 class="my-5" [ngClass]="family? 'd-none':''">Address(to be vaccinated):</h5>
+        <div class="row my-3" [ngClass]="family? 'd-none':''">
+            <div class="col-8">
+                <input type="text" class="form-control" id="Address" placeholder="Enter your full address"
+                    name="address">
+            </div>
+            <div class="col">
+                <input type="number" class="form-control" placeholder="Zip code" name="zip">
+            </div>
+        </div>
+
+
+    </div>
+    <input type="submit" class="btn btnmat col-8" value="Submit" />
+</form>
+<!-- family -->
+<form [ngClass]="(corporate && myself) || !family? 'd-none':''">
+    <h4 class="text-center new"><strong>Myself and Family or Friends</strong></h4>
+    <small>
+        <p class="text-center text-secondary mb-3">Minimum of five(5) persons</p>
+    </small>
+    <div class="form-group service-offer">
+        <label>How would you want your service:</label><br>
+        <div>
+        <div class="custom-control custom-radio custom-control" (click)="clickHome()">
+            <input type="radio" class="custom-control-input" required id="customRadio3" name="example" value="customEx">
+            <label class="custom-control-label" for="customRadio3">Home Service</label>
+        </div>
+        <div class="custom-control custom-radio custom-control" (click)="clickHub()">
+            <input type="radio" class="custom-control-input" required id="customRadio4" name="example" value="customEx">
+            <label class="custom-control-label" for="customRadio4">I will visit the nearby hub</label>
+        </div>
+        </div>
+    </div>
+    <!-- select state -->
+    <div class="statelocal row" [ngClass]="home? 'd-none':''">
+        <div class="form-group  col">
+            <label for="state">Select Your State:</label>
+            <select class="custom-select">
+                <option selected>Select your State</option>
+                <option *ngFor="let state of states">{{ state }}</option>
+            </select>
+        </div>
+        <div class="form-group col">
+            <label for="lga">Select Your LGA:</label>
+            <select class="custom-select">
+                <option selected>Select your LGA</option>
+                <option *ngFor="let local of lga">{{ local }}</option>
+            </select>
+        </div>
+    </div>
+    <div class=" form-group hub"  [ngClass]="home? 'd-none':''">
+        <label for="hub">Choose Your Preferred Hub:</label>
+        <select class="custom-select col-sm-12">
+            <option selected>Select your preferred hub</option>
+            <option *ngFor="let state of states">{{ state }}</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <!-- <select class="custom-select mx-5 col-sm-2">
+        <option selected>Select your Vaccine(s)</option>
+        <option *ngFor="let vacc of vaccine">
+            
+       </option>
+    </select> -->
+        <label for="custom vacc my-2">Choose Your Vaccine(s)</label>
+        <div class="custom-control custom-checkbox my-2" *ngFor="let vacc of vaccine">
+            <input type="checkbox" class="custom-control-input" *ngFor="let vacc of vaccine" id="customCheck"
+                name="example1">
+            <label class="custom-control-label" for="customCheck">{{vacc}}</label>
+        </div>
+        <button class="btn addbtn btn-sm mt-3 px-3">Add</button>
+    </div>
+    <div class="form-group" [ngClass]="!family? 'd-none':''">
+        <div class="row">
+            <div class="col-8">
+                <label for="address">Address:</label>
+                <input type="text" class="form-control" id="address" placeholder="Enter address" name="address">
+            </div>
+            <div class="col">
+                <label for="time">Time:</label>
+                <input type="datetime" class="form-control" placeholder="Time And Date" name="Time">
+            </div>
+        </div>
+    </div>
+    <!-- profile -->
+    <h5 class="my-3 mt-5 blue"><strong>Profile(s)</strong></h5>
+    <div class="form-group ">
+        <p [ngClass]="family? '':'d-none'"><span class="mx-1">Add person</span><i class="fa fa-plus"></i></p>
+        <div class="row">
+            <div class="col">
+                <label for="firstname">First Name:</label>
+                <input type="text" class="form-control" id="firstname" placeholder="First name" name="firstname">
+            </div>
+            <div class="col">
+                <label for="lastname">Last Name:</label>
+                <input type="text" class="form-control" placeholder="Last name" name="lastname">
+            </div>
+        </div>
+        <div class="row my-3">
+            <div class="col">
+                <label for="phone">Phone:</label>
+                <input type="tel" class="form-control" placeholder="Phone Number" name="phone">
+            </div>
+            <div class="col">
+                <label for="age">Age:</label>
+                <input type="text" class="form-control" id="Age" placeholder="Enter your Age" name="age">
+            </div>
+            <div class="col">
+                <label for="email">Email:</label>
+                <input type="text" class="form-control" id="email" placeholder="Enter your Email" name="email">
+            </div>
+        </div>
+            <div class="row">
+            <div class="col">
+                <label for="gender">Gender:</label>
+                <select class="custom-select">
+                    <option selected>Select your Gender</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                </select>
+            </div>
+            
+        </div>
+        <button class="btn addbtn btn-sm mt-3 px-3">Add Person</button>
+
+    </div>
+<input type="submit" class="btn btnmat col-8" value="Submit" />
+</form>
+<!-- corporate -->
+<form [ngClass]="(!family && myself) || !corporate? 'd-none':''">
+    <h4 class="text-center new"><b>Corporate</b></h4>
+    <small>
+        <p class="text-center text-secondary mb-3">Minimum of twenty(20) persons</p>
+    </small>
+    <p class="text-justify">This is a custom request, kindly fill in the details below and we will get in touch with
+        you.</p>
+    <div class="row my-3">
+        <div class="col">
+            <label for="fullname">Full Name:</label>
+            <input type="text" class="form-control" id="fullname" placeholder="Enter your Full Name" name="fullname">
+        </div>
+    </div>
+    <div class="row my-3">
+        <div class="col-8">
+            <label for="email">Email:</label>
+            <input type="text" class="form-control" id="email" placeholder="Enter your Email" name="email">
+        </div>
+        <div class="col">
+            <label for="phone">Phone:</label>
+            <input type="tel" class="form-control" placeholder="Phone Number" name="phone">
+        </div>
+    </div>
+    <h5>Company details</h5>
+    <div class="row my-3">
+        <div class="col">
+            <label for="companyname">Company's Name:</label>
+            <input type="text" class="form-control" id="companyname" placeholder="Enter your Company Name"
+                name="companyname">
+        </div>
+    </div>
+    <div class="row my-3">
+        <div class="col">
+            <label for="address">Address:</label>
+            <input type="text" class="form-control" id="address" placeholder="Enter your Address" name="address">
+        </div>
+    </div>
+    <div class="row my-3">
+        <div class="col">
+            <label for="nofstaff">Number of Staff to be vaccinated:</label>
+            <input type="number" class="form-control" id="nofstaff" placeholder="Enter number of staff" name="nofstaff">
+        </div>
+    </div>
+    <div class="col">
+        <label for="question">Any Questions:</label>
+        <textarea rows="5" class="form-control"
+            placeholder="You could send any question you want us to answer and we will get back to you"
+            name="questions">
+        </textarea>
+    </div>
+    <input type="submit" class="btn btnmat col-8" value="Submit" />
+</form>
+</body>
