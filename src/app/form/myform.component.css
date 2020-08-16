@@ -5,13 +5,23 @@ form{
     border-top-right-radius:300px;
     border-top-left-radius:50px;
     border-bottom-left-radius:10px;
-    border-bottom:1px solid #29abe2;
+    /* border-bottom:1px solid #29abe2; */
     padding:5rem;
     background:#fff;
     position: absolute;
     top: 15%;
     left:10%;
 }
+.is-invalid{
+    border: 1px solid lightcoral;
+}
+.disabled{
+    opacity:0.3;
+}
+.invalid-feedback{
+    color:lightcoral;
+}
+
 .service-offer div{
     display:flex;
     margin-top: 0.4rem;
@@ -106,6 +116,12 @@ body{
 }
 .btn:hover{
     opacity: 0.8;
+}
+.disabled{
+    opacity:0.3;
+}
+.disabled:hover{
+    opacity:0.3
 }
 @media screen and (max-width: 1100px){
     .floatedtext{

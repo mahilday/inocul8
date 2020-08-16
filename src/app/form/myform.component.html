@@ -1,341 +1,518 @@
 <!-- choose most preferred option -->
+
 <body>
-<ul class="nav nav-tabs" >
-    <li class="nav-item " (click)="clickBack()" [ngClass]="(myself || family) || corporate?'':'d-none'">
-        <a class="nav-link" data-toggle="tooltip" title="back"
-            href="#"><i class="fa fa-arrow-left"></i></a>
-    </li>
-    <li class="nav-item" [ngClass]="(myself || family) || corporate?'d-none':''">
-        <a class="nav-link" data-toggle="tooltip" title="back" href="#"><i class="fa fa-arrow-left"></i></a>
-    </li>
-    <li class="nav-item " [ngClass]="myself?'':'d-none'">
-        <a  class="nav-link colornav" data-toggle="tooltip"
-            title="For Myself alone" href="#">{{"Just For Myself"| uppercase}}</a>
-    </li>
-    <li [ngClass]="family?'':'d-none'" class="nav-item border-right border-left"  data-select="family">
-        <a class="nav-link colornav"  data-toggle="tooltip"
-            title="Minimum of Five(5) persons" href="#">
-            {{"Myself and Family or Friends" | uppercase}}</a>
-    </li>
-    <li class="nav-item" [ngClass]="corporate?'':'d-none'" data-toggle="tooltip" data-select="corporate"
-        title="Minimum of Twenty(20) persons">
-        <a class="nav-link colornav" href="#">{{"Corporate"| uppercase}}</a>
-    </li>
-</ul>
-<div class="deepblue"></div>
-<h6 class="floatedtext animated fadeIn slow"  [ngClass]="(myself || family) || corporate?'d-none':''">Please pick a form that best suites what you need and we'll get back to you.</h6>
-<div class="displaymedic">
-    <img src="https://res.cloudinary.com/matsxript/image/upload/v1596229459/undraw_medical_care_movn_sbj431.svg" alt="medic"/>
-</div>
-
-<div class="fill" [ngClass]="(myself || family) || corporate? 'd-none': ''">
-    <div class="choose" >
-        <div>
-            <button class="btn text-center animated jello" (click)="clickMyself()">For Myself</button>
-        </div>
-        <div >
-            <button class="btn text-center animated jello " (click)="clickFamily()">Myself and Family or Friends</button>
-        </div>
-        <div>
-            <button class="btn text-center animated jello" (click)="clickCorporate()">Corporate</button>
-        </div>
-    </div>
-</div>
-<!-- begin form  -->
-
-<form [ngClass]="(family && corporate) || !myself? 'd-none':''">
-    <h3 class="text-center new"><strong>For Just Myself</strong></h3>
-    <small>
-        <p class="text-center text-secondary mb-3">For Yourself Alone</p>
-    </small>
-    <div class="form-group service-offer">
-        <label>How would you want your service:</label><br>
-        <div>
-        <div class="custom-control custom-radio custom-control" (click)="clickHome()">
-            <input type="radio" class="custom-control-input" id="customRadio" name="example" value="customEx">
-            <label class="custom-control-label" for="customRadio">Home Service</label>
-        </div>
-        <div class="custom-control custom-radio custom-control" (click)="clickHub()">
-            <input type="radio" class="custom-control-input" id="customRadio2" name="example" value="customEx">
-            <label class="custom-control-label" for="customRadio2">I will visit the nearby hub</label>
-        </div>
-        </div>
-    </div>
-    <!-- select state -->
-    <div class="statelocal row" [ngClass]="home?'d-none':''">
-        <div class="form-group  col">
-            <label for="state">Select Your State:</label>
-            <select class="custom-select">
-                <option selected>Select your State</option>
-                <option *ngFor="let state of states">{{ state }}</option>
-            </select>
-        </div>
-        <div class="form-group col">
-            <label for="lga">Select Your LGA:</label>
-            <select class="custom-select">
-                <option selected>Select your LGA</option>
-                <option *ngFor="let local of lga">{{ local }}</option>
-            </select>
-        </div>
-    </div>
-    <div class=" form-group hub" [ngClass]="home?'d-none':''">
-        <label for="hub">Choose Your Preferred Hub:</label>
-        <select class="custom-select col-sm-12">
-            <option selected>Select your preferred hub</option>
-            <option *ngFor="let state of states">{{ state }}</option>
-        </select>
+    <ul class="nav nav-tabs">
+        <li class="nav-item " (click)="clickBack()" [ngClass]="(myself || family) || corporate?'':'d-none'">
+            <a class="nav-link" data-toggle="tooltip" title="back" href="#"><i class="fa fa-arrow-left"></i></a>
+        </li>
+        <li class="nav-item" [ngClass]="(myself || family) || corporate?'d-none':''">
+            <a class="nav-link" data-toggle="tooltip" title="back" href="#"><i class="fa fa-arrow-left"></i></a>
+        </li>
+        <li class="nav-item " [ngClass]="myself?'':'d-none'">
+            <a class="nav-link colornav" data-toggle="tooltip" title="For Myself alone"
+                href="#">{{"Just For Myself"| uppercase}}</a>
+        </li>
+        <li [ngClass]="family?'':'d-none'" class="nav-item border-right border-left" data-select="family">
+            <a class="nav-link colornav" data-toggle="tooltip" title="Minimum of Five(5) persons" href="#">
+                {{"Myself and Family or Friends" | uppercase}}</a>
+        </li>
+        <li class="nav-item" [ngClass]="corporate?'':'d-none'" data-toggle="tooltip" data-select="corporate"
+            title="Minimum of Twenty(20) persons">
+            <a class="nav-link colornav" href="#">{{"Corporate"| uppercase}}</a>
+        </li>
+    </ul>
+    <div class="deepblue"></div>
+    <h6 class="floatedtext animated fadeIn slow" [ngClass]="(myself || family) || corporate?'d-none':''">Please pick a
+        form that best suites what you need and we'll get back to you.</h6>
+    <div class="displaymedic">
+        <img src="https://res.cloudinary.com/matsxript/image/upload/v1596229459/undraw_medical_care_movn_sbj431.svg"
+            alt="medic" />
     </div>
 
-    <div class="form-group">
-        <!-- <select class="custom-select mx-5 col-sm-2">
-        <option selected>Select your Vaccine(s)</option>
-        <option *ngFor="let vacc of vaccine">
-            
-       </option>
-    </select> -->
-        <label for="custom vacc my-2">Choose Your Vaccine(s)</label>
-        <div class="custom-control custom-checkbox my-2" *ngFor="let vacc of vaccine">
-            <input type="checkbox" class="custom-control-input" *ngFor="let vacc of vaccine" id="customCheck"
-                name="example1">
-            <label class="custom-control-label" for="customCheck">{{vacc}}</label>
-        </div>
-        <button class="btn addbtn btn-sm mt-3 px-3">Add</button>
-    </div>
-    <div class="form-group" [ngClass]="!family? 'd-none':''">
-        <div class="row">
-            <div class="col-8">
-                <label for="address">Address:</label>
-                <input type="text" class="form-control" id="address" placeholder="Enter address" name="address">
+    <div class="fill" [ngClass]="(myself || family) || corporate? 'd-none': ''">
+        <div class="choose">
+            <div>
+                <button class="btn text-center animated jello" (click)="clickMyself()">For Myself</button>
             </div>
-            <div class="col">
-                <label for="time">Time:</label>
-                <input type="datetime" class="form-control" placeholder="Time And Date" name="Time">
+            <div>
+                <button class="btn text-center animated jello " (click)="clickFamily()">Myself and Family or
+                    Friends</button>
+            </div>
+            <div>
+                <button class="btn text-center animated jello" (click)="clickCorporate()">Corporate</button>
             </div>
         </div>
     </div>
-    <!-- profile -->
-    <h5 class="my-3 mt-5 blue"><strong>Profile(s)</strong></h5>
-    <div class="form-group " [ngClass]= "family? 'squeeze':''">
-        <p [ngClass]="family? '':'d-none'"><span class="mx-1">Add person</span><i class="fa fa-plus"></i></p>
-        <div class="row">
-            <div class="col">
-                <label for="firstname">First Name:</label>
-                <input type="text" class="form-control" id="firstname" placeholder="First name" name="firstname">
-            </div>
-            <div class="col">
-                <label for="lastname">Last Name:</label>
-                <input type="text" class="form-control" placeholder="Last name" name="lastname">
+    <!-- begin form  -->
+
+    <form [ngClass]="(family && corporate) || !myself? 'd-none':''" #myselfForm="ngForm"
+        (ngSubmit)="myselfForm.form.valid && postMyForm(myselfForm)" novalidate>
+        <!-- {{myselfForm.valid}} -->
+        <h3 class="text-center new"><strong>For Just Myself</strong></h3>
+        <small>
+            <p class="text-center text-secondary mb-3">For Yourself Alone</p>
+        </small>
+        <div class="form-group service-offer">
+            <label>How would you want your service:</label><br>
+            <div>
+                <div class="custom-control custom-radio custom-control" (click)="clickHome()">
+                    <input type="radio" class="custom-control-input" id="customRadio" name="radioservice"
+                        value="Home-service" ngModel>
+                    <label class="custom-control-label" for="customRadio">Home Service</label>
+                </div>
+                <div class="custom-control custom-radio custom-control" (click)="clickHub()">
+                    <input type="radio" class="custom-control-input" id="customRadio2" name="radioservice" value="Hub"
+                        ngModel>
+                    <label class="custom-control-label" for="customRadio2">I will visit the nearby hub</label>
+                </div>
             </div>
         </div>
-        <div class="row my-3">
-            <div class="col-8">
-                <label for="email">Email:</label>
-                <input type="text" class="form-control" id="email" placeholder="Enter your Email" name="email">
-            </div>
-            <div class="col">
-                <label for="phone">Phone:</label>
-                <input type="tel" class="form-control" placeholder="Phone Number" name="phone">
-            </div>
-        </div>
-        <div class="row my-3">
-            <div class="col">
-                <label for="age">Age:</label>
-                <input type="text" class="form-control" id="Age" placeholder="Enter your Age" name="age">
-            </div>
-            <div class="col">
-                <label for="gender">Gender:</label>
-                <select class="custom-select">
-                    <option selected>Select your Gender</option>
-                    <option>Male</option>
-                    <option>Female</option>
+        <!-- select state -->
+        <div class="statelocal row" [ngClass]="home?'d-none':''">
+            <div class="form-group  col">
+                <label for="state">Select Your State:</label>
+                <select class="custom-select" #state="ngModel" [ngClass]="{ 'is-invalid': (myselfForm.submitted && state.invalid) || (state.invalid && state.touched)}"
+                    name="state" [(ngModel)]="formModel.state"  [required]="!home">
+                    <option selected>Select your State</option>
+                    <option *ngFor="let state of states">{{ state }}</option>
                 </select>
+                <div *ngIf="myselfForm.submitted || (state.invalid && state.touched)" class="invalid-feedback">
+                    <div *ngIf="state.errors.required">State is required</div>
+                </div>
             </div>
-            <div class="col" [ngClass]="family? 'd-none':''">
-                <label for="time">Time:</label>
-                <input type="time" class="form-control" id="Time" placeholder="Enter Time" name="time">
+            <div class="form-group col">
+                <label for="lga">Select Your LGA:</label>
+                <select class="custom-select" name="lga" #lga="ngModel"
+                    [ngClass]="{ 'is-invalid': (myselfForm.submitted && lga.invalid  ) || (lga.invalid && lga.touched)}" [(ngModel)]="formModel.lga"
+                   [required]="!home">
+                    <option selected>Select your LGA</option>
+                    <option *ngFor="let local of lga">{{ local }}</option>
+                </select>
+                <div *ngIf="myselfForm.submitted || (lga.invalid && lga.touched)" class="invalid-feedback">
+                    <div *ngIf="lga.errors.required">LGA is required</div>
+                </div>
             </div>
         </div>
-        <h5 class="my-5" [ngClass]="family? 'd-none':''">Address(to be vaccinated):</h5>
-        <div class="row my-3" [ngClass]="family? 'd-none':''">
-            <div class="col-8">
-                <input type="text" class="form-control" id="Address" placeholder="Enter your full address"
-                    name="address">
-            </div>
-            <div class="col">
-                <input type="number" class="form-control" placeholder="Zip code" name="zip">
-            </div>
-        </div>
-
-
-    </div>
-    <input type="submit" class="btn btnmat col-8" value="Submit" />
-</form>
-<!-- family -->
-<form [ngClass]="(corporate && myself) || !family? 'd-none':''">
-    <h4 class="text-center new"><strong>Myself and Family or Friends</strong></h4>
-    <small>
-        <p class="text-center text-secondary mb-3">Minimum of five(5) persons</p>
-    </small>
-    <div class="form-group service-offer">
-        <label>How would you want your service:</label><br>
-        <div>
-        <div class="custom-control custom-radio custom-control" (click)="clickHome()">
-            <input type="radio" class="custom-control-input" required id="customRadio3" name="example" value="customEx">
-            <label class="custom-control-label" for="customRadio3">Home Service</label>
-        </div>
-        <div class="custom-control custom-radio custom-control" (click)="clickHub()">
-            <input type="radio" class="custom-control-input" required id="customRadio4" name="example" value="customEx">
-            <label class="custom-control-label" for="customRadio4">I will visit the nearby hub</label>
-        </div>
-        </div>
-    </div>
-    <!-- select state -->
-    <div class="statelocal row" [ngClass]="home? 'd-none':''">
-        <div class="form-group  col">
-            <label for="state">Select Your State:</label>
-            <select class="custom-select">
-                <option selected>Select your State</option>
+        <div class=" form-group hub" [ngClass]="home?'d-none':''">
+            <label for="hub">Choose Your Preferred Hub:</label>
+            <select class="custom-select col-sm-12" name="preferredhub" #preferredhub="ngModel"
+                [ngClass]="{ 'is-invalid': (myselfForm.submitted && preferredhub.invalid) || (preferredhub.invalid && preferredhub.touched) }"
+                [(ngModel)]="formModel.preferredhub"  [required]="!home">
+                <option selected>Select your preferred hub</option>
                 <option *ngFor="let state of states">{{ state }}</option>
             </select>
+            <div *ngIf="myselfForm.submitted || (preferredhub.invalid && preferredhub.touched)" class="invalid-feedback">
+                <div *ngIf="preferredhub.errors.required">Hub is required</div>
+            </div>
         </div>
-        <div class="form-group col">
-            <label for="lga">Select Your LGA:</label>
-            <select class="custom-select">
-                <option selected>Select your LGA</option>
-                <option *ngFor="let local of lga">{{ local }}</option>
-            </select>
-        </div>
-    </div>
-    <div class=" form-group hub"  [ngClass]="home? 'd-none':''">
-        <label for="hub">Choose Your Preferred Hub:</label>
-        <select class="custom-select col-sm-12">
-            <option selected>Select your preferred hub</option>
-            <option *ngFor="let state of states">{{ state }}</option>
-        </select>
-    </div>
 
-    <div class="form-group">
-        <!-- <select class="custom-select mx-5 col-sm-2">
+        <div class="form-group">
+            <!-- <select class="custom-select mx-5 col-sm-2">
         <option selected>Select your Vaccine(s)</option>
         <option *ngFor="let vacc of vaccine">
             
        </option>
     </select> -->
-        <label for="custom vacc my-2">Choose Your Vaccine(s)</label>
-        <div class="custom-control custom-checkbox my-2" *ngFor="let vacc of vaccine">
-            <input type="checkbox" class="custom-control-input" *ngFor="let vacc of vaccine" id="customCheck"
-                name="example1">
-            <label class="custom-control-label" for="customCheck">{{vacc}}</label>
+            <label for="custom vacc my-2">Choose Your Vaccine(s)</label>
+            <div class="custom-control custom-checkbox my-2" *ngFor='let vacc of vaccine; let i = index'>
+                <input type="checkbox" class="custom-control-input" id="customCheck{{i}}" name="vaccine" ngModel>
+                <label class="custom-control-label" for="customCheck">{{i}}{{vacc}}</label>
+            </div>
+            <button class="btn addbtn btn-sm mt-3 px-3">Add</button>
         </div>
-        <button class="btn addbtn btn-sm mt-3 px-3">Add</button>
-    </div>
-    <div class="form-group" [ngClass]="!family? 'd-none':''">
-        <div class="row">
-            <div class="col-8">
-                <label for="address">Address:</label>
-                <input type="text" class="form-control" id="address" placeholder="Enter address" name="address">
-            </div>
-            <div class="col">
-                <label for="time">Time:</label>
-                <input type="datetime" class="form-control" placeholder="Time And Date" name="Time">
-            </div>
-        </div>
-    </div>
-    <!-- profile -->
-    <h5 class="my-3 mt-5 blue"><strong>Profile(s)</strong></h5>
-    <div class="form-group ">
-        <p [ngClass]="family? '':'d-none'"><span class="mx-1">Add person</span><i class="fa fa-plus"></i></p>
-        <div class="row">
-            <div class="col">
-                <label for="firstname">First Name:</label>
-                <input type="text" class="form-control" id="firstname" placeholder="First name" name="firstname">
-            </div>
-            <div class="col">
-                <label for="lastname">Last Name:</label>
-                <input type="text" class="form-control" placeholder="Last name" name="lastname">
-            </div>
-        </div>
-        <div class="row my-3">
-            <div class="col">
-                <label for="phone">Phone:</label>
-                <input type="tel" class="form-control" placeholder="Phone Number" name="phone">
-            </div>
-            <div class="col">
-                <label for="age">Age:</label>
-                <input type="text" class="form-control" id="Age" placeholder="Enter your Age" name="age">
-            </div>
-            <div class="col">
-                <label for="email">Email:</label>
-                <input type="text" class="form-control" id="email" placeholder="Enter your Email" name="email">
-            </div>
-        </div>
+        <!-- profile -->
+        <h5 class="my-3 mt-5 blue"><strong>Profile(s)</strong></h5>
+        <div class="form-group" ngModelGroup="profile">
+            <p [ngClass]="family? '':'d-none'"><span class="mx-1">Add person</span><i class="fa fa-plus"></i></p>
             <div class="row">
-            <div class="col">
-                <label for="gender">Gender:</label>
-                <select class="custom-select">
-                    <option selected>Select your Gender</option>
-                    <option>Male</option>
-                    <option>Female</option>
-                </select>
+                <div class="col">
+                    <label for="first name">First Name:</label>
+                    <input type="text" class="form-control" #firstname="ngModel"  id="firstname"
+                        placeholder="First Name" name="firstname" [ngClass]="{ 'is-invalid': (myselfForm.submitted && firstname.invalid) || (firstname.invalid && firstname.touched) }" 
+                        [(ngModel)]="formModel.firstname" required>
+                        <div *ngIf="myselfForm.submitted || (firstname.invalid && firstname.touched)" class="invalid-feedback">
+                            <div *ngIf="firstname.errors.required">First name is required</div>
+                        </div>
+                </div>
+                <div class="col">
+                    <label for="last name">Last Name:</label>
+                    <input type="text" class="form-control" placeholder="Last Name" name="lastname" #lastname="ngModel"
+                        [ngClass]="{ 'is-invalid': (myselfForm.submitted && lastname.invalid) || (lastname.invalid && lastname.touched) }"
+                        [(ngModel)]="formModel.lastname" required>
+                        <div *ngIf="myselfForm.submitted || (lastname.invalid && lastname.touched)" class="invalid-feedback">
+                            <div *ngIf="lastname.errors.required">Last name is required</div>
+                        </div>
+                </div>
             </div>
-            
+            <div class="row my-3">
+                <div class="col-8">
+                    <label for="email">Email:</label>
+                    <input type="text" class="form-control" id="email" placeholder="Enter your Email" name="email"
+                        #email="ngModel" [ngClass]="{ 'is-invalid': (myselfForm.submitted && email.invalid) || (email.invalid && email.touched) }"
+                        [(ngModel)]="formModel.email" required email>
+                        <div *ngIf="myselfForm.submitted || (email.invalid && email.touched)" class="invalid-feedback">
+                            <div *ngIf="email.errors.required">Email is required</div>
+                            <div *ngIf="email.errors.email">Email must be a valid email address</div>
+                        </div>
+                </div>
+                <div class="col">
+                    <label for="phone">Phone:</label>
+                    <input type="tel" class="form-control" placeholder="Phone Number" name="phone" #phone="ngModel"
+                        [ngClass]="{ 'is-invalid': (myselfForm.submitted && phone.invalid) ||(phone.invalid && phone.touched)}"
+                        [(ngModel)]="formModel.phone" required minlength="11">
+                        <div *ngIf="myselfForm.submitted || (phone.invalid && phone.touched)" class="invalid-feedback">
+                            <div *ngIf="phone.errors.required">Phone number is required</div>
+                            <div *ngIf="phone.errors.minlength">Phone number must be at least 11</div>
+                        </div>
+                </div>
+            </div>
+            <div class="row my-3">
+                <div class="col">
+                    <label for="age">Age:</label>
+                    <input type="number" class="form-control" id="Age" placeholder="Enter your Age" name="age"
+                        #age="ngModel" [ngClass]="{ 'is-invalid': (myselfForm.submitted && age.invalid) || (age.invalid && age.touched) }"
+                        [(ngModel)]="formModel.age" required>
+                        <div *ngIf="myselfForm.submitted || (age.invalid && age.touched)" class="invalid-feedback">
+                            <div *ngIf="age.errors.required">Age is required</div>
+                        </div>
+                </div>
+                <div class="col">
+                    <label for="gender">Gender:</label>
+                    <select class="custom-select" name="gender" #gender="ngModel"
+                        [ngClass]="{ 'is-invalid': (myselfForm.submitted && gender.invalid) || (gender.invalid && gender.touched) }"
+                        [(ngModel)]="formModel.gender" required>
+                        <option selected>Select your Gender</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                    </select>
+                    <div *ngIf="myselfForm.submitted || (gender.invalid && gender.touched)" class="invalid-feedback">
+                        <div *ngIf="gender.errors.required">Gender is required</div>
+                    </div>
+                </div>
+                <div class="col" [ngClass]="family? 'd-none':''">
+                    <label for="time">Time:</label>
+                    <input type="datetime" class="form-control" id="Time" placeholder="Enter Time" name="time"
+                        #time="ngModel" [ngClass]="{ 'is-invalid': (myselfForm.submitted && time.invalid) || (time.invalid && time.touched) }"
+                        [(ngModel)]="formModel.time" required>
+                        <div *ngIf="myselfForm.submitted || (time.invalid && time.touched)" class="invalid-feedback">
+                            <div *ngIf="time.errors.required">Time is required</div>
+                        </div>
+                </div>
+            </div>
+            <h5 class="my-5" [ngClass]="family? 'd-none':''">Address(to be vaccinated):</h5>
+            <div class="row my-3" [ngClass]="family? 'd-none':''" ngModelGroup="address">
+                <div class="col-8">
+                    <input type="text" class="form-control" id="Address" placeholder="Enter your full address"
+                        name="address" #address="ngModel"
+                        [ngClass]="{ 'is-invalid': (myselfForm.submitted && address.invalid) ||(address.invalid && address.touched) }"
+                        [(ngModel)]="formModel.address" required>
+                        <div *ngIf="myselfForm.submitted || (address.invalid && address.touched)" class="invalid-feedback">
+                            <div *ngIf="address.errors.required">Address is required</div>
+                        </div>
+                </div>
+                <div class="col">
+                    <input type="number" class="form-control" placeholder="Zip code" name="zipcode" #zipcode="ngModel"
+                        [ngClass]="{ 'is-invalid': (myselfForm.submitted && zipcode.invalid) || (zipcode.invalid && zipcode.touched) }"
+                        [(ngModel)]="formModel.zipcode" required>
+                        <div *ngIf="myselfForm.submitted || (zipcode.invalid && zipcode.touched)" class="invalid-feedback">
+                            <div *ngIf="zipcode.errors.required">Zip code is required</div>
+                        </div>
+                </div>
+            </div>
         </div>
-        <button class="btn addbtn btn-sm mt-3 px-3">Add Person</button>
+        <div *ngIf="!myselfForm.valid" class="text-danger text-center mt-5">The button is still disabled, please make sure all inputs are filled correctly</div>
+        <input type="submit" [ngClass]="!myselfForm.valid?'disabled':''" class="btn btnmat col-8" [disabled]="!myselfForm.valid" value="Submit" 
+            data-toggle="modal" data-target="#exampleModal"/>
+    </form>
+    <!-- family -->
+    <form [ngClass]="(corporate && myself) || !family? 'd-none':''" #familyForm="ngForm"
+        (ngSubmit)="familyForm.form.valid && postFamForm()" novalidate>
+        <h4 class="text-center new"><strong>Myself and Family or Friends</strong></h4>
+        <small>
+            <p class="text-center text-secondary mb-3">Minimum of five(5) persons</p>
+        </small>
+        <div class="form-group service-offer">
+            <label>How would you want your service:</label><br>
+            <div>
+                <div class="custom-control custom-radio custom-control" (click)="clickHome()">
+                    <input type="radio" class="custom-control-input" id="customRadio3" name="radioservice" value="Home-service" ngModel>
+                    <label class="custom-control-label" for="customRadio3">Home Service</label>
+                </div>
+                <div class="custom-control custom-radio custom-control" (click)="clickHub()">
+                    <input type="radio" class="custom-control-input" id="customRadio4" name="radioservice" value="Hub" ngModel>
+                    <label class="custom-control-label" for="customRadio4">I will visit the nearby hub</label>
+                </div>
+            </div>
+        </div>
+        <!-- select state -->
+        <div class="statelocal row" [ngClass]="home? 'd-none':''">
+            <div class="form-group  col">
+                <label for="state">Select Your State:</label>
+            <select class="custom-select" #statefam="ngModel"
+                [ngClass]="{ 'is-invalid': (familyForm.submitted && statefam.invalid) || (statefam.invalid && statefam.touched)}" name="state"
+                [(ngModel)]="famModel.statefam" [required]="!home">
+                <option selected>Select your State</option>
+                <option *ngFor="let state of states">{{ state }}</option>
+            </select>
+            <div *ngIf="familyForm.submitted || (statefam.invalid && statefam.touched)" class="invalid-feedback">
+                <div *ngIf="statefam.errors.required">State is required</div>
+            </div>
+            </div>
+            <div class="form-group col">
+                <label for="lga">Select Your LGA:</label>
+                <select class="custom-select" name="lga" #lgafam="ngModel"
+                    [ngClass]="{ 'is-invalid': (familyForm.submitted && lgafam.invalid) || (lgafam.invalid && lgafam.touched)}" [(ngModel)]="famModel.lgafam"
+                    [required]="!home">
+                    <option selected>Select your LGA</option>
+                    <option *ngFor="let local of lga">{{ local }}</option>
+                </select>
+                <div *ngIf="familyForm.submitted || (lgafam.invalid && lgafam.touched)" class="invalid-feedback">
+                    <div *ngIf="lgafam.errors.required">LGA is required</div>
+                </div>
+            </div>
+        </div>
+        <div class=" form-group hub" [ngClass]="home? 'd-none':''">
+            <label for="hub">Choose Your Preferred Hub:</label>
+            <select class="custom-select col-sm-12" name="preferredhub" #preferredhubfam="ngModel"
+                [ngClass]="{ 'is-invalid': (familyForm.submitted && preferredhubfam.invalid) || (preferredhubfam.invalid && preferredhubfam.touched) }"
+                [(ngModel)]="famModel.preferredhubfam" [required]="!home">
+                <option selected>Select your preferred hub</option>
+                <option *ngFor="let state of states">{{ state }}</option>
+            </select>
+            <div *ngIf="familyForm.submitted || (preferredhubfam.invalid && preferredhubfam.touched)" class="invalid-feedback">
+                <div *ngIf="preferredhubfam.errors.required">Hub is required</div>
+            </div>
+        </div>
 
-    </div>
-<input type="submit" class="btn btnmat col-8" value="Submit" />
-</form>
-<!-- corporate -->
-<form [ngClass]="(!family && myself) || !corporate? 'd-none':''">
-    <h4 class="text-center new"><b>Corporate</b></h4>
-    <small>
-        <p class="text-center text-secondary mb-3">Minimum of twenty(20) persons</p>
-    </small>
-    <p class="text-justify">This is a custom request, kindly fill in the details below and we will get in touch with
-        you.</p>
-    <div class="row my-3">
+        <div class="form-group">
+            <!-- <select class="custom-select mx-5 col-sm-2">
+        <option selected>Select your Vaccine(s)</option>
+        <option *ngFor="let vacc of vaccine">
+            
+       </option>
+    </select> -->
+            <label for="custom vacc my-2">Choose Your Vaccine(s)</label>
+            <div class="custom-control custom-checkbox my-2" *ngFor="let vacc of vaccine">
+                <input type="checkbox" class="custom-control-input" *ngFor="let vacc of vaccine" id="customCheck"
+                    name="vaccine" ngModel>
+                <label class="custom-control-label" for="customCheck">{{vacc}}</label>
+            </div>
+            <button class="btn addbtn btn-sm mt-3 px-3">Add</button>
+        </div>
+        <div class="form-group" [ngClass]="!family? 'd-none':''">
+            <div class="row">
+                <div class="col-8">
+                    <label for="address">Address:</label>
+                    <input type="text" class="form-control" id="Address" placeholder="Enter your full address" name="address"
+                        #addressfam="ngModel" [ngClass]="{ 'is-invalid': (familyForm.submitted && addressfam.invalid) || (addressfam.invalid && addressfam.touched) }"
+                        [(ngModel)]="famModel.addressfam" required>
+                    <div *ngIf="familyForm.submitted ||(addressfam.invalid && addressfam.touched)" class="invalid-feedback">
+                        <div *ngIf="addressfam.errors.required">Address is required</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <label for="time">Time:</label>
+                    <input type="datetime" class="form-control" id="Time" placeholder="Enter Time" name="time" #timefam="ngModel"
+                        [ngClass]="{ 'is-invalid': (familyForm.submitted && timefam.invalid) || (timefam.invalid && timefam.touched) }" [(ngModel)]="famModel.timefam"
+                        required>
+                    <div *ngIf="familyForm.submitted || (timefam.invalid && timefam.touched)" class="invalid-feedback">
+                        <div *ngIf="timefam.errors.required">Time is required</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- profile -->
+        <h5 class="my-1 mt-5 blue"><strong>Profile(s)</strong></h5>
+        <div class="form-group" #profile="ngModelGroup" [ngModelGroup]="profile.profile">
+            <small class="text-secondary my-2">Please add a profile for each person you want to be vaccinated and click the <b><i>add person</i></b> button</small>
+            <div class="text-success my-3">{{nopersons}} person(s) have been added</div>
+            <!-- <p [ngClass]="family? '':'d-none'"><span class="mx-1">Add person</span><i class="fa fa-plus"></i></p> -->
+            <div class="row">
+                <div class="col">
+                    <label for="firstname">First Name:</label>
+                    <input type="text" class="form-control" #firstnamefam="ngModel" id="firstname" placeholder="First Name" name="firstname"
+                        [ngClass]="{ 'is-invalid': (familyForm.submitted && firstnamefam.invalid) || (firstnamefam.invalid && firstnamefam.touched) }"
+                        [(ngModel)]="profile.firstnamefam" required>
+                    <div *ngIf="familyForm.submitted || (firstnamefam.invalid && firstnamefam.touched)" class="invalid-feedback">
+                        <div *ngIf="firstnamefam.errors.required">First name is required</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <label for="last name">Last Name:</label>
+                    <input type="text" class="form-control" placeholder="Last Name" name="lastname" #lastnamefam="ngModel"
+                        [ngClass]="{ 'is-invalid': (familyForm.submitted && lastnamefam.invalid) || (lastnamefam.invalid && lastnamefam.touched) }"
+                        [(ngModel)]="profile.lastnamefam" required>
+                    <div *ngIf="familyForm.submitted || (lastnamefam.invalid && lastnamefam.touched)" class="invalid-feedback">
+                        <div *ngIf="lastnamefam.errors.required">Last name is required</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row my-3">
+                <div class="col">
+                    <label for="phone">Phone:</label>
+                    <input type="tel" class="form-control" placeholder="Phone Number" name="phone" #phonefam="ngModel"
+                        [ngClass]="{ 'is-invalid':(familyForm.submitted && phonefam.invalid) ||(phonefam.invalid && phonefam.touched)}" [(ngModel)]="profile.phonefam"
+                        required minlength="11">
+                    <div *ngIf="familyForm.submitted || (phonefam.invalid && phonefam.touched)" class="invalid-feedback">
+                        <div *ngIf="phonefam.errors.required">Phone number is required</div>
+                        <div *ngIf="phonefam.errors.minlength">Phone number must be at least 11</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <label for="age">Age:</label>
+                    <input type="number" class="form-control" id="Age" placeholder="Enter your Age" name="age" #agefam="ngModel"
+                        [ngClass]="{ 'is-invalid': (familyForm.submitted && agefam.invalid) || (agefam.invalid && agefam.touched) }" [(ngModel)]="profile.agefam"
+                        required>
+                    <div *ngIf="familyForm.submitted || (agefam.invalid && agefam.touched)" class="invalid-feedback">
+                        <div *ngIf="age.errors.required">Age is required</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <label for="email">Email:</label>
+                    <input type="text" class="form-control" id="email" placeholder="Enter your Email" name="email" #emailfam="ngModel"
+                        [ngClass]="{ 'is-invalid': (familyForm.submitted && emailfam.invalid) || (emailfam.invalid && emailfam.touched) }" [(ngModel)]="profile.emailfam"
+                        required email>
+                    <div *ngIf="familyForm.submitted || (emailfam.invalid && emailfam.touched)" class="invalid-feedback">
+                        <div *ngIf="emailfam.errors.required">Email is required</div>
+                        <div *ngIf="emailfam.errors.email">Email must be a valid email address</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label for="gender">Gender:</label>
+                    <select class="custom-select" name="gender" #genderfam="ngModel"
+                        [ngClass]="{ 'is-invalid': (familyForm.submitted && genderfam.invalid) || (genderfam.invalid && genderfam.touched) }"
+                        [(ngModel)]="profile.genderfam" required>
+                        <option selected>Select your Gender</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                    </select>
+                    <div *ngIf="familyForm.submitted || (genderfam.invalid && genderfam.touched)" class="invalid-feedback">
+                        <div *ngIf="genderfam.errors.required">Gender is required</div>
+                    </div>
+                </div>
+
+            </div>
+            <button class="btn btn-primary btn-sm mt-3 px-3" (click)="saveProfile($event, profile.value)">Add Person</button>
+            <button class="btn btn-secondary mx-4 btn-sm mt-3 px-3" (click)="resetProfile($event, profile)">Reset</button>
+
+        </div>
+        <div *ngIf="!familyForm.valid" class="text-danger text-center mt-5">The button is still disabled, please make sure all
+            inputs are filled correctly</div>
+        <input type="submit" [ngClass]="!familyForm.valid?'disabled':''" class="btn btnmat col-8" [disabled]="!familyForm.valid"
+            value="Submit" data-toggle="modal" data-target="#exampleModal"/>
+    </form>
+    <!-- corporate -->
+    <form [ngClass]="(family && myself) || !corporate? 'd-none':''" #corporateForm="ngForm"
+        (ngSubmit)="corporateForm.form.valid && postForm(corporateForm)">
+        <h4 class="text-center new"><b>Corporate</b></h4>
+        <small>
+            <p class="text-center text-secondary mb-3">Minimum of twenty(20) persons</p>
+        </small>
+        <p class="text-justify">This is a custom request, kindly fill in the details below and we will get in touch with
+            you.</p>
+        <div class="row my-3">
+            <div class="col">
+                <label for="fullname">Full Name:</label>
+                <input type="text" class="form-control" #fullname="ngModel" id="fullname" placeholder="Full Name" name="fullname"
+                    [ngClass]="{ 'is-invalid': (corporateForm.submitted && fullname.invalid) || (fullname.invalid && fullname.touched) }"
+                    [(ngModel)]="corpModel.fullname" required>
+                <div *ngIf="corporateForm.submitted || (fullname.invalid && fullname.touched)" class="invalid-feedback">
+                    <div *ngIf="fullname.errors.required">Full name is required</div>
+                </div>
+            </div>
+        </div>
+        <div class="row my-3">
+            <div class="col-8">
+                <label for="email">Email:</label>
+                <input type="text" class="form-control" id="email" placeholder="Enter your Email" name="email" #emailcorp="ngModel"
+                    [ngClass]="{ 'is-invalid': (corporateForm.submitted && emailcorp.invalid) || (emailcorp.invalid && emailcorp.touched) }" [(ngModel)]="corpModel.emailcorp"
+                    required email>
+                <div *ngIf="corporateForm.submitted || (emailcorp.invalid && emailcorp.touched)" class="invalid-feedback">
+                    <div *ngIf="emailcorp.errors.required">Email is required</div>
+                    <div *ngIf="emailcorp.errors.email">Email must be a valid email address</div>
+                </div>
+            </div>
+            <div class="col">
+                <label for="phone">Phone:</label>
+                <input type="tel" class="form-control" placeholder="Phone Number" name="phone" #phonecorp="ngModel"
+                    [ngClass]="{ 'is-invalid': (corporateForm.submitted && phonecorp.invalid) ||(phonecorp.invalid && phonecorp.touched)}" [(ngModel)]="corpModel.phonecorp"
+                    required minlength="11">
+                <div *ngIf="corporateForm.submitted || (phonecorp.invalid && phonecorp.touched)" class="invalid-feedback">
+                    <div *ngIf="phonecorp.errors.required">Phone number is required</div>
+                    <div *ngIf="phonecorp.errors.minlength">Phone number must be at least 11</div>
+                </div>
+            </div>
+        </div>
+        <h5>Company details</h5>
+        <span ngModelGroup="companydetails">
+            <div class="row my-3">
+                <div class="col">
+                    <label for="companyname">Company's Name:</label>
+                    <input type="text" class="form-control" #companyname="ngModel" id="companyname" placeholder="Enter Your Company Name" name="companyname"
+                        [ngClass]="{ 'is-invalid': (corporateForm.submitted && companyname.invalid) || (companyname.invalid && companyname.touched) }"
+                        [(ngModel)]="corpModel.companyname" required>
+                    <div *ngIf="corporateForm.submitted || (companyname.invalid && companyname.touched)" class="invalid-feedback">
+                        <div *ngIf="companyname.errors.required">Company name is required</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row my-3">
+                <div class="col">
+                    <label for="address">Address:</label>
+                    <input type="text" class="form-control" id="Address" placeholder="Enter your Company address" name="address"
+                        #addresscorp="ngModel" [ngClass]="{ 'is-invalid': (corporateForm.submitted && addresscorp.invalid) || (addresscorp.invalid && addresscorp.touched) }"
+                        [(ngModel)]="corpModel.addresscorp" required>
+                    <div *ngIf="corporateForm.submitted || (addresscorp.invalid && addresscorp.touched)" class="invalid-feedback">
+                        <div *ngIf="addresscorp.errors.required">Address is required</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row my-3">
+                <div class="col">
+                    <label for="nofstaff">Number of Staff to be vaccinated:</label>
+                    <input type="number" class="form-control" id="nofstaff" placeholder="Enter number of staff"
+                        name="nofstaff" #nofstaff="ngModel"
+                        [ngClass]="{ 'is-invalid': (corporateForm.submitted && nofstaff.invalid) || (nofstaff.invalid && nofstaff.touched) }"
+                        [(ngModel)]="corpModel.nofstaff" required>
+                    <div *ngIf="corporateForm.submitted || (nofstaff.invalid && nofstaff.touched)" class="invalid-feedback">
+                        <div *ngIf="nofstaff.errors.required">Number of staff is required</div>
+                    </div>
+                </div>
+            </div>
+        </span>
         <div class="col">
-            <label for="fullname">Full Name:</label>
-            <input type="text" class="form-control" id="fullname" placeholder="Enter your Full Name" name="fullname">
-        </div>
-    </div>
-    <div class="row my-3">
-        <div class="col-8">
-            <label for="email">Email:</label>
-            <input type="text" class="form-control" id="email" placeholder="Enter your Email" name="email">
-        </div>
-        <div class="col">
-            <label for="phone">Phone:</label>
-            <input type="tel" class="form-control" placeholder="Phone Number" name="phone">
-        </div>
-    </div>
-    <h5>Company details</h5>
-    <div class="row my-3">
-        <div class="col">
-            <label for="companyname">Company's Name:</label>
-            <input type="text" class="form-control" id="companyname" placeholder="Enter your Company Name"
-                name="companyname">
-        </div>
-    </div>
-    <div class="row my-3">
-        <div class="col">
-            <label for="address">Address:</label>
-            <input type="text" class="form-control" id="address" placeholder="Enter your Address" name="address">
-        </div>
-    </div>
-    <div class="row my-3">
-        <div class="col">
-            <label for="nofstaff">Number of Staff to be vaccinated:</label>
-            <input type="number" class="form-control" id="nofstaff" placeholder="Enter number of staff" name="nofstaff">
-        </div>
-    </div>
-    <div class="col">
-        <label for="question">Any Questions:</label>
-        <textarea rows="5" class="form-control"
-            placeholder="You could send any question you want us to answer and we will get back to you"
-            name="questions">
+            <label for="question">Any Questions:</label>
+            <textarea rows="5" class="form-control"
+                placeholder="You could send any question you want us to answer and we will get back to you"
+                name="questions" ngModel>
         </textarea>
+        </div>
+    <div *ngIf="!corporateForm.valid" class="text-danger text-center mt-5">The button is still disabled, please make sure all
+        inputs are filled correctly</div>
+    <input type="submit" [ngClass]="!corporateForm.valid?'disabled':''" class="btn btnmat col-8" [disabled]="!corporateForm.valid"
+        value="Submit" data-toggle="modal" data-target="#exampleModal"/>
+    </form>
+
+    <div class="modal fade" *ngIf="!valid" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <input type="submit" class="btn btnmat col-8" value="Submit" />
-</form>
 </body>
