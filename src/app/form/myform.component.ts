@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NgForm, FormGroup } from '@angular/forms';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'my-form',
@@ -78,7 +79,7 @@ export class MyFormComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   postForm(val: NgForm) {
-    let url = 'http://localhost:3000/api/v1/corporate-form';
+    let url = `${environment.baseUrl}/corporate-form`;
     
     this.http.post(url, val.value).toPromise().then((res: any)=>{
         this.valid= true
@@ -88,7 +89,7 @@ export class MyFormComponent implements OnInit {
     })
   }
   postMyForm(val: NgForm) {
-    let url = 'http://localhost:3000/api/v1/my-form';
+    let url = `${environment.baseUrl}/my-form`;
 
     this.http.post(url, val.value).toPromise().then((res: any) => {
       console.log(res)
@@ -103,7 +104,8 @@ export class MyFormComponent implements OnInit {
     })
   }
   postFamForm() {
-    let url = 'http://localhost:3000/api/v1/family-form';
+
+    let url = `${environment.baseUrl}/family-form`;
 
     this.http.post(url, this.famModel).toPromise().then((res: any) => {
       this.valid = true
