@@ -15,9 +15,9 @@ export class MyFormComponent implements OnInit {
   home: boolean = false;
   hub: boolean = false;
 
-  states = ['Anambra state', 'Edo state', 'Abia State'];
+  states = [];
   vaccine: Array<string> = ['Measles', 'Polio'];
-  lga: Array<string> = ['Uhunwonde', 'Ikpoba-Hill'];
+  localgovt = [];
 
   clickHome() {
     this.home = true;
@@ -32,11 +32,13 @@ export class MyFormComponent implements OnInit {
     this.myself = true;
     this.family = false;
     this.corporate = false;
+    this.getState()
   }
   clickFamily() {
     this.myself = false;
     this.family = true;
     this.corporate = false;
+    this.getState()
   }
   clickCorporate() {
     this.myself = false;
@@ -54,7 +56,9 @@ export class MyFormComponent implements OnInit {
   }
   
   profile:Array<object>=[]
-  formModel: any={}
+  formModel: any={
+    state: ''
+  }
   famModel: any={
     statefam:'',
     lgafam:'',
@@ -82,8 +86,12 @@ export class MyFormComponent implements OnInit {
     let url = `${environment.baseUrl}/corporate-form`;
     
     this.http.post(url, val.value).toPromise().then((res: any)=>{
-        this.valid= true
-        console.log(res)
+      if (res.status = 200) {
+        this.valid = true
+      } else {
+        this.valid = false
+      }
+        console.log(res, this.valid)
     }).catch(err=>{
         console.log(err)
     })
@@ -92,10 +100,10 @@ export class MyFormComponent implements OnInit {
     let url = `${environment.baseUrl}/my-form`;
 
     this.http.post(url, val.value).toPromise().then((res: any) => {
-      console.log(res)
-      if(res.status){
+      console.log(res, this.valid)
+      if (res.status = 200) {
         this.valid = true
-      } else{
+      } else {
         this.valid = false
       }
      
@@ -108,11 +116,54 @@ export class MyFormComponent implements OnInit {
     let url = `${environment.baseUrl}/family-form`;
 
     this.http.post(url, this.famModel).toPromise().then((res: any) => {
-      this.valid = true
+      if (res.status = 200) {
+        this.valid = true
+      } else {
+        this.valid = false
+      }
       console.log(res, this.valid)
       
     }).catch(err => {
       console.log(err)
     })
   }
+
+   getState=()=>{
+     this.http.get('http://locationsng-api.herokuapp.com/api/v1/states').toPromise().then((res: any) => {
+       
+       for(let i = 0; i<res.length; i++){
+         this.states.push(res[i].name)
+       }
+       console.log(res, this.states, this.formModel.state)
+     }).catch(err => {
+       console.log(err)
+     })
+   }
+  getLga = () => {
+    this.http.get(`http://locationsng-api.herokuapp.com/api/v1/states/${this.formModel.state}/lgas`).toPromise().then((res: any) => {
+
+      // console.log(res.lgas, this.lga)
+     this.localgovt = res
+     console.log(res)
+
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+  getFamLga = () => {
+    this.http.get(`http://locationsng-api.herokuapp.com/api/v1/states/${this.famModel.statefam}/lgas`).toPromise().then((res: any) => {
+
+      // console.log(res.lgas, this.lga)
+      this.localgovt = res
+      console.log(res)
+
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+  closeModal(){
+    this.valid = false
+    this.getState()
+  }
+ 
 }

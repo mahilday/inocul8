@@ -47,7 +47,7 @@
 
     <form [ngClass]="(family && corporate) || !myself? 'd-none':''" #myselfForm="ngForm"
         (ngSubmit)="myselfForm.form.valid && postMyForm(myselfForm)" novalidate>
-        <!-- {{myselfForm.valid}} -->
+        {{myselfForm.value | json}}
         <h3 class="text-center new"><strong>For Just Myself</strong></h3>
         <small>
             <p class="text-center text-secondary mb-3">For Yourself Alone</p>
@@ -68,7 +68,7 @@
             </div>
         </div>
         <!-- select state -->
-        <div class="statelocal row" [ngClass]="home?'d-none':''">
+        <div class="statelocal row"  (change)="getLga()" [ngClass]="home?'d-none':''">
             <div class="form-group  col">
                 <label for="state">Select Your State:</label>
                 <select class="custom-select" #state="ngModel" [ngClass]="{ 'is-invalid': (myselfForm.submitted && state.invalid) || (state.invalid && state.touched)}"
@@ -86,7 +86,7 @@
                     [ngClass]="{ 'is-invalid': (myselfForm.submitted && lga.invalid  ) || (lga.invalid && lga.touched)}" [(ngModel)]="formModel.lga"
                    [required]="!home">
                     <option selected>Select your LGA</option>
-                    <option *ngFor="let local of lga">{{ local }}</option>
+                    <option *ngFor="let local of localgovt">{{ local }}</option>
                 </select>
                 <div *ngIf="myselfForm.submitted || (lga.invalid && lga.touched)" class="invalid-feedback">
                     <div *ngIf="lga.errors.required">LGA is required</div>
@@ -115,8 +115,11 @@
     </select> -->
             <label for="custom vacc my-2">Choose Your Vaccine(s)</label>
             <div class="custom-control custom-checkbox my-2" *ngFor='let vacc of vaccine; let i = index'>
-                <input type="checkbox" class="custom-control-input" id="customCheck{{i}}" name="vaccine" ngModel>
-                <label class="custom-control-label" for="customCheck">{{i}}{{vacc}}</label>
+                <label class="container">{{vacc}}
+                    <input ng-true-value="{{vacc}}" type="checkbox" name="vaccine" ngModel>
+                    <span class="checkmark"></span>
+                </label>
+
             </div>
             <button class="btn addbtn btn-sm mt-3 px-3">Add</button>
         </div>
@@ -222,7 +225,7 @@
         </div>
         <div *ngIf="!myselfForm.valid" class="text-danger text-center mt-5">The button is still disabled, please make sure all inputs are filled correctly</div>
         <input type="submit" [ngClass]="!myselfForm.valid?'disabled':''" class="btn btnmat col-8" [disabled]="!myselfForm.valid" value="Submit" 
-            data-toggle="modal" data-target="#exampleModal"/>
+        />
     </form>
     <!-- family -->
     <form [ngClass]="(corporate && myself) || !family? 'd-none':''" #familyForm="ngForm"
@@ -245,7 +248,7 @@
             </div>
         </div>
         <!-- select state -->
-        <div class="statelocal row" [ngClass]="home? 'd-none':''">
+        <div class="statelocal row" (change)="getFamLga()" [ngClass]="home? 'd-none':''">
             <div class="form-group  col">
                 <label for="state">Select Your State:</label>
             <select class="custom-select" #statefam="ngModel"
@@ -264,7 +267,7 @@
                     [ngClass]="{ 'is-invalid': (familyForm.submitted && lgafam.invalid) || (lgafam.invalid && lgafam.touched)}" [(ngModel)]="famModel.lgafam"
                     [required]="!home">
                     <option selected>Select your LGA</option>
-                    <option *ngFor="let local of lga">{{ local }}</option>
+                    <option *ngFor="let local of localgovt">{{ local }}</option>
                 </select>
                 <div *ngIf="familyForm.submitted || (lgafam.invalid && lgafam.touched)" class="invalid-feedback">
                     <div *ngIf="lgafam.errors.required">LGA is required</div>
@@ -293,9 +296,10 @@
     </select> -->
             <label for="custom vacc my-2">Choose Your Vaccine(s)</label>
             <div class="custom-control custom-checkbox my-2" *ngFor="let vacc of vaccine">
-                <input type="checkbox" class="custom-control-input" *ngFor="let vacc of vaccine" id="customCheck"
-                    name="vaccine" ngModel>
-                <label class="custom-control-label" for="customCheck">{{vacc}}</label>
+                <label class="container">{{vacc}}
+                    <input type="checkbox" name="vaccine" #vaccinefam ="ngModel" [(ngModel)]="famModel.vaccinefam">
+                    <span class="checkmark"></span>
+                </label>
             </div>
             <button class="btn addbtn btn-sm mt-3 px-3">Add</button>
         </div>
@@ -401,7 +405,7 @@
         <div *ngIf="!familyForm.valid" class="text-danger text-center mt-5">The button is still disabled, please make sure all
             inputs are filled correctly</div>
         <input type="submit" [ngClass]="!familyForm.valid?'disabled':''" class="btn btnmat col-8" [disabled]="!familyForm.valid"
-            value="Submit" data-toggle="modal" data-target="#exampleModal"/>
+            value="Submit" />
     </form>
     <!-- corporate -->
     <form [ngClass]="(family && myself) || !corporate? 'd-none':''" #corporateForm="ngForm"
@@ -492,16 +496,16 @@
     <div *ngIf="!corporateForm.valid" class="text-danger text-center mt-5">The button is still disabled, please make sure all
         inputs are filled correctly</div>
     <input type="submit" [ngClass]="!corporateForm.valid?'disabled':''" class="btn btnmat col-8" [disabled]="!corporateForm.valid"
-        value="Submit" data-toggle="modal" data-target="#exampleModal"/>
+        value="Submit" />
     </form>
 
-    <div class="modal fade" *ngIf="!valid" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal" [ngClass]="valid?'d-block':'d-none'" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" (click) = "closeModal()" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -509,7 +513,7 @@
                     ...
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" (click) = "closeModal()" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
