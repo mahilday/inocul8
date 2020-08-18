@@ -5,7 +5,8 @@ import {HttpClientModule} from '@angular/common/http'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {MyFormComponent} from "./form/myform.component";
+import { MyFormComponent } from "./form/myform.component"; 
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 
 @NgModule({
@@ -15,11 +16,12 @@ import {MyFormComponent} from "./form/myform.component";
    
   ],
   imports: [
+    NgMultiSelectDropDownModule.forRoot(),
     BrowserModule,
     HttpClientModule,
     AppRoutingModule, 
     FormsModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule,
     
   ],
   providers: [],

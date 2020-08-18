@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NgForm, FormGroup } from '@angular/forms';
 import { environment } from '../../environments/environment';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'my-form',
@@ -16,7 +17,7 @@ export class MyFormComponent implements OnInit {
   hub: boolean = false;
 
   states = [];
-  vaccine: Array<string> = ['Measles', 'Polio'];
+  vaccine: Array<object> = [];
   localgovt = [];
 
   clickHome() {
@@ -51,13 +52,40 @@ export class MyFormComponent implements OnInit {
     this.corporate = false;
     console.log(this.profile)
   }
-  ngOnInit(){
+  vaccineList = [];
+  selectedItems = [];
+  vaccSettings: IDropdownSettings = {}
 
+  ngOnInit(){
+    this.vaccineList=[
+      { item_id:0, itemText: 'Measles'},
+      { item_id: 1, itemText: 'Flu' },
+      { item_id: 2, itemText: 'Gonorrhea' }
+    ]
+    this.selectedItems=[]
+    this.vaccSettings = {
+      singleSelection: false,
+      idField: 'item_id',
+      textField: 'itemText',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: true
+    };
   }
+  
+  onItemSelect(item: any) {
+    console.log(item);
+  }
+  onSelectAll(items: any) {
+    console.log(items);
+  }
+  
   
   profile:Array<object>=[]
   formModel: any={
-    state: ''
+    state: '',
+    vaccines: ''
   }
   famModel: any={
     statefam:'',
@@ -65,11 +93,17 @@ export class MyFormComponent implements OnInit {
     preferredhubfam:'',
     addressfam:'',
     timefam:'',
-    profile: this.profile
+    profile: this.profile,
+    vaccines: ''
   }
+  
   corpModel: any={}
   nopersons:number = this.profile.length
   valid: boolean = false
+  // saveVaccine=(e, vacc: any)=>{
+  //   e.preventDefault();
+  //   this.vaccines.push(vacc)
+  // }
   saveProfile=(e, profile: object)=>{
     e.preventDefault();
     this.profile.push(profile)
