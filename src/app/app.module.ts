@@ -7,12 +7,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MyFormComponent } from "./form/myform.component"; 
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import {AccordionComponent} from './accordion.component'
+import {ProfileService} from './services/profile.service'
 
 
 @NgModule({
   declarations: [
     AppComponent,
     MyFormComponent,
+    AccordionComponent
    
   ],
   imports: [
@@ -24,7 +27,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     ReactiveFormsModule,
     
   ],
-  providers: [],
+  providers: [ProfileService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

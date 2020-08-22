@@ -322,11 +322,14 @@
         <!-- profile -->
         <h5 class="my-1 mt-5 blue"><strong>Profile(s)</strong></h5>
         <div class="form-group" #profile="ngModelGroup" [ngModelGroup]="profile.profile">
-            <small class="text-secondary my-2">Please add a profile for each person you want to be vaccinated and click
-                the <b><i>add person</i></b> button</small>
-            <div class="text-success my-3">{{nopersons}} person(s) have been added</div>
+           <div class="my-3"> <small class="text-secondary ">Please add a profile for each person you want to be vaccinated and click
+                the <b><i>add person</i></b> button</small></div>
+            <!-- <div class="text-success my-3">{{nopersons}} person(s) have been added</div> -->
+            <div class="d-flex prof" *ngFor="let items of profileData; let i = index">
+                <app-accordion  [profile]="items" [index]="i"></app-accordion>
+            </div>
             <!-- <p [ngClass]="family? '':'d-none'"><span class="mx-1">Add person</span><i class="fa fa-plus"></i></p> -->
-            <div class="row">
+            <div class="row clear">
                 <div class="col">
                     <label for="firstname">First Name:</label>
                     <input type="text" class="form-control" #firstnamefam="ngModel" id="firstname"
@@ -402,7 +405,7 @@
                 </div>
 
             </div>
-            <button class="btn btn-primary btn-sm mt-3 px-3" (click)="saveProfile($event, profile.value)">Add
+            <button class="btn btn-primary btn-sm mt-3 px-3" (click)="saveProfile($event, profile)">Add
                 Person</button>
             <button class="btn btn-secondary mx-4 btn-sm mt-3 px-3"
                 (click)="resetProfile($event, profile)">Reset</button>
