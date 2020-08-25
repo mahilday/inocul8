@@ -161,7 +161,7 @@ export class AccordionComponent implements OnInit {
   ngOnInit() {}
   constructor(private profileService: ProfileService) {}
   deleteForm(profile, index) {
-    this.deleteItem.emit(this.profile);
+    this.deleteItem.emit(profile);
 
     if (this.profileService.profileData[index]) {
       this.profileService.profileData.splice(index, 1);

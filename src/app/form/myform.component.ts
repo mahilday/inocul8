@@ -54,38 +54,32 @@ export class MyFormComponent implements OnInit {
     console.log(this.profile);
   }
   vaccineList = [];
-  selectedItems = [];
+  selectedItems: Array<object> = [];
   vaccSettings: IDropdownSettings = {};
 
   ngOnInit() {
     this.setProfile();
-    this.vaccineList = [
-      { item_id: 0, itemText: 'Hepatitis A Vaccine' },
-      { item_id: 1, itemText: 'Hepatitis B Vaccine' },
-      { item_id: 2, itemText: 'Cervical Cancer Vaccine' },
-      { item_id: 1, itemText: 'Rotavirus Vaccine' },
-      { item_id: 1, itemText: 'Meningitis Vaccine' },
-      { item_id: 1, itemText: 'Typhoid Vaccine' },
-      { item_id: 1, itemText: 'Yellow Fever Vaccine' },
-      { item_id: 1, itemText: 'Chicken Pox Vaccine' },
-      { item_id: 1, itemText: 'Pneumonia Vaccine' },
-      { item_id: 1, itemText: 'Cholera Vaccine' },
-      { item_id: 1, itemText: 'Human Papillomavirus(HPV) Vaccine' },
-    ];
-    this.selectedItems = [];
+    this.vaccineList = [];
     this.vaccSettings = {
       singleSelection: false,
-      idField: 'item_id',
-      textField: 'itemText',
+      idField: '_id',
+      textField: 'name',
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 3,
+      itemsShowLimit: 5,
       allowSearchFilter: true,
     };
+    this.getVaccines();
   }
 
   onItemSelect(item: any) {
-    console.log(item);
+    console.log(this.formModel.vaccines);
+    this.vaccineList.forEach((vaccine) => {
+      if (item._id === vaccine._id) {
+        this.selectedItems.push(vaccine);
+        console.log(this.selectedItems);
+      }
+    });
   }
   onSelectAll(items: any) {
     console.log(items);
@@ -94,7 +88,7 @@ export class MyFormComponent implements OnInit {
   profile: Array<object> = [];
   formModel: any = {
     state: '',
-    vaccines: '',
+    vaccines: [],
   };
   famModel: any = {
     statefam: '',
@@ -189,6 +183,16 @@ export class MyFormComponent implements OnInit {
         console.log(err);
       });
   }
+
+  getVaccines = () => {
+    this.http
+      .get('http://localhost:3000/api/v1/vaccines')
+      .toPromise()
+      .then((res: any) => {
+        this.vaccineList = res.result;
+        console.log(this.vaccineList);
+      });
+  };
 
   getState = () => {
     this.http
