@@ -25,7 +25,7 @@ import { NgForm, FormGroup } from '@angular/forms';
         <div *ngFor="let type of brand; let i = index">
           <input
             type="radio"
-            class="mr-5"
+            class="mr-3"
             name="vaccinetype"
             value="{{ type.name + ' ' + type.price }}"
             ngModel
