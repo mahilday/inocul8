@@ -53,6 +53,26 @@ export class MyFormComponent implements OnInit {
     this.corporate = false;
     console.log(this.profile);
   }
+  constructor(
+    private profileService: ProfileService,
+    private http: HttpClient
+  ) {}
+  profile: Array<object> = [];
+  formModel: any = {
+    state: '',
+    vaccines: [],
+    vaccinetype: [],
+  };
+  famModel: any = {
+    statefam: '',
+    lgafam: '',
+    preferredhubfam: '',
+    addressfam: '',
+    timefam: '',
+    profile: this.profile,
+    vaccines: '',
+  };
+
   vaccineList = [];
   selectedItems: Array<object> = [];
   vaccSettings: IDropdownSettings = {};
@@ -64,13 +84,16 @@ export class MyFormComponent implements OnInit {
       singleSelection: false,
       idField: '_id',
       textField: 'name',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
       itemsShowLimit: 5,
       allowSearchFilter: true,
     };
     this.getVaccines();
+    this.vaccinetypes();
   }
+  vaccinetypes = () => {
+    this.formModel.vaccinetype.push(this.profileService.brandtype);
+    console.log(this.formModel.vaccinetype);
+  };
 
   onItemSelect(item: any) {
     console.log(this.formModel.vaccines);
@@ -84,21 +107,6 @@ export class MyFormComponent implements OnInit {
   onSelectAll(items: any) {
     console.log(items);
   }
-
-  profile: Array<object> = [];
-  formModel: any = {
-    state: '',
-    vaccines: [],
-  };
-  famModel: any = {
-    statefam: '',
-    lgafam: '',
-    preferredhubfam: '',
-    addressfam: '',
-    timefam: '',
-    profile: this.profile,
-    vaccines: '',
-  };
 
   corpModel: any = {};
   nopersons: number = this.profile.length;
@@ -121,10 +129,6 @@ export class MyFormComponent implements OnInit {
   };
   profileData: Array<object> = [];
 
-  constructor(
-    private profileService: ProfileService,
-    private http: HttpClient
-  ) {}
   setProfile = () => {
     this.profileData = this.profileService.profileData;
   };

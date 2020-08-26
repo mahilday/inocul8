@@ -1,11 +1,16 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { NgForm, FormGroup } from '@angular/forms';
+import { ProfileService } from './services/profile.service';
 
 @Component({
   selector: 'app-vaccine',
   template: `
-    <div>
-      <div>{{ vaccine.name }}</div>
+    <div class="vaccwrapper">
+      <h5 class="my-3">
+        <b
+          ><i>{{ vaccine.name }}</i></b
+        >
+      </h5>
       <p>{{ vaccine.description.firstdes }}</p>
       <p>{{ vaccine.description.givenhowquest }}</p>
       <p>{{ vaccine.description.givenhowanswer }}</p>
@@ -21,21 +26,38 @@ import { NgForm, FormGroup } from '@angular/forms';
       <p>Check out the available brands</p>
       <p>{{ vaccine.description.brands.branddes }}</p>
       <p>Kindly choose a brand</p>
-      <div class="form-group">
+      <form class="form-group" #brandsval="ngForm">
+        {{ brandsval.value | json }}
         <div *ngFor="let type of brand; let i = index">
           <input
             type="radio"
-            class="mr-3"
+            class="mr-3 rad"
+            #rad="ngModel"
+            (change)="dis(brandsval.value.vaccinetype)"
             name="vaccinetype"
             value="{{ type.name + ' ' + type.price }}"
-            ngModel
+            [(ngModel)]="brandtype"
           />
           <label>{{ type.name + ' ' + type.price }}</label>
         </div>
-      </div>
+      </form>
     </div>
   `,
-  styles: [],
+  styles: [
+    `
+      .vaccwrapper {
+        background: #29abe2;
+        color: #fff;
+        padding: 3em;
+        margin: 10px 0;
+        text-align: justify;
+      }
+      .rad:focus {
+        border: none;
+        outline: none;
+      }
+    `,
+  ],
 })
 export class VaccineComponent implements OnInit {
   @Input() vaccine: any;
@@ -43,7 +65,7 @@ export class VaccineComponent implements OnInit {
 
   dosekeys = [];
   dosevals = [];
-
+  brandtype = null;
   brand = [];
 
   dose = function (vacc) {
@@ -53,6 +75,13 @@ export class VaccineComponent implements OnInit {
     });
     this.brand = vacc.description.brands.brandtype;
   };
+  constructor(private profileService: ProfileService) {}
+
+  dis(event) {
+    this.profileService.dis(event);
+    this.brandtype = this.profileService.brandtype;
+    console.log(this.brandtype);
+  }
 
   ngOnInit() {}
 }
