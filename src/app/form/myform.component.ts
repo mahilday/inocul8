@@ -190,7 +190,7 @@ export class MyFormComponent implements OnInit {
 
   getVaccines = () => {
     this.http
-      .get('http://localhost:3000/api/v1/vaccines')
+      .get(`${environment.baseUrl}/vaccines`)
       .toPromise()
       .then((res: any) => {
         this.vaccineList = res.result;
