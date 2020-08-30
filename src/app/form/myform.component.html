@@ -1165,7 +1165,7 @@
 
   <div
     class="modal"
-    [ngClass]="valid ? 'd-block' : 'd-none'"
+    [ngClass]="valid ? 'd-block' : 'd-block'"
     id="exampleModal"
     tabindex="-1"
     role="dialog"
@@ -1177,9 +1177,13 @@
         <div class="modal-body newmod">
           <img
             class="thanks"
-            src="https://res.cloudinary.com/matsxript/image/upload/c_scale,w_3000/v1598399039/3303228_ayyt1p.jpg"
+            src="https://res.cloudinary.com/matsxript/image/upload/c_scale,w_3000,h_1000/v1598399039/3303228_ayyt1p.jpg"
             alt="Thank you"
           />
+          <svg width="10em" height="10em" viewBox="0 0 16 16" class="bi bi-check2-circle svg-pharm" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M15.354 2.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L8 9.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+            <path fill-rule="evenodd" d="M8 2.5A5.5 5.5 0 1 0 13.5 8a.5.5 0 0 1 1 0 6.5 6.5 0 1 1-3.25-5.63.5.5 0 1 1-.5.865A5.472 5.472 0 0 0 8 2.5z"/>
+          </svg>
         </div>
         <div class="modal-footer">
           <a
@@ -1192,7 +1196,7 @@
           </a>
           <button
             angular4-paystack
-            [key]="'pk_test_a18f42abea034a496aee041a8db12845315af792'"
+            [key]="'sk_live_276b7c2c3ef8e8839788b49cec0a08aa992228ec'"
             [email]="'mailexample@mail.com'"
             [amount]="5000000"
             [currency]="'GHS'"
@@ -1201,6 +1205,7 @@
             (paymentInit)="paymentInit()"
             (close)="paymentCancel()"
             (callback)="paymentDone($event)"
+            class ="btn btn-success"
           >
             Pay with Paystack
           </button>

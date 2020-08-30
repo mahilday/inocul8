@@ -45,54 +45,7 @@ form {
   width: 0;
 }
 
-/* Create a custom checkbox */
-.checkmark {
-  position: absolute;
-  top: 0;
-  left: -20px;
-  height: 18px;
-  width: 18px;
-  background-color: transparent;
-  border-radius: 4px;
-  border: 1px solid #29abe2;
-}
-
-/* On mouse-over, add a grey background color */
-.container:hover input ~ .checkmark {
-  background-color: #eee;
-}
-
-/* When the checkbox is checked, add a blue background */
-.container input:checked ~ .checkmark {
-  background-color: #2196f3;
-}
-
-/* Create the checkmark/indicator (hidden when not checked) */
-.checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
-}
-
-/* Show the checkmark when checked */
-.container input:checked ~ .checkmark:after {
-  display: block;
-}
-
-/* Style the checkmark/indicator */
-.container .checkmark:after {
-  left: 5px;
-  top: 2px;
-  width: 5px;
-  height: 10px;
-  border: solid white;
-  border-width: 0 3px 3px 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
-}
-
-/* checkbox end */
+/* modal start */
 .modal {
   background: #33333365;
 }
@@ -217,7 +170,30 @@ body {
 }
 .newmod img {
   width: 100%;
+  height:20vh;
+  border-top-right-radius: 40px;
+  border-top-left-radius: 40px;
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
   margin: 0 auto;
+  object-fit: cover;
+}
+.modal-dialog{
+  max-width: 50vw;
+ 
+}
+.modal-body{
+  padding:.3rem
+}
+.modal-content{
+  border:none;
+  border-radius:2em;
+}
+.modal-footer{
+  border-top: none;
+}
+.svg-pharm{
+  position: absolute;
 }
 
 @media screen and (max-width: 1100px) {
@@ -225,6 +201,16 @@ body {
     width: 60%;
     font-size: 20px;
     transform: translateX(15%);
+  }
+  .modal-dialog{
+    max-width: 70vw;
+   
+  }
+  .svg-pharm{
+    position: absolute;
+  }
+  .newmod img{
+    height: 15vh;
   }
   .displaymedic {
     left: 68%;
@@ -283,6 +269,9 @@ body {
     border-top-left-radius: 0;
     padding: 2rem;
     padding-top: 4rem;
+  }
+  .modal-dialog{
+    max-width: 70vw;
   }
   .displaymedic {
     left: 65%;
