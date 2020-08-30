@@ -8,14 +8,16 @@ export class ProfileService {
   profileData: Array<any> = [];
   submitted(event): any {
     this.profileData.push(event);
-    console.log(event);
-    console.log(this.profileData);
   }
 
   brandtype = [];
+  branddesItems =[]
   close = true
   dis = (event: any) => {
     this.brandtype.push(event);
   };
+  branddes(value){
+    this.branddesItems.push(value)
+  }
   constructor() {}
 }

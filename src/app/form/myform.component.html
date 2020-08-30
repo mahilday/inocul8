@@ -222,11 +222,11 @@
       <label for="custom vacc" class="marginTop">Choose Your Vaccine(s):</label>
       <div class="my-2">
         <div
-        class="proffer my-1"
-        *ngFor="let branditem of selectedItems let i = index"
-      >
-        <app-vaccdion [brand]="branditem" [index]="i"></app-vaccdion>
-      </div>
+          class="proffer my-1"
+          *ngFor="let branditem of brandtype; let i = index"
+        >
+          <app-vaccdion [brand]="branditem" [index]="i"></app-vaccdion>
+        </div>
         <ng-multiselect-dropdown
           [settings]="vaccSettings"
           [placeholder]="'Choose your vaccines'"
@@ -891,15 +891,13 @@
       </div>
       <div class="row">
         <div class="my-3 col">
-          <label for="custom" class="marginTop"
-            >Choose Your Vaccine(s):</label
-          >
+          <label for="custom" class="marginTop">Choose Your Vaccine(s):</label>
           <div
-          class="proffer my-1"
-          *ngFor="let branditem of brandFamType; let i = index"
-        >
-          <app-vaccdion [brand]="branditem" [index]="i"></app-vaccdion>
-        </div>
+            class="proffer my-1"
+            *ngFor="let branditem of brandFamType; let i = index"
+          >
+            <app-vaccdion [brand]="branditem" [index]="i"></app-vaccdion>
+          </div>
           <div class="my-2">
             <ng-multiselect-dropdown
               [settings]="vaccSettings"
@@ -1192,7 +1190,20 @@
           >
             Pay Later
           </a>
-          <button type="button" class="btn btn-primary">Pay Now</button>
+          <button
+            angular4-paystack
+            [key]="'pk_test_a18f42abea034a496aee041a8db12845315af792'"
+            [email]="'mailexample@mail.com'"
+            [amount]="5000000"
+            [currency]="'GHS'"
+            [ref]="reference"
+            [class]="'btn btn-primary'"
+            (paymentInit)="paymentInit()"
+            (close)="paymentCancel()"
+            (callback)="paymentDone($event)"
+          >
+            Pay with Paystack
+          </button>
         </div>
       </div>
     </div>

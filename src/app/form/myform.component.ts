@@ -91,6 +91,7 @@ export class MyFormComponent implements OnInit {
     };
     this.getVaccines();
     this.vaccinetypes();
+    this.reference = `ref-${Math.ceil(Math.random() * 10e13)}`;
   }
   vaccinetypes = () => {
     this.formModel.vaccinetype=this.profileService.brandtype;
@@ -147,7 +148,21 @@ export class MyFormComponent implements OnInit {
     this.brandtype = this.profileService.brandtype;
     this.brandFamType = this.profileService.brandtype
   }
+  title = ''
+// paystack start
+reference = ''
+paymentInit() {
+  console.log('Payment initialized');
+}
 
+paymentDone(ref: any) {
+  this.title = 'Payment successfull';
+  console.log(this.title, ref);
+}
+
+paymentCancel() {
+  console.log('payment failed');
+}
   postForm(val: NgForm) {
     let url = `${environment.baseUrl}/corporate-form`;
 

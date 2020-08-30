@@ -11,6 +11,7 @@ import { AccordionComponent } from './accordion.component';
 import { ProfileService } from './services/profile.service';
 import { VaccineComponent } from './vaccinedes.component';
 import {VaccAccordionComponent } from './vaccAccordion.component'
+import { Angular4PaystackModule } from 'angular4-paystack';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import {VaccAccordionComponent } from './vaccAccordion.component'
     VaccAccordionComponent
   ],
   imports: [
+    Angular4PaystackModule.forRoot('pk_test_a18f42abea034a496aee041a8db12845315af792'),
     NgMultiSelectDropDownModule.forRoot(),
     BrowserModule,
     HttpClientModule,

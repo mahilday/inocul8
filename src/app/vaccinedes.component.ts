@@ -12,6 +12,7 @@ import { ProfileService } from './services/profile.service';
           ><i>{{ vaccine.name }}</i></b
         >
       </h5>
+      {{branddes(brandsval.value)}}
       <p name ="firstdes" [(ngModel)]= "vaccine.description.firstdes">{{ vaccine.description.firstdes }}</p>
       <p name ="firstquest" [(ngModel)]= "vaccine.description.givenhowquest">{{ vaccine.description.givenhowquest }}</p>
       <p name ="firstanswer" [(ngModel)]= "vaccine.description.givenhowanswer">{{ vaccine.description.givenhowanswer }}</p>
@@ -27,8 +28,6 @@ import { ProfileService } from './services/profile.service';
       <p>Check out the available brands</p>
       <p>{{ vaccine.description.brands.branddes }}</p>
       <p>Kindly choose a brand</p>
-      
-        {{ brandsval.value | json }}
         <div *ngFor="let type of brand; let i = index">
           <input
             type="radio"
@@ -82,9 +81,11 @@ export class VaccineComponent implements OnInit {
     this.profileService.dis(event);
     this.close = this.profileService.close
     this.brandtype = this.profileService.brandtype;
-    console.log(this.brandtype);
   }
   ngOnInit() {
+  }
+  branddes(value){
+    this.profileService.branddes(value)
   }
 
  

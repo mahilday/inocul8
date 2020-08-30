@@ -8,7 +8,7 @@ import { ProfileService } from './services/profile.service';
     <div class="col accord">
     <small class="text-center"
       ><span class="name" >{{
-       brand.description.brands.brandtype
+       brand
       }}</span>
       <button
         type="button"
@@ -20,15 +20,14 @@ import { ProfileService } from './services/profile.service';
       </button></small
     >
   </div>
-  <form class="form-group" (ngSubmit)='dis(brand)' #brandsval="ngForm">
-      <h5 class="my-3" name="Vaccname" [(ngModel)]= "brand.name">
+      <h5 class="my-3">
         <b
-          ><i>{{ brand.name }}</i></b
+          ><i>{{brand}}</i></b
         >
       </h5>
-      <p name ="firstdes" [(ngModel)]= "brand.description.firstdes">{{ brand.description.firstdes }}</p>
-      <p name ="firstquest" [(ngModel)]= "brand.description.givenhowquest">{{ brand.description.givenhowquest }}</p>
-      <p name ="firstanswer" [(ngModel)]= "brand.description.givenhowanswer">{{ brand.description.givenhowanswer }}</p>
+      <p>{{ brand.description.firstdes }}</p>
+      <p >{{ brand.description.givenhowquest }}</p>
+      <p >{{ brand.description.givenhowanswer }}</p>
       <ol>
         {{
           dose(brand)
@@ -40,9 +39,10 @@ import { ProfileService } from './services/profile.service';
       <p>{{ brand.description.brands.brandquest }}</p>
       <p>Check out the available brands</p>
       <p>{{ brand.description.brands.branddes }}</p>
+      <form class="form-group" (ngSubmit)='dis(brand)' #brandsval="ngForm">
       <p>Kindly choose a brand</p>
-      
-        {{ brandsval.value | json }}
+
+      {{getVaccDes(index)}}
         <div *ngFor="let type of brandnew; let i = index">
           <input
             type="radio"
@@ -91,7 +91,6 @@ export class VaccAccordionComponent implements OnInit{
     deleteForm(brand, index) {
       if (this.profileService.brandtype[index]) {
         this.profileService.brandtype.splice(index, 1);
-        console.log(brand);
       } else {
         console.log(null);
       }
@@ -99,11 +98,15 @@ export class VaccAccordionComponent implements OnInit{
     dosevals =[];
     dosekeys = [];
     brandnew= [];
+    brands =[]
 
     dis(event) {
       this.profileService.dis(event);
     }
-
+    getVaccDes(index){
+        this.brands = this.profileService.branddesItems
+        console.log(this.profileService.branddes[index])
+    }
   dose = function (vacc) {
     vacc.description.dosages.map((dose: any) => {
       this.dosekeys = Object.keys(dose.patientdosages);
@@ -111,10 +114,10 @@ export class VaccAccordionComponent implements OnInit{
     });
     this.brandnew = vacc.description.brands.brandtype;
   };
-  show = false
-    onShow() {
-      this.show = true;
-    }
+  // show = false
+  //   onShow() {
+  //     this.show = true;
+  //   }
     // onEdit(e, profile, index) {
     //   e.preventDefault();
     //   this.profileService.profileData.splice(index, 1, profile);
