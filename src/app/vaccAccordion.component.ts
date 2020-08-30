@@ -111,9 +111,10 @@ export class VaccAccordionComponent implements OnInit{
     });
     this.brandnew = vacc.description.brands.brandtype;
   };
-    // onShow() {
-    //   this.show = true;
-    // }
+  show = false
+    onShow() {
+      this.show = true;
+    }
     // onEdit(e, profile, index) {
     //   e.preventDefault();
     //   this.profileService.profileData.splice(index, 1, profile);
