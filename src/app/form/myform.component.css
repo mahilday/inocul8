@@ -12,6 +12,16 @@ form {
   top: 15%;
   left: 10%;
 }
+.marginTop{
+  margin-top:1em;
+}
+
+.proffer{
+  margin:0 .2em;
+  float:left;
+  
+}
+
 /* checkbox start */
 .container {
   display: block;
@@ -114,6 +124,7 @@ form {
 }
 .blue {
   color: #29abe2;
+  clear: both;
 }
 .floatedtext {
   position: absolute;

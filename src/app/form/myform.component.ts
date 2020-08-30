@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NgForm, FormGroup } from '@angular/forms';
 import { environment } from '../../environments/environment';
@@ -72,6 +72,7 @@ export class MyFormComponent implements OnInit {
     profile: this.profile,
     vaccines: '',
   };
+  brandtype = null;
 
   vaccineList = [];
   selectedItems: Array<object> = [];
@@ -79,6 +80,7 @@ export class MyFormComponent implements OnInit {
 
   ngOnInit() {
     this.setProfile();
+    this.setBrandtype();
     this.vaccineList = [];
     this.vaccSettings = {
       singleSelection: false,
@@ -91,16 +93,25 @@ export class MyFormComponent implements OnInit {
     this.vaccinetypes();
   }
   vaccinetypes = () => {
-    this.formModel.vaccinetype.push(this.profileService.brandtype);
+    this.formModel.vaccinetype=this.profileService.brandtype;
     console.log(this.formModel.vaccinetype);
   };
-
+  vaccinesFam = []
   onItemSelect(item: any) {
     console.log(this.formModel.vaccines);
     this.vaccineList.forEach((vaccine) => {
       if (item._id === vaccine._id) {
         this.selectedItems.push(vaccine);
         console.log(this.selectedItems);
+      }
+    });
+  }
+  onFamItemSelect(item: any) {
+    console.log(this.famModel.vaccines);
+    this.vaccineList.forEach((vaccine) => {
+      if (item._id === vaccine._id) {
+        this.vaccinesFam.push(vaccine);
+        console.log(item);
       }
     });
   }
@@ -121,17 +132,21 @@ export class MyFormComponent implements OnInit {
     this.profile.push(profile.value);
     this.nopersons += 1;
     this.profileValues.emit(profile.value);
+    setTimeout(()=>{
+      profile.reset()
+    }, 500)
   };
 
-  resetProfile = (e, profile: FormGroup) => {
-    e.preventDefault();
-    profile.reset();
-  };
   profileData: Array<object> = [];
 
   setProfile = () => {
     this.profileData = this.profileService.profileData;
   };
+  brandFamType = null
+  setBrandtype =()=>{
+    this.brandtype = this.profileService.brandtype;
+    this.brandFamType = this.profileService.brandtype
+  }
 
   postForm(val: NgForm) {
     let url = `${environment.baseUrl}/corporate-form`;

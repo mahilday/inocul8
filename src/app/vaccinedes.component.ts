@@ -5,15 +5,16 @@ import { ProfileService } from './services/profile.service';
 @Component({
   selector: 'app-vaccine',
   template: `
-    <div class="vaccwrapper">
-      <h5 class="my-3">
+    <div class="vaccwrapper" [ngClass]="close? 'd-none':''">
+    <form class="form-group" (ngSubmit)='dis(brandsval.value.vaccinetype)' #brandsval="ngForm">
+      <h5 class="my-3" name="Vaccname" [(ngModel)]= "vaccine.name">
         <b
           ><i>{{ vaccine.name }}</i></b
         >
       </h5>
-      <p>{{ vaccine.description.firstdes }}</p>
-      <p>{{ vaccine.description.givenhowquest }}</p>
-      <p>{{ vaccine.description.givenhowanswer }}</p>
+      <p name ="firstdes" [(ngModel)]= "vaccine.description.firstdes">{{ vaccine.description.firstdes }}</p>
+      <p name ="firstquest" [(ngModel)]= "vaccine.description.givenhowquest">{{ vaccine.description.givenhowquest }}</p>
+      <p name ="firstanswer" [(ngModel)]= "vaccine.description.givenhowanswer">{{ vaccine.description.givenhowanswer }}</p>
       <ol>
         {{
           dose(vaccine)
@@ -26,20 +27,20 @@ import { ProfileService } from './services/profile.service';
       <p>Check out the available brands</p>
       <p>{{ vaccine.description.brands.branddes }}</p>
       <p>Kindly choose a brand</p>
-      <form class="form-group" #brandsval="ngForm">
+      
         {{ brandsval.value | json }}
         <div *ngFor="let type of brand; let i = index">
           <input
             type="radio"
             class="mr-3 rad"
             #rad="ngModel"
-            (change)="dis(brandsval.value.vaccinetype)"
             name="vaccinetype"
             value="{{ type.name + ' ' + type.price }}"
             [(ngModel)]="brandtype"
           />
           <label>{{ type.name + ' ' + type.price }}</label>
         </div>
+        <button class="btn btn-primary px-4 my-2">Save</button>
       </form>
     </div>
   `,
@@ -49,7 +50,7 @@ import { ProfileService } from './services/profile.service';
         background: #29abe2;
         color: #fff;
         padding: 3em;
-        margin: 10px 0;
+        margin: 3em 0;
         text-align: justify;
       }
       .rad:focus {
@@ -76,12 +77,15 @@ export class VaccineComponent implements OnInit {
     this.brand = vacc.description.brands.brandtype;
   };
   constructor(private profileService: ProfileService) {}
-
+  close = null
   dis(event) {
     this.profileService.dis(event);
+    this.close = this.profileService.close
     this.brandtype = this.profileService.brandtype;
     console.log(this.brandtype);
   }
+  ngOnInit() {
+  }
 
-  ngOnInit() {}
+ 
 }

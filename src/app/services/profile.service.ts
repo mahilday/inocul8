@@ -13,6 +13,7 @@ export class ProfileService {
   }
 
   brandtype = [];
+  close = true
   dis = (event: any) => {
     this.brandtype.push(event);
   };

@@ -141,7 +141,7 @@
     <div
       class="statelocal row"
       (change)="getLga()"
-      [ngClass]="home ? 'd-none' : ''"
+      [ngClass]="!hub ? 'd-none' : ''"
     >
       <div class="form-group col">
         <label for="state">Select Your State:</label>
@@ -192,7 +192,7 @@
         </div>
       </div>
     </div>
-    <div class="form-group hub" [ngClass]="home ? 'd-none' : ''">
+    <div class="form-group hub" [ngClass]="!hub ? 'd-none' : ''">
       <label for="hub">Choose Your Preferred Hub:</label>
       <select
         class="custom-select col-sm-12"
@@ -219,25 +219,32 @@
       </div>
     </div>
     <div class="my-3">
-      <label for="custom vacc my-2">Choose Your Vaccine(s)</label>
-      <ng-multiselect-dropdown
-        class="my-3"
-        [settings]="vaccSettings"
-        [placeholder]="'Choose your vaccines'"
-        #vaccines="ngModel"
-        name="vaccines"
-        [data]="vaccineList"
-        [ngClass]="{
-          'is-invalid':
-            (myselfForm.submitted && vaccines.invalid) ||
-            (vaccines.invalid && vaccines.touched)
-        }"
-        (onSelect)="onItemSelect($event)"
-        (onSelectAll)="onSelectAll($event)"
-        [(ngModel)]="formModel.vaccines"
-        required
+      <label for="custom vacc" class="marginTop">Choose Your Vaccine(s):</label>
+      <div class="my-2">
+        <div
+        class="proffer my-1"
+        *ngFor="let branditem of selectedItems let i = index"
       >
-      </ng-multiselect-dropdown>
+        <app-vaccdion [brand]="branditem" [index]="i"></app-vaccdion>
+      </div>
+        <ng-multiselect-dropdown
+          [settings]="vaccSettings"
+          [placeholder]="'Choose your vaccines'"
+          #vaccines="ngModel"
+          name="vaccines"
+          [data]="vaccineList"
+          [ngClass]="{
+            'is-invalid':
+              (myselfForm.submitted && vaccines.invalid) ||
+              (vaccines.invalid && vaccines.touched)
+          }"
+          (onSelect)="onItemSelect($event)"
+          (onSelectAll)="onSelectAll($event)"
+          [(ngModel)]="formModel.vaccines"
+          required
+        >
+        </ng-multiselect-dropdown>
+      </div>
       <div *ngFor="let items of selectedItems; let i = index">
         <app-vaccine [vaccine]="items" [index]="i"></app-vaccine>
       </div>
@@ -249,7 +256,9 @@
       </div>
     </div>
     <!-- profile -->
-    <h5 class="my-3 mt-5 blue"><strong>Profile(s)</strong></h5>
+    <div>
+      <h5 class="my-3 mt-5 blue"><strong>Profile(s)</strong></h5>
+    </div>
     <div class="form-group" ngModelGroup="profile">
       <p [ngClass]="family ? '' : 'd-none'">
         <span class="mx-1">Add person</span><i class="fa fa-plus"></i>
@@ -560,7 +569,7 @@
     <div
       class="statelocal row"
       (change)="getFamLga()"
-      [ngClass]="home ? 'd-none' : ''"
+      [ngClass]="!hub ? 'd-none' : ''"
     >
       <div class="form-group col">
         <label for="state">Select Your State:</label>
@@ -611,7 +620,7 @@
         </div>
       </div>
     </div>
-    <div class="form-group hub" [ngClass]="home ? 'd-none' : ''">
+    <div class="form-group hub" [ngClass]="!hub ? 'd-none' : ''">
       <label for="hub">Choose Your Preferred Hub:</label>
       <select
         class="custom-select col-sm-12"
@@ -639,16 +648,6 @@
       </div>
     </div>
 
-    <label for="custom vacc my-2">Choose Your Vaccine(s)</label>
-    <ng-multiselect-dropdown
-      class="my-3"
-      [settings]="vaccSettings"
-      [placeholder]="'Choose your vaccines'"
-      name="vaccine"
-      [data]="vaccineList"
-      [(ngModel)]="selectedItems"
-    >
-    </ng-multiselect-dropdown>
     <div class="form-group" [ngClass]="!family ? 'd-none' : ''">
       <div class="row">
         <div class="col-8">
@@ -777,6 +776,33 @@
             <div *ngIf="lastnamefam.errors.required">Last name is required</div>
           </div>
         </div>
+        <div class="col">
+          <label for="gender">Gender:</label>
+          <select
+            class="custom-select"
+            name="gender"
+            #genderfam="ngModel"
+            [ngClass]="{
+              'is-invalid':
+                (familyForm.submitted && genderfam.invalid) ||
+                (genderfam.invalid && genderfam.touched)
+            }"
+            [(ngModel)]="profile.genderfam"
+            required
+          >
+            <option selected>Select your Gender</option>
+            <option>Male</option>
+            <option>Female</option>
+          </select>
+          <div
+            *ngIf="
+              familyForm.submitted || (genderfam.invalid && genderfam.touched)
+            "
+            class="invalid-feedback"
+          >
+            <div *ngIf="genderfam.errors.required">Gender is required</div>
+          </div>
+        </div>
       </div>
       <div class="row my-3">
         <div class="col">
@@ -864,31 +890,37 @@
         </div>
       </div>
       <div class="row">
-        <div class="col">
-          <label for="gender">Gender:</label>
-          <select
-            class="custom-select"
-            name="gender"
-            #genderfam="ngModel"
-            [ngClass]="{
-              'is-invalid':
-                (familyForm.submitted && genderfam.invalid) ||
-                (genderfam.invalid && genderfam.touched)
-            }"
-            [(ngModel)]="profile.genderfam"
-            required
+        <div class="my-3 col">
+          <label for="custom" class="marginTop"
+            >Choose Your Vaccine(s):</label
           >
-            <option selected>Select your Gender</option>
-            <option>Male</option>
-            <option>Female</option>
-          </select>
           <div
-            *ngIf="
-              familyForm.submitted || (genderfam.invalid && genderfam.touched)
-            "
-            class="invalid-feedback"
-          >
-            <div *ngIf="genderfam.errors.required">Gender is required</div>
+          class="proffer my-1"
+          *ngFor="let branditem of brandFamType; let i = index"
+        >
+          <app-vaccdion [brand]="branditem" [index]="i"></app-vaccdion>
+        </div>
+          <div class="my-2">
+            <ng-multiselect-dropdown
+              [settings]="vaccSettings"
+              [placeholder]="'Choose your vaccines'"
+              #vaccines="ngModel"
+              name="vaccines"
+              [data]="vaccineList"
+              [ngClass]="{
+                'is-invalid':
+                  (myselfForm.submitted && vaccines.invalid) ||
+                  (vaccines.invalid && vaccines.touched)
+              }"
+              (onSelect)="onFamItemSelect($event)"
+              (onSelectAll)="onSelectAll($event)"
+              [(ngModel)]="famModel.vaccines"
+              required
+            >
+            </ng-multiselect-dropdown>
+          </div>
+          <div *ngFor="let items of vaccinesFam; let i = index">
+            <app-vaccine [vaccine]="items" [index]="i"></app-vaccine>
           </div>
         </div>
       </div>
@@ -897,12 +929,6 @@
         (click)="saveProfile($event, profile)"
       >
         Add Person
-      </button>
-      <button
-        class="btn btn-secondary mx-4 btn-sm mt-3 px-3"
-        (click)="resetProfile($event, profile)"
-      >
-        Reset
       </button>
     </div>
     <div *ngIf="!familyForm.valid" class="text-danger text-center mt-5">

@@ -10,6 +10,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { AccordionComponent } from './accordion.component';
 import { ProfileService } from './services/profile.service';
 import { VaccineComponent } from './vaccinedes.component';
+import {VaccAccordionComponent } from './vaccAccordion.component'
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { VaccineComponent } from './vaccinedes.component';
     MyFormComponent,
     AccordionComponent,
     VaccineComponent,
+    VaccAccordionComponent
   ],
   imports: [
     NgMultiSelectDropDownModule.forRoot(),
