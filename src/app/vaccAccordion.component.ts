@@ -8,10 +8,10 @@ import { ProfileService } from './services/profile.service';
     <div class="col accord">
     <small class="text-center"
       ><span class="name" >{{
-       brand.name + ' ' + brand.price }}</span>
+       brand.name + ' ' + '&#x20a6;'+brand.price }}</span>
       <button
         type="button"
-        (click) = "deleteForm(brand, index)"
+        (click) = "deleteForm(brand.name, index, items)"
         class="close"
         aria-label="Close"
       >
@@ -46,6 +46,7 @@ import { ProfileService } from './services/profile.service';
 export class VaccAccordionComponent implements OnInit{
   @Input() brand;
   @Input() index;
+  @Input() items;
 
   constructor(private profileService: ProfileService){
 
@@ -53,8 +54,8 @@ export class VaccAccordionComponent implements OnInit{
     ngOnInit(){
 
     }
-    deleteForm(brand, index) {
-     this.profileService.deleteForm(brand, index)
+    deleteForm(brand, index, items) {
+     this.profileService.deleteForm(brand, index, items)
     }
     dosevals =[];
     dosekeys = [];

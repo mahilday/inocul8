@@ -225,7 +225,7 @@
           class="proffer my-1"
           *ngFor="let branditem of brandtype; let i = index"
         >
-          <app-vaccdion [brand]="branditem" [index]="i"></app-vaccdion>
+          <app-vaccdion [items]="selectedItems" [brand]="branditem" [index]="i"></app-vaccdion>
         </div>
         <ng-multiselect-dropdown
           [settings]="vaccSettings"

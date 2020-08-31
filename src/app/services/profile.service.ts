@@ -37,12 +37,19 @@ export class ProfileService {
     // this.brands = vacc.description.brands.brandtype
     return vacc.description.brands.brandtype;
   }
-  deleteForm(brand, index){
+  deleteForm(brand, index, items){
     if (this.brandtype[index]) {
       this.brandtype.splice(index, 1);
     } else {
       console.log(null);
     }
+    const eachitem = items[index]
+    if(brand === eachitem.name ){
+      items.splice(index, 1)
+    } else{
+      console.log(null)
+    }
+    console.log(eachitem)
   }
   constructor() {}
 }
