@@ -14,7 +14,8 @@ export class ProfileService {
   branddesItems =[]
   close = true
   dis = (event: any) => {
-    this.brandtype.push(event);
+    this.brandtype.push(event.vaccinetype);
+    this.close = true
   };
   branddes(value){
     this.branddesItems.push(value)

@@ -5,8 +5,8 @@ import { ProfileService } from './services/profile.service';
 @Component({
   selector: 'app-vaccine',
   template: `
-    <div class="vaccwrapper" [ngClass]="close? 'd-none':''">
-    <form class="form-group" (ngSubmit)='dis(brandsval.value.vaccinetype)' #brandsval="ngForm">
+  <form class="form-group"  (ngSubmit)='dis(brandsval)' #brandsval="ngForm">
+    <div class="vaccwrapper" [ngClass]="close? 'd-none':''"  >
       <h5 class="my-3" name="Vaccname" [(ngModel)]= "vaccine.name">
         <b
           ><i>{{ vaccine.name }}</i></b
@@ -27,6 +27,7 @@ import { ProfileService } from './services/profile.service';
       <p>{{ vaccine.description.brands.brandquest }}</p>
       <p>Check out the available brands</p>
       <p>{{ vaccine.description.brands.branddes }}</p>
+    
       <p>Kindly choose a brand</p>
         <div *ngFor="let type of brand; let i = index">
           <input
@@ -39,9 +40,9 @@ import { ProfileService } from './services/profile.service';
           />
           <label>{{ type.name + ' ' + type.price }}</label>
         </div>
-        <button class="btn btn-primary px-4 my-2">Save</button>
-      </form>
+        <button (click)="closeclick()" class="btn btn-primary px-4 my-2">Save</button>
     </div>
+    </form>
   `,
   styles: [
     `
@@ -76,11 +77,14 @@ export class VaccineComponent implements OnInit {
     this.brand = vacc.description.brands.brandtype;
   };
   constructor(private profileService: ProfileService) {}
-  close = null
+  close = false
   dis(event) {
-    this.profileService.dis(event);
-    this.close = this.profileService.close
+    this.profileService.dis(event.value);
     this.brandtype = this.profileService.brandtype;
+    console.log(this.close)
+  }
+  closeclick(){
+    this.close = this.profileService.close
   }
   ngOnInit() {
   }

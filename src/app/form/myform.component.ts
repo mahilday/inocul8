@@ -17,7 +17,7 @@ export class MyFormComponent implements OnInit {
   home: boolean = false;
   hub: boolean = false;
 
-  states = [];
+  states = ["Lagos State"];
   vaccine: Array<object> = [];
   localgovt = [];
 
@@ -230,13 +230,18 @@ paymentCancel() {
 
   getState = () => {
     this.http
-      .get('http://locationsng-api.herokuapp.com/api/v1/states')
+      .get(`${environment.baseUrl}/states`)
       .toPromise()
       .then((res: any) => {
-        for (let i = 0; i < res.length; i++) {
-          this.states.push(res[i].name);
+        for(let v = 0; v < res.result.length; v++){
+          const statesne = res.result[v].states;
+          console.log(statesne)
+          for (let i = 0; i < statesne.length; i++) {
+            // this.states.push(statesne[i].state.name);
+          }
         }
-        console.log(res, this.states, this.formModel.state);
+        
+        console.log(res.result, this.states, this.formModel.state);
       })
       .catch((err) => {
         console.log(err);
@@ -245,13 +250,23 @@ paymentCancel() {
   getLga = () => {
     this.http
       .get(
-        `http://locationsng-api.herokuapp.com/api/v1/states/${this.formModel.state}/lgas`
+        `${environment.baseUrl}/states`
       )
       .toPromise()
       .then((res: any) => {
-        // console.log(res.lgas, this.lga)
-        this.localgovt = res;
-        console.log(res);
+        console.log(res)
+        for(let v = 0; v < res.result.length; v++){
+          const statesne = res.result[v].states;
+          for (let i = 0; i < statesne.length; i++) {
+            if(this.formModel.state === statesne[i].state.name ){
+                
+              this.localgovt = statesne[i].state.locals
+              
+            } else{
+              console.log("not done")
+            }
+          }
+        }
       })
       .catch((err) => {
         console.log(err);
