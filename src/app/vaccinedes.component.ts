@@ -13,9 +13,9 @@ import { ProfileService } from './services/profile.service';
         >
       </h5>
       {{branddes(brandsval.value)}}
-      <p [(ngModel)]= "vaccine.description.firstdes">{{ vaccine.description.firstdes }}</p>
-      <p [(ngModel)]= "vaccine.description.givenhowquest">{{ vaccine.description.givenhowquest }}</p>
-      <p [(ngModel)]= "vaccine.description.givenhowanswer">{{ vaccine.description.givenhowanswer }}</p>
+      <p >{{ vaccine.description.firstdes }}</p>
+      <p >{{ vaccine.description.givenhowquest }}</p>
+      <p >{{ vaccine.description.givenhowanswer }}</p>
       <ol>
         {{
           dose(vaccine)

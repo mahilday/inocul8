@@ -152,7 +152,7 @@ export class MyFormComponent implements OnInit {
   setBrandtype =()=>{
     this.brandtype = this.profileService.brands;
     this.brandFamType = this.profileService.brandtype
-    console.log(this.brandtype)
+    
   }
   title = ''
 // paystack start
@@ -196,7 +196,6 @@ newmainprice = null
       .post(url, val.value)
       .toPromise()
       .then((res: any) => {
-        console.log(res, this.valid);
         if ((res.status = 200)) {
           this.valid = true;
         } else {
