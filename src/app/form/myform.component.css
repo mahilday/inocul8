@@ -210,6 +210,12 @@ body {
 .modal-footer{
   border-top: none;
 }
+.modal-footer .btn-secondary {
+  border-color:transparent;
+}
+.modal-footer .laterpay{
+  border-radius:30px;
+}
 .svg-pharm{
   position: fixed;
   top:7%;

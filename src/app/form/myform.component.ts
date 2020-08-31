@@ -70,9 +70,10 @@ export class MyFormComponent implements OnInit {
     addressfam: '',
     timefam: '',
     profile: this.profile,
-    vaccines: '',
+    vaccines: [],
   };
   brandtype = null;
+  addPrices: Array<number> = this.profileService.newprices
 
   vaccineList = [];
   selectedItems: Array<object> = [];
@@ -116,10 +117,13 @@ export class MyFormComponent implements OnInit {
       }
     });
   }
+  
   onSelectAll(items: any) {
     console.log(items);
+    console.log(this.addPrices)
   }
-
+  mainprice = null
+  
   corpModel: any = {};
   nopersons: number = this.profile.length;
   valid: boolean = false;
@@ -137,6 +141,7 @@ export class MyFormComponent implements OnInit {
       profile.reset()
     }, 500)
   };
+  
 
   profileData: Array<object> = [];
 
@@ -145,8 +150,9 @@ export class MyFormComponent implements OnInit {
   };
   brandFamType = null
   setBrandtype =()=>{
-    this.brandtype = this.profileService.brandtype;
+    this.brandtype = this.profileService.brands;
     this.brandFamType = this.profileService.brandtype
+    console.log(this.brandtype)
   }
   title = ''
 // paystack start
@@ -163,6 +169,7 @@ paymentDone(ref: any) {
 paymentCancel() {
   console.log('payment failed');
 }
+newmainprice = null
   postForm(val: NgForm) {
     let url = `${environment.baseUrl}/corporate-form`;
 
@@ -176,6 +183,7 @@ paymentCancel() {
           this.valid = false;
         }
         console.log(res, this.valid);
+        
       })
       .catch((err) => {
         console.log(err);
@@ -194,6 +202,8 @@ paymentCancel() {
         } else {
           this.valid = false;
         }
+        this.mainprice = this.addPrices.reduce((a,b) => a + b, 0) * 100
+        this.newmainprice = this.addPrices.reduce((a,b) => a + b, 0)
       })
       .catch((err) => {
         console.log(err);
@@ -212,6 +222,7 @@ paymentCancel() {
           this.valid = false;
         }
         console.log(res, this.valid);
+        this.newmainprice = this.addPrices.reduce((a,b) => a + b, 0)
       })
       .catch((err) => {
         console.log(err);

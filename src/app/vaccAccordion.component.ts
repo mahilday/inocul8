@@ -8,8 +8,7 @@ import { ProfileService } from './services/profile.service';
     <div class="col accord">
     <small class="text-center"
       ><span class="name" >{{
-       brand
-      }}</span>
+       brand.name + ' ' + brand.price }}</span>
       <button
         type="button"
         (click) = "deleteForm(brand, index)"
@@ -20,41 +19,7 @@ import { ProfileService } from './services/profile.service';
       </button></small
     >
   </div>
-      <h5 class="my-3">
-        <b
-          ><i>{{brand}}</i></b
-        >
-      </h5>
-      <p>{{ brand.description.firstdes }}</p>
-      <p >{{ brand.description.givenhowquest }}</p>
-      <p >{{ brand.description.givenhowanswer }}</p>
-      <ol>
-        {{
-          dose(brand)
-        }}
-        <li *ngFor="let vals of dosevals; let i = index">
-          Dose {{ i + 1 }} : {{ vals }}
-        </li>
-      </ol>
-      <p>{{ brand.description.brands.brandquest }}</p>
-      <p>Check out the available brands</p>
-      <p>{{ brand.description.brands.branddes }}</p>
-      <form class="form-group" (ngSubmit)='dis(brand)' #brandsval="ngForm">
-      <p>Kindly choose a brand</p>
-
-      {{getVaccDes(index)}}
-        <div *ngFor="let type of brandnew; let i = index">
-          <input
-            type="radio"
-            class="mr-3 rad"
-            #rad="ngModel"
-            name="brandtype"
-            value="{{ type.name + ' ' + type.price }}"
-          />
-          <label>{{ type.name + ' ' + type.price }}</label>
-        </div>
-        <button class="btn btn-primary px-4 my-2">Save</button>
-      </form>
+    
     `,
     styles: [`
     .close{
@@ -89,20 +54,20 @@ export class VaccAccordionComponent implements OnInit{
 
     }
     deleteForm(brand, index) {
-      if (this.profileService.brandtype[index]) {
-        this.profileService.brandtype.splice(index, 1);
-      } else {
-        console.log(null);
-      }
+     this.profileService.deleteForm(brand, index)
     }
     dosevals =[];
     dosekeys = [];
     brandnew= [];
     brands =[]
+    // newprice= []
 
     dis(event) {
       this.profileService.dis(event);
     }
+    // addPrices(price){
+    //   const newprice = this.profileService.prices(price)
+    // }
     getVaccDes(index){
         this.brands = this.profileService.branddesItems
         console.log(this.profileService.branddes[index])

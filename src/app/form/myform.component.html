@@ -233,11 +233,6 @@
           #vaccines="ngModel"
           name="vaccines"
           [data]="vaccineList"
-          [ngClass]="{
-            'is-invalid':
-              (myselfForm.submitted && vaccines.invalid) ||
-              (vaccines.invalid && vaccines.touched)
-          }"
           (onSelect)="onItemSelect($event)"
           (onSelectAll)="onSelectAll($event)"
           [(ngModel)]="formModel.vaccines"
@@ -1186,6 +1181,7 @@
           <div class="text">
             <h2>Great!</h2>
             <p class= "text-secondary">Your information has been successfully recorded</p>
+            <p class= "text-success">Total cost of vaccines is <b>&#x20a6;{{newmainprice}} </b></p>
           </div>
         </div>
         <div class="modal-footer">
@@ -1201,7 +1197,7 @@
             angular4-paystack
             [key]="'pk_live_2d6743929c8d8594dc4a96ade3774ce6a4de56aa'"
             [email]="'mailexample@mail.com'"
-            [amount]="5000000"
+            [amount]="mainprice"
             [currency]="'NGN'"
             [ref]="reference"
             [class]="'btn btn-primary'"

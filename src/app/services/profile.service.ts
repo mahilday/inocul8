@@ -12,13 +12,37 @@ export class ProfileService {
 
   brandtype = [];
   branddesItems =[]
+  brands = []
+  newprices: Array<number>=[]
+  price: number = null
   close = true
   dis = (event: any) => {
     this.brandtype.push(event.vaccinetype);
-    this.close = true
   };
+  types=(type)=>{
+    this.brands.push(type)
+    this.price= type.price
+    console.log(this.price)
+  }
+  
+  prices=()=>{
+    this.newprices.push(this.price)
+    console.log(this.newprices)
+  }
+    
   branddes(value){
     this.branddesItems.push(value)
+  }
+  vaccine(vacc){
+    // this.brands = vacc.description.brands.brandtype
+    return vacc.description.brands.brandtype;
+  }
+  deleteForm(brand, index){
+    if (this.brandtype[index]) {
+      this.brandtype.splice(index, 1);
+    } else {
+      console.log(null);
+    }
   }
   constructor() {}
 }

@@ -5,17 +5,17 @@ import { ProfileService } from './services/profile.service';
 @Component({
   selector: 'app-vaccine',
   template: `
-  <form class="form-group"  (ngSubmit)='dis(brandsval)' #brandsval="ngForm">
     <div class="vaccwrapper" [ngClass]="close? 'd-none':''"  >
-      <h5 class="my-3" name="Vaccname" [(ngModel)]= "vaccine.name">
+    <form class="form-group"  (ngSubmit)='dis(brandsval)' #brandsval="ngForm"> 
+      <h5 class="my-3"  [(ngModel)]= "vaccine.name">
         <b
           ><i>{{ vaccine.name }}</i></b
         >
       </h5>
       {{branddes(brandsval.value)}}
-      <p name ="firstdes" [(ngModel)]= "vaccine.description.firstdes">{{ vaccine.description.firstdes }}</p>
-      <p name ="firstquest" [(ngModel)]= "vaccine.description.givenhowquest">{{ vaccine.description.givenhowquest }}</p>
-      <p name ="firstanswer" [(ngModel)]= "vaccine.description.givenhowanswer">{{ vaccine.description.givenhowanswer }}</p>
+      <p [(ngModel)]= "vaccine.description.firstdes">{{ vaccine.description.firstdes }}</p>
+      <p [(ngModel)]= "vaccine.description.givenhowquest">{{ vaccine.description.givenhowquest }}</p>
+      <p [(ngModel)]= "vaccine.description.givenhowanswer">{{ vaccine.description.givenhowanswer }}</p>
       <ol>
         {{
           dose(vaccine)
@@ -33,16 +33,17 @@ import { ProfileService } from './services/profile.service';
           <input
             type="radio"
             class="mr-3 rad"
-            #rad="ngModel"
             name="vaccinetype"
+            (change) = "showType(type)"
             value="{{ type.name + ' ' + type.price }}"
             [(ngModel)]="brandtype"
           />
-          <label>{{ type.name + ' ' + type.price }}</label>
+          <label>{{ type.name }} : &#x20a6;{{type.price }}</label>
+          
         </div>
         <button (click)="closeclick()" class="btn btn-primary px-4 my-2">Save</button>
+        </form>
     </div>
-    </form>
   `,
   styles: [
     `
@@ -50,7 +51,7 @@ import { ProfileService } from './services/profile.service';
         background: #29abe2;
         color: #fff;
         padding: 3em;
-        margin: 3em 0;
+        margin: 1em 0;
         text-align: justify;
       }
       .rad:focus {
@@ -66,25 +67,31 @@ export class VaccineComponent implements OnInit {
 
   dosekeys = [];
   dosevals = [];
-  brandtype = null;
+  brandtype = [];
   brand = [];
-
+  type = null
   dose = function (vacc) {
     vacc.description.dosages.map((dose: any) => {
       this.dosekeys = Object.keys(dose.patientdosages);
       this.dosevals = Object.values(dose.patientdosages);
     });
-    this.brand = vacc.description.brands.brandtype;
+    this.brand = this.profileService.vaccine(vacc);
   };
   constructor(private profileService: ProfileService) {}
   close = false
   dis(event) {
     this.profileService.dis(event.value);
-    this.brandtype = this.profileService.brandtype;
+    // this.brandtype = this.profileService.brandtype;
     console.log(this.close)
   }
   closeclick(){
     this.close = this.profileService.close
+    this.profileService.prices()
+   
+  }
+  showType(type: number){
+   this.type = this.profileService.types(type)
+
   }
   ngOnInit() {
   }
