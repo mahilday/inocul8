@@ -5,14 +5,13 @@ import { ProfileService } from './services/profile.service';
 @Component({
     selector: "app-vaccdion",
     template:`
-    <div class="vaccwrapper" *ngFor= "let items of items; let i = index" >
-    <div class="col accord" (click)= "doses(brand.name, items)">
+    <div class="vaccwrapper">
+    <div class="col accord" (click)= "doses(brandname, items)">
     <small class="text-center"
-      ><span class="name" >{{
-       brand.name + ' ' + '&#x20a6;'+brand.price }}</span>
+      ><span>{{brandname + ' ' + '&#x20a6;'}}</span>
       <button
         type="button"
-        (click) = "deleteForm(brand.name, index)"
+        (click) = "deleteForm(brandname, index)"
         class="close"
         aria-label="Close"
       >
@@ -30,12 +29,18 @@ import { ProfileService } from './services/profile.service';
       </h5>
       
       
-      <p>{{ newItem.description.firstdes }}</p>
-      <p>{{ newItem.description.givenhowquest }}</p>
-      <p>{{ newItem.description.givenhowanswer }}</p>
-      <p>{{ newItem.description.brands.brandquest }}</p>
+      <p>{{ description.firstdes }}</p>
+      <p>{{ description.givenhowquest }}</p>
+      <p>{{ description.givenhowanswer }}</p>
+      <div *ngFor = "let dose of dosevals; let u = index">
+      <label>{{dose.patient}}</label>
+      <ol >
+      <li *ngFor = "let doses of dosereal; let v = index">Dose {{v + 1}}: {{doses}}</li>
+      </ol>
+      </div>
+      <p>{{ eachbrandset.brandquest }}</p>
       <p>Check out the available brands</p>
-      <p>{{ newItem.description.brands.branddes }}</p>
+      <p>{{ eachbrandset.branddes }}</p>
     
       <p>Kindly choose a brand</p>
         <div *ngFor ="let type of brandtypes">
@@ -76,41 +81,61 @@ import { ProfileService } from './services/profile.service';
 })
 
 export class VaccAccordionComponent implements OnInit{
-  @Input() brand;
+  @Input() brandname;
+  @Input() brandprice;
   @Input() index;
   @Input() items: any;
 
   constructor(private profileService: ProfileService){
 
   }
+  setbrand=(brand)=>{
+    this.brandname = brand
+    // this.brandprice = brand.price
+    console.log(brand)
+  }
     ngOnInit(){
-
+     
     }
+   
     deleteForm(brand, index) {
      this.profileService.deleteForm(brand, index)
+     console.log(brand)
     }
     dosevals =[];
-    dosekeys = [];
+    dosekeys: any = {};
     brandnew= [];
     brands =[]
+    description:any = {}
+    eachbrandset: any = {}
     newItem: any = {}
     brandtypes = []
     isOpen = false
+    dosereal = []
     // newprice= []
     doses(brand,items){
       console.log(items)
-      let item = items.description.brands.brandtype
+      for(let d =0; d< items.length; d++){
+      let item = items[d].description.brands.brandtype
       for(let i = 0; i < item.length; i++){
         if(brand === item[i].name){
           this.newItem = items
           console.log(this.newItem)
+          this.description = this.newItem.description
           this.brandtypes = this.newItem.description.brands.brandtype
+          this.eachbrandset = this.newItem.description.brands
+          this.dosevals = this.newItem.description.dosages
+          for(let w = 0; w< this.dosevals.length; w++){
+            this.dosekeys = this.dosevals[w].patientdosages
+          }
+          this.dosereal = Object.values(this.dosekeys)
          
           this.isOpen = true
         } else{
           console.log(null)
         }
       }
+    }
     }
     dis(event) {
       this.profileService.dis(event);

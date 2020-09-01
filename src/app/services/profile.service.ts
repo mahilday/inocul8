@@ -22,7 +22,7 @@ export class ProfileService {
   types=(type)=>{
     this.brands.push(type)
     this.price= type.price
-    console.log(this.price)
+    console.log(this.brands)
   }
   
   prices=()=>{

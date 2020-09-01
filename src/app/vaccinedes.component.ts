@@ -6,7 +6,7 @@ import { ProfileService } from './services/profile.service';
   selector: 'app-vaccine',
   template: `
     <div class="vaccwrapper" [ngClass]="close? 'd-none':''"  >
-    <form class="form-group"  (ngSubmit)='dis(brandsval)' #brandsval="ngForm"> 
+   
       <h5 class="my-3"  [(ngModel)]= "vaccine.name">
         <b
           ><i>{{ vaccine.name }}</i></b
@@ -29,14 +29,15 @@ import { ProfileService } from './services/profile.service';
       <p>{{ vaccine.description.brands.branddes }}</p>
     
       <p>Kindly choose a brand</p>
-        <div *ngFor="let type of brand; let i = index">
+      <form class="form-group"  (ngSubmit)='dis(brandsval)' #brandsval="ngForm"> 
+        <div *ngFor="let type of brand; let i = index" >
           <input
             type="radio"
             class="mr-3 rad"
-            name="vaccinetype"
-            (change) = "showType(type)"
-            value="{{ type.name + ' ' + type.price }}"
-            [(ngModel)]="brandtype"
+            name="name"
+            (change) = showType(type)
+            value="{{ type.name }}"
+            ngModel
           />
           <label>{{ type.name }} : &#x20a6;{{type.price }}</label>
           
@@ -65,6 +66,10 @@ export class VaccineComponent implements OnInit {
   @Input() vaccine: any;
   @Input() index: number;
 
+  brandname ={
+    types: {}
+  }
+
   dosekeys = [];
   dosevals = [];
   brandtype = [];
@@ -84,15 +89,18 @@ export class VaccineComponent implements OnInit {
     // this.brandtype = this.profileService.brandtype;
     console.log(this.close)
   }
+  closenow= false
   closeclick(){
     this.close = this.profileService.close
+    this.profileService.types(this.type)
     this.profileService.prices()
    
   }
-  showType(type: number){
-   this.type = this.profileService.types(type)
-
+  showType(type){
+    this.type = type
+    console.log(this.type)
   }
+  
   ngOnInit() {
   }
   branddes(value){

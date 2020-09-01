@@ -72,7 +72,7 @@ export class MyFormComponent implements OnInit {
     profile: this.profile,
     vaccines: [],
   };
-  brandtype = null;
+  brandtype = [];
   addPrices: Array<number> = this.profileService.newprices
 
   vaccineList = [];
@@ -111,9 +111,7 @@ export class MyFormComponent implements OnInit {
         this.selectedItems.splice(i, 1)
         for(let u =0; u< this.brandtype.length; u++){
         if(selected[v].name === this.brandtype[u].name){
-          
-         
-            this.brandtype.splice(u, 1)
+          this.brandtype.splice(u, 1)
           }else{
             console.log(null)
           }
@@ -125,7 +123,7 @@ export class MyFormComponent implements OnInit {
 }
  }
   vaccinesFam = []
-  onItemSelect(item: any) {
+  onItemSelect=(item: any)=> {
     console.log(this.selectedItems);
     this.vaccineList.forEach((vaccine) => {
       if (item._id === vaccine._id) {
@@ -195,7 +193,7 @@ export class MyFormComponent implements OnInit {
   };
   brandFamType = null
   setBrandtype =()=>{
-    this.brandtype = this.profileService.brands;
+    this.brandtype= this.profileService.brands;
     this.brandFamType = this.profileService.brandtype
     
   }
