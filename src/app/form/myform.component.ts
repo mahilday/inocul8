@@ -120,6 +120,26 @@ export class MyFormComponent implements OnInit {
   }
 }
  }
+ onFamItemDeSelect(item: any){
+  console.log(this.brandFamType, this.vaccinesFam)
+  for(let i = 0; i < this.vaccinesFam.length; i++){
+      if(item._id === this.vaccinesFam[i]._id){
+        let selected = this.vaccinesFam[i].description.brands.brandtype
+        for(let v = 0; v < selected.length; v++){
+        this.vaccinesFam.splice(i, 1)
+        for(let u =0; u< this.brandFamType.length; u++){
+        if(selected[v].name === this.brandFamType[u].name){
+          this.brandFamType.splice(u, 1)
+          }else{
+            console.log(null)
+          }
+        } 
+      } 
+  } else{
+    console.log(null)
+  }
+}
+ }
   vaccinesFam = []
   onItemSelect=(item: any)=> {
     console.log(this.selectedItems);
@@ -151,14 +171,37 @@ export class MyFormComponent implements OnInit {
       }
     }
   }
+  newFamSelect =[]
   onFamItemSelect(item: any) {
     console.log(this.famModel.vaccines);
+    console.log(this.vaccinesFam);
     this.vaccineList.forEach((vaccine) => {
       if (item._id === vaccine._id) {
         this.vaccinesFam.push(vaccine);
-        console.log(item);
+        this.profileService.selectedItem = this.vaccinesFam
+        console.log( this.profileService.selectedItem)
       }
     });
+   
+    for(let i = 0; i < this.vaccinesFam.length; i++){
+      if(item._id === this.vaccinesFam[i]._id){
+        this.newFamSelect.push(Object.assign({}, this.vaccinesFam[i])) 
+          console.log(this.newFamSelect)
+          let selected = this.vaccinesFam[i].description.brands.brandtype
+          // for(let v = 0; v < selected.length; v++){
+          //   for(let u =0; u< this.brandtype.length; u++){
+          //   if(selected[v].name === this.brandtype[u].name){
+              
+             
+          //     }else{
+          //       console.log(null)
+          //     }
+          //   } 
+          // } 
+      } else{
+        console.log(null)
+      }
+    }
   }
   
   onSelectAll(items: any) {

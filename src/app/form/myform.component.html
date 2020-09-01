@@ -894,27 +894,28 @@
             <app-vaccdion [brand]="branditem" [index]="i"></app-vaccdion>
           </div>
           <div class="my-2">
-            <ng-multiselect-dropdown
-              [settings]="vaccSettings"
-              [placeholder]="'Choose your vaccines'"
-              #vaccines="ngModel"
-              name="vaccines"
-              [data]="vaccineList"
-              [ngClass]="{
-                'is-invalid':
-                  (myselfForm.submitted && vaccines.invalid) ||
-                  (vaccines.invalid && vaccines.touched)
-              }"
-              (onSelect)="onFamItemSelect($event)"
-              (onSelectAll)="onSelectAll($event)"
-              [(ngModel)]="famModel.vaccines"
-              required
-            >
-            </ng-multiselect-dropdown>
-          </div>
-          <div *ngFor="let items of vaccinesFam; let i = index">
-            <app-vaccine [vaccine]="items" [index]="i"></app-vaccine>
-          </div>
+            <div
+          class="proffer my-1"
+          *ngFor="let branditem of brandtype; let i = index"
+        >
+          <app-vaccdion [items]="newFamSelected"  [brand]="branditem" [index]="i"></app-vaccdion>
+        </div>
+        <ng-multiselect-dropdown
+          [settings]="vaccSettings"
+          [placeholder]="'Choose your vaccines'"
+          [data]="vaccineList"
+          name = "'vaccines'"
+          (onSelect)="onFamItemSelect($event)"
+          (onSelectAll)="onSelectAll($event)"
+          (onDeSelect) ="onFamItemDeSelect($event)"
+          [(ngModel)]="famModel.vaccines"
+          required
+        >
+        </ng-multiselect-dropdown>
+      </div>
+      <div *ngFor="let items of vaccinesFam; let i = index" [func]="setBrandtype()">
+        <app-vaccine [vaccine]="items" [index]="i"></app-vaccine>
+      </div>
         </div>
       </div>
       <button
