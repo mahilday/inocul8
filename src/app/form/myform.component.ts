@@ -76,13 +76,14 @@ export class MyFormComponent implements OnInit {
   addPrices: Array<number> = this.profileService.newprices
 
   vaccineList = [];
-  selectedItems: Array<object> = [];
+  selectedItems: Array<any> = [];
   vaccSettings: IDropdownSettings = {};
 
   ngOnInit() {
     this.setProfile();
     this.setBrandtype();
     this.vaccineList = [];
+    this.selectedItems = this.profileService.selectedItemsUpdate
     this.vaccSettings = {
       singleSelection: false,
       idField: '_id',
@@ -98,15 +99,59 @@ export class MyFormComponent implements OnInit {
     this.formModel.vaccinetype=this.profileService.brandtype;
     console.log(this.formModel.vaccinetype);
   };
+  useSelected = [];
+ onItemDeSelect(item: any){
+  console.log(this.brandtype, this.selectedItems)
+  for(let i = 0; i < this.selectedItems.length; i++){
+      if(item._id === this.selectedItems[i]._id){
+        this.useSelected = this.selectedItems[i]
+          console.log(this.useSelected)
+        let selected = this.selectedItems[i].description.brands.brandtype
+        for(let v = 0; v < selected.length; v++){
+        this.selectedItems.splice(i, 1)
+        for(let u =0; u< this.brandtype.length; u++){
+        if(selected[v].name === this.brandtype[u].name){
+          
+         
+            this.brandtype.splice(u, 1)
+          }else{
+            console.log(null)
+          }
+        } 
+      } 
+  } else{
+    console.log(null)
+  }
+}
+ }
   vaccinesFam = []
   onItemSelect(item: any) {
-    console.log(this.formModel.vaccines);
+    console.log(this.selectedItems);
     this.vaccineList.forEach((vaccine) => {
       if (item._id === vaccine._id) {
         this.selectedItems.push(vaccine);
         console.log(this.selectedItems);
       }
     });
+    for(let i = 0; i < this.selectedItems.length; i++){
+      if(item._id === this.selectedItems[i]._id){
+        this.useSelected.push(Object.assign({}, this.selectedItems[i])) 
+          console.log(this.useSelected)
+          let selected = this.selectedItems[i].description.brands.brandtype
+          // for(let v = 0; v < selected.length; v++){
+          //   for(let u =0; u< this.brandtype.length; u++){
+          //   if(selected[v].name === this.brandtype[u].name){
+              
+             
+          //     }else{
+          //       console.log(null)
+          //     }
+          //   } 
+          // } 
+      } else{
+        console.log(null)
+      }
+    }
   }
   onFamItemSelect(item: any) {
     console.log(this.famModel.vaccines);

@@ -225,16 +225,16 @@
           class="proffer my-1"
           *ngFor="let branditem of brandtype; let i = index"
         >
-          <app-vaccdion [items]="selectedItems" [brand]="branditem" [index]="i"></app-vaccdion>
+          <app-vaccdion [items]="useSelected" [brand]="branditem" [index]="i"></app-vaccdion>
         </div>
         <ng-multiselect-dropdown
           [settings]="vaccSettings"
           [placeholder]="'Choose your vaccines'"
-          #vaccines="ngModel"
-          name="vaccines"
           [data]="vaccineList"
+          name = "'vaccines'"
           (onSelect)="onItemSelect($event)"
           (onSelectAll)="onSelectAll($event)"
+          (onDeSelect) ="onItemDeSelect($event)"
           [(ngModel)]="formModel.vaccines"
           required
         >

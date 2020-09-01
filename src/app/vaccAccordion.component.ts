@@ -5,13 +5,14 @@ import { ProfileService } from './services/profile.service';
 @Component({
     selector: "app-vaccdion",
     template:`
-    <div class="col accord">
+    <div class="vaccwrapper" *ngFor= "let items of items; let i = index" >
+    <div class="col accord" (click)= "doses(brand.name, items)">
     <small class="text-center"
       ><span class="name" >{{
        brand.name + ' ' + '&#x20a6;'+brand.price }}</span>
       <button
         type="button"
-        (click) = "deleteForm(brand.name, index, items)"
+        (click) = "deleteForm(brand.name, index)"
         class="close"
         aria-label="Close"
       >
@@ -19,6 +20,37 @@ import { ProfileService } from './services/profile.service';
       </button></small
     >
   </div>
+
+  
+    <form class="form-group" [ngClass] ="isOpen?'':'d-none'" #brandsval="ngForm"> 
+      <h5 class="my-3">
+        <b
+          ><i>{{ newItem.name }}</i></b
+        >
+      </h5>
+      
+      
+      <p>{{ newItem.description.firstdes }}</p>
+      <p>{{ newItem.description.givenhowquest }}</p>
+      <p>{{ newItem.description.givenhowanswer }}</p>
+      <p>{{ newItem.description.brands.brandquest }}</p>
+      <p>Check out the available brands</p>
+      <p>{{ newItem.description.brands.branddes }}</p>
+    
+      <p>Kindly choose a brand</p>
+        <div *ngFor ="let type of brandtypes">
+          <input
+            type="radio"
+            class="mr-3 rad"
+            name="vaccinetype"
+            value="{{ type.name + ' ' + type.price }}"
+          />
+          <label>{{type.name + ' ' + type.price}}</label>
+          
+        </div>
+        <button class="btn btn-primary px-4 my-2">Save</button>
+        </form>
+    </div>
     
     `,
     styles: [`
@@ -46,7 +78,7 @@ import { ProfileService } from './services/profile.service';
 export class VaccAccordionComponent implements OnInit{
   @Input() brand;
   @Input() index;
-  @Input() items;
+  @Input() items: any;
 
   constructor(private profileService: ProfileService){
 
@@ -54,15 +86,32 @@ export class VaccAccordionComponent implements OnInit{
     ngOnInit(){
 
     }
-    deleteForm(brand, index, items) {
-     this.profileService.deleteForm(brand, index, items)
+    deleteForm(brand, index) {
+     this.profileService.deleteForm(brand, index)
     }
     dosevals =[];
     dosekeys = [];
     brandnew= [];
     brands =[]
+    newItem: any = {}
+    brandtypes = []
+    isOpen = false
     // newprice= []
-
+    doses(brand,items){
+      console.log(items)
+      let item = items.description.brands.brandtype
+      for(let i = 0; i < item.length; i++){
+        if(brand === item[i].name){
+          this.newItem = items
+          console.log(this.newItem)
+          this.brandtypes = this.newItem.description.brands.brandtype
+         
+          this.isOpen = true
+        } else{
+          console.log(null)
+        }
+      }
+    }
     dis(event) {
       this.profileService.dis(event);
     }
