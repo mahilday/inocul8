@@ -6,12 +6,12 @@ import { ProfileService } from './services/profile.service';
     selector: "app-vaccdion",
     template:`
     <div class="vaccwrapper">
-    <div class="col accord" (click)= "doses(brandname, items)">
+    <div class="col accord" (click)= "doses(brand.name, items)">
     <small class="text-center"
-      ><span>{{brandname + ' ' + '&#x20a6;'}}</span>
+      ><span>{{brand.name + ' ' + '&#x20a6;' + brand.price}}</span>
       <button
         type="button"
-        (click) = "deleteForm(brandname, index)"
+        (click) = "deleteForm(brand, index)"
         class="close"
         aria-label="Close"
       >
@@ -81,18 +81,12 @@ import { ProfileService } from './services/profile.service';
 })
 
 export class VaccAccordionComponent implements OnInit{
-  @Input() brandname;
-  @Input() brandprice;
+  @Input() brand;
   @Input() index;
   @Input() items: any;
 
   constructor(private profileService: ProfileService){
 
-  }
-  setbrand=(brand)=>{
-    this.brandname = brand
-    // this.brandprice = brand.price
-    console.log(brand)
   }
     ngOnInit(){
      
@@ -112,6 +106,8 @@ export class VaccAccordionComponent implements OnInit{
     brandtypes = []
     isOpen = false
     dosereal = []
+    brandname = null
+    brandprice = null
     // newprice= []
     doses(brand,items){
       console.log(items)
