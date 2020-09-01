@@ -73,7 +73,7 @@ export class MyFormComponent implements OnInit {
     vaccines: [],
   };
   brandtype = [];
-  addPrices: Array<number> = this.profileService.newprices
+  addPrices: Array<number> = this.profileService.price
 
   vaccineList = [];
   selectedItems: Array<any> = [];
@@ -104,8 +104,6 @@ export class MyFormComponent implements OnInit {
   console.log(this.brandtype, this.selectedItems)
   for(let i = 0; i < this.selectedItems.length; i++){
       if(item._id === this.selectedItems[i]._id){
-        this.useSelected = this.selectedItems[i]
-          console.log(this.useSelected)
         let selected = this.selectedItems[i].description.brands.brandtype
         for(let v = 0; v < selected.length; v++){
         this.selectedItems.splice(i, 1)
@@ -128,6 +126,8 @@ export class MyFormComponent implements OnInit {
     this.vaccineList.forEach((vaccine) => {
       if (item._id === vaccine._id) {
         this.selectedItems.push(vaccine);
+        this.profileService.selectedItem = this.selectedItems
+        console.log( this.profileService.selectedItem)
         console.log(this.selectedItems);
       }
     });

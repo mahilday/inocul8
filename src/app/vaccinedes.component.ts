@@ -30,19 +30,20 @@ import { ProfileService } from './services/profile.service';
     
       <p>Kindly choose a brand</p>
       <form class="form-group"  (ngSubmit)='dis(brandsval)' #brandsval="ngForm"> 
+      {{brandsval.value | json}}
         <div *ngFor="let type of brand; let i = index" >
           <input
             type="radio"
-            class="mr-3 rad"
-            name="name"
+            class="'mr-3 rad'"
+            name="brandt"
             (change) = showType(type)
-            value="{{ type.name }}"
+            value="{name:{{type.name}}, price:{{type.price}}}"
             ngModel
           />
           <label>{{ type.name }} : &#x20a6;{{type.price }}</label>
           
         </div>
-        <button (click)="closeclick()" class="btn btn-primary px-4 my-2">Save</button>
+        <button (click)="closeclick(func)" class="btn btn-primary px-4 my-2">Save</button>
         </form>
     </div>
   `,
@@ -65,15 +66,14 @@ import { ProfileService } from './services/profile.service';
 export class VaccineComponent implements OnInit {
   @Input() vaccine: any;
   @Input() index: number;
+  @Input() func
 
-  brandname ={
-    types: {}
-  }
-
+  
   dosekeys = [];
   dosevals = [];
   brandtype = [];
   brand = [];
+  ty = null
   type = []
   dose = function (vacc) {
     vacc.description.dosages.map((dose: any) => {
@@ -90,16 +90,23 @@ export class VaccineComponent implements OnInit {
     console.log(this.close)
   }
   closenow= false
-  closeclick(){
+  closeclick(func){
     this.close = this.profileService.close
-    this.profileService.types(this.type)
+    this.profileService.types(this.ty)
     console.log(this.type)
     this.profileService.prices()
+    func()
    
   }
   showType=(type)=>{
-    this.type.push(type)
-    console.log(this.type)
+    this.ty = type
+    console.log(this.ty)
+    if(this.ty !== null){
+      this.type.push(this.ty)
+    } else{
+      console.log(null)
+    }
+  
   }
   
   ngOnInit() {

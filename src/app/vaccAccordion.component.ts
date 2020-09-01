@@ -5,13 +5,12 @@ import { ProfileService } from './services/profile.service';
 @Component({
     selector: "app-vaccdion",
     template:`
-    <div class="vaccwrapper">
-    <div class="col accord" (click)= "doses(brand.name, items)">
+    <div class="col accord" (click)= "doses(brand.name, items, $event)">
     <small class="text-center"
-      ><span>{{brand+ ' ' + '&#x20a6;' + brand}}</span>
+      ><span>{{brand.name+ ' ' + '&#x20a6;' + brand.price}}</span>
       <button
         type="button"
-        (click) = "deleteForm(brand, index)"
+        (click) = "deleteForm(brand.name, index)"
         class="close"
         aria-label="Close"
       >
@@ -21,10 +20,10 @@ import { ProfileService } from './services/profile.service';
   </div>
 
   
-    <form class="form-group" [ngClass] ="isOpen?'':'d-none'" #brandsval="ngForm"> 
+    <form class="form-group" [ngClass] ="isOpen?'d-block':'d-none'" #newval="ngForm"> 
       <h5 class="my-3">
         <b
-          ><i>{{ newItem.name }}</i></b
+          ><i>{{ newname }}</i></b
         >
       </h5>
       
@@ -46,16 +45,16 @@ import { ProfileService } from './services/profile.service';
         <div *ngFor ="let type of brandtypes">
           <input
             type="radio"
-            class="mr-3 rad"
-            name="vaccinetype"
-            value="{{ type.name + ' ' + type.price }}"
-          />
-          <label>{{type.name + ' ' + type.price}}</label>
+            id="{{type.name}}{{i}}"
+            name="vacctype"
+            (click) = "change(type)"
+            value="{name:{{type.name}}, price:{{type.price}}}"
+            ngModel
+          />{{type.name + ' ' + type.price}}
           
         </div>
-        <button class="btn btn-primary px-4 my-2">Save</button>
+        <button (click) = "onEdit($event)" class="btn btn-primary px-4 my-2">Edit</button>
         </form>
-    </div>
     
     `,
     styles: [`
@@ -92,46 +91,83 @@ export class VaccAccordionComponent implements OnInit{
      
     }
    
-    deleteForm(brand, index) {
-     this.profileService.deleteForm(brand, index)
-     console.log(brand)
-    }
+   
     dosevals =[];
     dosekeys: any = {};
     brandnew= [];
     brands =[]
     description:any = {}
     eachbrandset: any = {}
-    newItem: any = {}
+    newItem: any = []
     brandtypes = []
     isOpen = false
     dosereal = []
     brandname = null
     brandprice = null
+    newname= null
     // newprice= []
-    doses(brand,items){
+    doses(brand,items, event){
+      console.log(event.value)
       console.log(items)
+      this.isOpen = true
       for(let d =0; d< items.length; d++){
       let item = items[d].description.brands.brandtype
+      console.log(item)
       for(let i = 0; i < item.length; i++){
         if(brand === item[i].name){
-          this.newItem = items
+          this.newItem.push(items[d])
           console.log(this.newItem)
-          this.description = this.newItem.description
-          this.brandtypes = this.newItem.description.brands.brandtype
-          this.eachbrandset = this.newItem.description.brands
-          this.dosevals = this.newItem.description.dosages
-          for(let w = 0; w< this.dosevals.length; w++){
-            this.dosekeys = this.dosevals[w].patientdosages
+          for(let l =0;l<this.newItem.length; l++){
+            this.newname = this.newItem[l].name
+            this.description = this.newItem[l].description
+            this.brandtypes = this.newItem[l].description.brands.brandtype
+            this.eachbrandset = this.newItem[l].description.brands
+            this.dosevals = this.newItem[l].description.dosages
+            for(let w = 0; w< this.dosevals.length; w++){
+              this.dosekeys = this.dosevals[w].patientdosages
+            }
+            this.dosereal = Object.values(this.dosekeys)
           }
-          this.dosereal = Object.values(this.dosekeys)
+          
          
-          this.isOpen = true
         } else{
           console.log(null)
         }
       }
     }
+    }
+    change(type){
+      this.profileService.types(type)
+    }
+    deleteForm(brand, index) {
+      for(let l =0;l<this.newItem.length; l++){
+        let eachb = this.newItem[l].description.brands.brandtype
+        for(let e =0;e<eachb.length; e++){
+         if(brand === eachb[e].name){
+            this.newItem.splice(l, 1)
+         } else{
+           console.log(null)
+         }
+       }
+      }
+      for(let y =0; y< this.profileService.selectedItem.length; y++){
+        let eachitem = this.profileService.selectedItem[y].description.brands.brandtype
+        for(let ei =0; ei<eachitem.length; ei++){
+          if(brand === eachitem[ei].name){
+            this.profileService.selectedItem.splice(y, 1)
+            console.log(this.profileService.selectedItem)
+          }else{
+            console.log(null)
+          }
+        }
+      }
+     this.profileService.deleteForm(brand, index)
+     console.log(brand)
+     this.isOpen= false;
+    }
+    
+    half(){
+      this.isOpen = false
     }
     dis(event) {
       this.profileService.dis(event);
@@ -154,10 +190,9 @@ export class VaccAccordionComponent implements OnInit{
   //   onShow() {
   //     this.show = true;
   //   }
-    // onEdit(e, profile, index) {
-    //   e.preventDefault();
-    //   this.profileService.profileData.splice(index, 1, profile);
-    //   console.log(this.profileService.profileData[index]);
-    //   this.show = false;
-    // }
+    onEdit(e) {
+      // this.profileService.brands.splice(index, 1, brand);
+      console.log(e);
+      this.isOpen= false;
+    }
 }

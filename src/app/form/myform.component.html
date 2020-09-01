@@ -225,7 +225,7 @@
           class="proffer my-1"
           *ngFor="let branditem of brandtype; let i = index"
         >
-          <app-vaccdion [items]="useSelected" [brand]="branditem" [index]="i"></app-vaccdion>
+          <app-vaccdion [items]="useSelected"  [brand]="branditem" [index]="i"></app-vaccdion>
         </div>
         <ng-multiselect-dropdown
           [settings]="vaccSettings"
@@ -240,7 +240,7 @@
         >
         </ng-multiselect-dropdown>
       </div>
-      <div *ngFor="let items of selectedItems; let i = index">
+      <div *ngFor="let items of selectedItems; let i = index" [func]="setBrandtype()">
         <app-vaccine [vaccine]="items" [index]="i"></app-vaccine>
       </div>
       <div

@@ -9,27 +9,26 @@ export class ProfileService {
   submitted(event): any {
     this.profileData.push(event);
   }
-
+  brandt= null
+ selectedItem = null
   brandtype = [];
   branddesItems =[]
   brands = []
   newprices: Array<number>=[]
-  price: number = null
+  price: Array<number> = []
   close = true
   dis = (event: any) => {
     this.brandtype.push(event.vaccinetype);
   };
   types=(type)=>{
-    this.brands = type
-    for(let i = 0; i< type.length; i++){
-      this.price= type[i].price
-    }
-    
+    this.brands.push(type)
+     this.price.push(type.price)
     console.log(this.brands)
+    console.log(this.brandt)
   }
   
   prices=()=>{
-    this.newprices.push(this.price)
+    this.newprices = this.price
     console.log(this.newprices)
   }
     
