@@ -20,8 +20,11 @@ export class ProfileService {
     this.brandtype.push(event.vaccinetype);
   };
   types=(type)=>{
-    this.brands.push(type)
-    this.price= type.price
+    this.brands = type
+    for(let i = 0; i< type.length; i++){
+      this.price= type[i].price
+    }
+    
     console.log(this.brands)
   }
   

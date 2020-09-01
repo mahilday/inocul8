@@ -8,7 +8,7 @@ import { ProfileService } from './services/profile.service';
     <div class="vaccwrapper">
     <div class="col accord" (click)= "doses(brand.name, items)">
     <small class="text-center"
-      ><span>{{brand.name + ' ' + '&#x20a6;' + brand.price}}</span>
+      ><span>{{brand+ ' ' + '&#x20a6;' + brand}}</span>
       <button
         type="button"
         (click) = "deleteForm(brand, index)"

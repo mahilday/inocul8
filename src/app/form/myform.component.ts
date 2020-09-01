@@ -193,7 +193,7 @@ export class MyFormComponent implements OnInit {
   };
   brandFamType = null
   setBrandtype =()=>{
-    this.brandtype= this.profileService.brands;
+    this.brandtype = this.profileService.brands;
     this.brandFamType = this.profileService.brandtype
     
   }

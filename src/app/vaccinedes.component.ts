@@ -74,7 +74,7 @@ export class VaccineComponent implements OnInit {
   dosevals = [];
   brandtype = [];
   brand = [];
-  type = null
+  type = []
   dose = function (vacc) {
     vacc.description.dosages.map((dose: any) => {
       this.dosekeys = Object.keys(dose.patientdosages);
@@ -93,11 +93,12 @@ export class VaccineComponent implements OnInit {
   closeclick(){
     this.close = this.profileService.close
     this.profileService.types(this.type)
+    console.log(this.type)
     this.profileService.prices()
    
   }
-  showType(type){
-    this.type = type
+  showType=(type)=>{
+    this.type.push(type)
     console.log(this.type)
   }
   
