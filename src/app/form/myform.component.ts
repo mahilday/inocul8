@@ -35,6 +35,7 @@ export class MyFormComponent implements OnInit {
     this.family = false;
     this.corporate = false;
     this.getState();
+    
   }
   clickFamily() {
     this.myself = false;
@@ -52,6 +53,9 @@ export class MyFormComponent implements OnInit {
     this.family = false;
     this.corporate = false;
     console.log(this.profile);
+    this.profileService.brands = []
+    this.formModel.vaccines = []
+    this.famModel.vaccines =[]
   }
   constructor(
     private profileService: ProfileService,
@@ -107,6 +111,7 @@ export class MyFormComponent implements OnInit {
         let selected = this.selectedItems[i].description.brands.brandtype
         for(let v = 0; v < selected.length; v++){
         this.selectedItems.splice(i, 1)
+        console.log(this.formModel.vaccines)
         for(let u =0; u< this.brandtype.length; u++){
         if(selected[v].name === this.brandtype[u].name){
           this.brandtype.splice(u, 1)
@@ -121,15 +126,16 @@ export class MyFormComponent implements OnInit {
 }
  }
  onFamItemDeSelect(item: any){
-  console.log(this.brandFamType, this.vaccinesFam)
+  console.log(this.brandtype, this.vaccinesFam)
   for(let i = 0; i < this.vaccinesFam.length; i++){
       if(item._id === this.vaccinesFam[i]._id){
         let selected = this.vaccinesFam[i].description.brands.brandtype
         for(let v = 0; v < selected.length; v++){
         this.vaccinesFam.splice(i, 1)
-        for(let u =0; u< this.brandFamType.length; u++){
-        if(selected[v].name === this.brandFamType[u].name){
-          this.brandFamType.splice(u, 1)
+        console.log(this.famModel.vaccines)
+        for(let u =0; u< this.brandtype.length; u++){
+        if(selected[v].name === this.brandtype[u].name){
+          this.brandtype.splice(u, 1)
           }else{
             console.log(null)
           }
@@ -146,9 +152,8 @@ export class MyFormComponent implements OnInit {
     this.vaccineList.forEach((vaccine) => {
       if (item._id === vaccine._id) {
         this.selectedItems.push(vaccine);
+        console.log(this.formModel.vaccines)
         this.profileService.selectedItem = this.selectedItems
-        console.log( this.profileService.selectedItem)
-        console.log(this.selectedItems);
       }
     });
     for(let i = 0; i < this.selectedItems.length; i++){

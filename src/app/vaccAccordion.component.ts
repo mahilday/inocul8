@@ -8,54 +8,9 @@ import { ProfileService } from './services/profile.service';
     <div class="col accord" (click)= "doses(brand.name, items, $event)">
     <small class="text-center"
       ><span>{{brand.name+ ' ' + '&#x20a6;' + brand.price}}</span>
-      <button
-        type="button"
-        (click) = "deleteForm(brand.name, index)"
-        class="close"
-        aria-label="Close"
-      >
-        <span aria-hidden="true">×</span>
-      </button></small
+      </small
     >
-  </div>
-
-  
-    <form class="form-group" [ngClass] ="isOpen?'d-block':'d-none'" #newval="ngForm"> 
-      <h5 class="my-3">
-        <b
-          ><i>{{ newname }}</i></b
-        >
-      </h5>
-      
-      
-      <p>{{ description.firstdes }}</p>
-      <p>{{ description.givenhowquest }}</p>
-      <p>{{ description.givenhowanswer }}</p>
-      <div *ngFor = "let dose of dosevals; let u = index">
-      <label>{{dose.patient}}</label>
-      <ol >
-      <li *ngFor = "let doses of dosereal; let v = index">Dose {{v + 1}}: {{doses}}</li>
-      </ol>
-      </div>
-      <p>{{ eachbrandset.brandquest }}</p>
-      <p>Check out the available brands</p>
-      <p>{{ eachbrandset.branddes }}</p>
-    
-      <p>Kindly choose a brand</p>
-        <div *ngFor ="let type of brandtypes">
-          <input
-            type="radio"
-            id="{{type.name}}{{i}}"
-            name="vacctype"
-            (click) = "change(type)"
-            value="{name:{{type.name}}, price:{{type.price}}}"
-            ngModel
-          />{{type.name + ' ' + type.price}}
-          
-        </div>
-        <button (click) = "onEdit($event)" class="btn btn-primary px-4 my-2">Edit</button>
-        </form>
-    
+  </div> 
     `,
     styles: [`
     .close{
@@ -139,36 +94,7 @@ export class VaccAccordionComponent implements OnInit{
     change(type){
       this.profileService.types(type)
     }
-    deleteForm(brand, index) {
-      for(let l =0;l<this.newItem.length; l++){
-        let eachb = this.newItem[l].description.brands.brandtype
-        for(let e =0;e<eachb.length; e++){
-         if(brand === eachb[e].name){
-            this.newItem.splice(l, 1)
-         } else{
-           console.log(null)
-         }
-       }
-      }
-      for(let y =0; y< this.profileService.selectedItem.length; y++){
-        let eachitem = this.profileService.selectedItem[y].description.brands.brandtype
-        for(let ei =0; ei<eachitem.length; ei++){
-          if(brand === eachitem[ei].name){
-            this.profileService.selectedItem.splice(y, 1)
-            console.log(this.profileService.selectedItem)
-          }else{
-            console.log(null)
-          }
-        }
-      }
-     this.profileService.deleteForm(brand, index)
-     console.log(brand)
-     this.isOpen= false;
-    }
     
-    half(){
-      this.isOpen = false
-    }
     dis(event) {
       this.profileService.dis(event);
     }

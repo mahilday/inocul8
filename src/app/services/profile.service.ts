@@ -40,15 +40,6 @@ export class ProfileService {
     return vacc.description.brands.brandtype;
   }
   selectedItemsUpdate = []
-  deleteForm(brand, index){
-    
-    if (this.brands[index]) {
-      this.brands.splice(index, 1);    
-    } else {
-      console.log(null);
-    }
-   
-    console.log(brand)
-  }
+  
   constructor() {}
 }
