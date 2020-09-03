@@ -33,9 +33,9 @@ import {RouterModule} from '@angular/router'
     HttpClientModule,
     AppRoutingModule,
     RouterModule.forRoot([
-      {path: 'admin/dashboard', component: DashboardComponent},
-      {path: '', component: MyFormComponent},
-      {path:'admin/login', component: LoginComponent}
+      // {path: 'admin/dashboard', component: DashboardComponent},
+      {path: '', component: MyFormComponent}
+      // {path:'admin/login', component: LoginComponent}
     ]),
     FormsModule,
     ReactiveFormsModule,

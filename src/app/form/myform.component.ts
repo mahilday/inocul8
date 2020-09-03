@@ -235,7 +235,6 @@ export class MyFormComponent implements OnInit {
     e.preventDefault();
     this.profile.push(profile.value);
     console.log(profile.value)
-    this.nopersons += 1;
     this.profileValues.emit(profile.value);
     
     setTimeout(()=>{

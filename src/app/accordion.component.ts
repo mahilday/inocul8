@@ -120,6 +120,7 @@ import { NgForm, FormGroup } from '@angular/forms';
         text-align: center;
         height: 15px;
         width: 15px;
+        margin-top:3px;
         padding: none;
       }
 
