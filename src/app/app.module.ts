@@ -12,6 +12,9 @@ import { ProfileService } from './services/profile.service';
 import { VaccineComponent } from './vaccinedes.component';
 import {VaccAccordionComponent } from './vaccAccordion.component'
 import { Angular4PaystackModule } from 'angular4-paystack';
+import { DashboardComponent } from './admin/dashboard/dashboard.component';
+import {LoginComponent} from './admin/login.component'
+import {RouterModule} from '@angular/router'
 
 @NgModule({
   declarations: [
@@ -19,7 +22,9 @@ import { Angular4PaystackModule } from 'angular4-paystack';
     MyFormComponent,
     AccordionComponent,
     VaccineComponent,
-    VaccAccordionComponent
+    VaccAccordionComponent,
+    DashboardComponent,
+    LoginComponent
   ],
   imports: [
     Angular4PaystackModule.forRoot('pk_live_2d6743929c8d8594dc4a96ade3774ce6a4de56aa'),
@@ -27,6 +32,11 @@ import { Angular4PaystackModule } from 'angular4-paystack';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    RouterModule.forRoot([
+      {path: 'admin/dashboard', component: DashboardComponent},
+      {path: '', component: MyFormComponent},
+      {path:'admin/login', component: LoginComponent}
+    ]),
     FormsModule,
     ReactiveFormsModule,
   ],
