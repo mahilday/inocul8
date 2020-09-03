@@ -180,6 +180,7 @@
           [(ngModel)]="formModel.lga"
           [required]="!home"
         >
+        <option selected>Select LGA</option>
           <option *ngFor="let local of localgovt">{{ local.name }}</option>
         </select>
         <p *ngIf ="lgaLoading" class="text-info">Please wait ...</p>
@@ -602,6 +603,7 @@
           [disabled] ="lgaLoading"
           [required]="!home"
         >
+         <option selected>Select LGA</option>
           <option *ngFor="let local of localgovt">{{ local.name }}</option>
         </select>
         <p *ngIf ="lgaLoading" class="text-info">Please wait ...</p>
