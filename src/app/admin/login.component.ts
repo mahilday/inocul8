@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-login',
   template: `
   <div class ="loginwrapper">
-  <img src="https://res.cloudinary.com/matsxript/image/upload/c_scale,w_3480/v1599153191/pexels-donald-tong-23273_yeoiaz.jpg" alt="blue"/>   
+  <img src="https://res.cloudinary.com/matsxript/image/upload/c_scale,w_4211/v1599153199/pexels-engin-akyurt-1435752_tohwsh.jpg" alt="blue"/>   
    <p>login</p>
   </div>
   `,
@@ -15,7 +15,8 @@ import { Component, OnInit } from '@angular/core';
       width:100vw;
   }
   .loginwrapper img{
-      height:60%;
+      position: absolute;
+      height:100%;
       width:100%;
       border-bottom-left-radius: 50%;
       border-bottom-right-radius: 50%;
