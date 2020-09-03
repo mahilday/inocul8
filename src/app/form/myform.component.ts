@@ -57,6 +57,10 @@ export class MyFormComponent implements OnInit {
     this.formModel.vaccines = []
     this.famModel.vaccines =[]
     this.profileService.brands.length =0
+    this.home = false
+    this.hub = false
+    this.localgovt.length = 0
+    location.replace("http://127.0.0.1:4200")
   }
   constructor(
     private profileService: ProfileService,
@@ -367,13 +371,16 @@ newmainprice = null
         console.log(err);
       });
   };
+  lgaLoading = false
   getLga = () => {
+    this.lgaLoading = true
     this.http
-      .get(
+    .get(
         `${environment.baseUrl}/states`
       )
       .toPromise()
       .then((res: any) => {
+        this.lgaLoading = false
         console.log(res)
         for(let v = 0; v < res.result.length; v++){
           const statesne = res.result[v].states;
@@ -393,15 +400,28 @@ newmainprice = null
       });
   };
   getFamLga = () => {
+    this.lgaLoading = true
     this.http
       .get(
-        `http://locationsng-api.herokuapp.com/api/v1/states/${this.famModel.statefam}/lgas`
+        `${environment.baseUrl}/states`
       )
       .toPromise()
       .then((res: any) => {
         // console.log(res.lgas, this.lga)
-        this.localgovt = res;
+        this.lgaLoading =false
         console.log(res);
+        for(let v = 0; v < res.result.length; v++){
+          const statesnorm = res.result[v].states;
+          for (let i = 0; i < statesnorm.length; i++) {
+            if(this.famModel.statefam === statesnorm[i].state.name ){
+                
+              this.localgovt = statesnorm[i].state.locals
+              
+            } else{
+              console.log("not done")
+            }
+          }
+        }
       })
       .catch((err) => {
         console.log(err);

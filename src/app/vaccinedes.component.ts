@@ -42,7 +42,7 @@ import { ProfileService } from './services/profile.service';
           <label>{{ type.name }} : &#x20a6;{{type.price }}</label>
           
         </div>
-        <button (click)="closeclick(func)" class="btn btn-primary px-4 my-2">Save</button>
+        <button (click)="closeclick(func)" [disabled]="!valid" class="btn btn-primary px-4 my-2">Save</button>
         </form>
     </div>
   `,
@@ -74,6 +74,7 @@ export class VaccineComponent implements OnInit {
   brand = [];
   ty = null
   type = []
+  valid = false
   dose = function (vacc) {
     vacc.description.dosages.map((dose: any) => {
       this.dosekeys = Object.keys(dose.patientdosages);
@@ -99,6 +100,7 @@ export class VaccineComponent implements OnInit {
   }
   showType=(type)=>{
     this.ty = type
+    this.valid = true
     console.log(this.ty)
     if(this.ty !== null){
       this.type.push(this.ty)
