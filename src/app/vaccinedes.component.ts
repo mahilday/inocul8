@@ -30,11 +30,10 @@ import { ProfileService } from './services/profile.service';
     
       <p>Kindly choose a brand</p>
       <form class="form-group"  (ngSubmit)='dis(brandsval)' #brandsval="ngForm"> 
-      {{brandsval.value | json}}
         <div *ngFor="let type of brand; let i = index" >
           <input
             type="radio"
-            class="'mr-3 rad'"
+            class="mr-3 rad"
             name="brandt"
             (change) = showType(type)
             value="{name:{{type.name}}, price:{{type.price}}}"

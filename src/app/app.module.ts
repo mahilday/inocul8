@@ -22,7 +22,7 @@ import { Angular4PaystackModule } from 'angular4-paystack';
     VaccAccordionComponent
   ],
   imports: [
-    Angular4PaystackModule.forRoot('pk_test_a18f42abea034a496aee041a8db12845315af792'),
+    Angular4PaystackModule.forRoot('pk_live_2d6743929c8d8594dc4a96ade3774ce6a4de56aa'),
     NgMultiSelectDropDownModule.forRoot(),
     BrowserModule,
     HttpClientModule,

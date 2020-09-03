@@ -56,6 +56,7 @@ export class MyFormComponent implements OnInit {
     this.profileService.brands = []
     this.formModel.vaccines = []
     this.famModel.vaccines =[]
+    this.profileService.brands.length =0
   }
   constructor(
     private profileService: ProfileService,
@@ -74,7 +75,7 @@ export class MyFormComponent implements OnInit {
     addressfam: '',
     timefam: '',
     profile: this.profile,
-    vaccines: [],
+    vaccines:[]
   };
   brandtype = [];
   addPrices: Array<number> = this.profileService.price
@@ -94,6 +95,8 @@ export class MyFormComponent implements OnInit {
       textField: 'name',
       itemsShowLimit: 5,
       allowSearchFilter: true,
+      closeDropDownOnSelection: true,
+      enableCheckAll: false
     };
     this.getVaccines();
     this.vaccinetypes();
@@ -132,7 +135,8 @@ export class MyFormComponent implements OnInit {
         let selected = this.vaccinesFam[i].description.brands.brandtype
         for(let v = 0; v < selected.length; v++){
         this.vaccinesFam.splice(i, 1)
-        console.log(this.famModel.vaccines)
+        console.log(this.famModel.vaccines , this.famModel.profile)
+        
         for(let u =0; u< this.brandtype.length; u++){
         if(selected[v].name === this.brandtype[u].name){
           this.brandtype.splice(u, 1)
@@ -178,7 +182,7 @@ export class MyFormComponent implements OnInit {
   }
   newFamSelect =[]
   onFamItemSelect(item: any) {
-    console.log(this.famModel.vaccines);
+   
     console.log(this.vaccinesFam);
     this.vaccineList.forEach((vaccine) => {
       if (item._id === vaccine._id) {
@@ -187,7 +191,7 @@ export class MyFormComponent implements OnInit {
         console.log( this.profileService.selectedItem)
       }
     });
-   
+    console.log(this.famModel.vaccines, this.famModel.profile);
     for(let i = 0; i < this.vaccinesFam.length; i++){
       if(item._id === this.vaccinesFam[i]._id){
         this.newFamSelect.push(Object.assign({}, this.vaccinesFam[i])) 
@@ -226,10 +230,13 @@ export class MyFormComponent implements OnInit {
   saveProfile = (e, profile: NgForm) => {
     e.preventDefault();
     this.profile.push(profile.value);
+    console.log(profile.value)
     this.nopersons += 1;
     this.profileValues.emit(profile.value);
+    
     setTimeout(()=>{
-      profile.reset()
+      profile.reset();
+      this.profileService.brands.length = 0;
     }, 500)
   };
   
@@ -242,7 +249,7 @@ export class MyFormComponent implements OnInit {
   brandFamType = null
   setBrandtype =()=>{
     this.brandtype = this.profileService.brands;
-    this.brandFamType = this.profileService.brandtype
+    this.brandFamType = this.profileService.brands;
     
   }
   title = ''
@@ -253,21 +260,24 @@ paymentInit() {
 }
 
 paymentDone(ref: any) {
-  this.title = 'Payment successfull';
+  this.title = 'Payment successful'
+  alert("Payment Successful")
+  location.replace("https://www.inocul8.com.ng")
   console.log(this.title, ref);
 }
 
 paymentCancel() {
-  console.log('payment failed');
+  alert('payment failed');
 }
 newmainprice = null
   postForm(val: NgForm) {
     let url = `${environment.baseUrl}/corporate-form`;
-
+    this.loading= true
     this.http
       .post(url, val.value)
       .toPromise()
       .then((res: any) => {
+        this.loading = false
         if ((res.status = 200)) {
           this.valid = true;
         } else {
@@ -280,18 +290,24 @@ newmainprice = null
         console.log(err);
       });
   }
+  loading = false
+  eachEmail=null
   postMyForm(val: NgForm) {
     let url = `${environment.baseUrl}/my-form`;
-
+    this.loading= true
     this.http
       .post(url, val.value)
       .toPromise()
       .then((res: any) => {
+        this.loading= false
         if ((res.status = 200)) {
           this.valid = true;
         } else {
           this.valid = false;
         }
+        console.log(res)
+        this.eachEmail = res.result.profile.email
+        console.log(this.eachEmail)
         this.mainprice = this.addPrices.reduce((a,b) => a + b, 0) * 100
         this.newmainprice = this.addPrices.reduce((a,b) => a + b, 0)
       })
@@ -301,17 +317,20 @@ newmainprice = null
   }
   postFamForm() {
     let url = `${environment.baseUrl}/family-form`;
-
+    this.loading = true
     this.http
       .post(url, this.famModel)
       .toPromise()
       .then((res: any) => {
+        this.loading= false
         if ((res.status = 200)) {
           this.valid = true;
         } else {
           this.valid = false;
         }
         console.log(res, this.valid);
+        this.eachEmail = res.result.profile[0].email
+        this.mainprice = this.addPrices.reduce((a,b) => a + b, 0) * 100
         this.newmainprice = this.addPrices.reduce((a,b) => a + b, 0)
       })
       .catch((err) => {
