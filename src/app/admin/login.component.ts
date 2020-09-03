@@ -11,6 +11,7 @@ import { Component, OnInit } from '@angular/core';
   styles: [`
   .loginwrapper{
       height:100vh;
+      background:#29abe2;
       width:100vw;
   }
   .loginwrapper img{
