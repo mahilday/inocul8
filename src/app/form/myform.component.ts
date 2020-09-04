@@ -297,7 +297,17 @@ newmainprice = null
   eachEmail=null
   postMyForm(val: NgForm) {
     let url = `${environment.baseUrl}/my-form`;
+    let otherurl = `${environment.baseUrl}/email`
     this.loading= true
+    this.http
+      .post(otherurl,val.value)
+      .toPromise()
+      .then((res: any) => {
+        console.log(res)
+      })
+      .catch((err) =>{
+        console.log(err)
+      })
     this.http
       .post(url, val.value)
       .toPromise()
