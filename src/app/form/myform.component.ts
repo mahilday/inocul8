@@ -4,6 +4,7 @@ import { NgForm, FormGroup } from '@angular/forms';
 import { environment } from '../../environments/environment';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { ProfileService } from '../services/profile.service';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'my-form',
@@ -68,9 +69,7 @@ export class MyFormComponent implements OnInit {
   ) {}
   profile: Array<object> = [];
   formModel: any = {
-    state: '',
-    vaccines: [],
-    vaccinetype: [],
+    paymentStatus: 'Not paid'
   };
   famModel: any = {
     statefam: '',
@@ -79,7 +78,8 @@ export class MyFormComponent implements OnInit {
     addressfam: '',
     timefam: '',
     profile: this.profile,
-    vaccines:[]
+    vaccines:[],
+    paymentStatus: 'Not paid'
   };
   brandtype = [];
   addPrices: Array<number> = this.profileService.price
@@ -261,16 +261,23 @@ reference = ''
 paymentInit() {
   console.log('Payment initialized');
 }
-
 paymentDone(ref: any) {
   this.title = 'Payment successful'
-  alert("Payment Successful")
-  location.replace("https://www.inocul8.com.ng")
   console.log(this.title, ref);
+    let url = `${environment.baseUrl}/updatemy`
+    this.formModel.paymentStatus = `Payment Done`
+    this.http
+      .patch(url, this.formModel)
+      .toPromise()
+      .then((res: any)=>{
+        console.log(res)
+      }).catch(err => console.log("Error", err))
+  
 }
 
 paymentCancel() {
   alert('payment failed');
+  this.formModel.paymentStatus = `Payment Unsuccessful`
 }
 newmainprice = null
   postForm(val: NgForm) {
@@ -295,12 +302,12 @@ newmainprice = null
   }
   loading = false
   eachEmail=null
-  postMyForm(val: NgForm) {
+  postMyForm() {
     let url = `${environment.baseUrl}/my-form`;
     let otherurl = `${environment.baseUrl}/email`
     this.loading= true
     this.http
-      .post(otherurl,val.value)
+      .post(otherurl,this.formModel)
       .toPromise()
       .then((res: any) => {
         console.log(res)
@@ -309,7 +316,7 @@ newmainprice = null
         console.log(err)
       })
     this.http
-      .post(url, val.value)
+      .post(url, this.formModel)
       .toPromise()
       .then((res: any) => {
         this.loading= false
@@ -318,7 +325,7 @@ newmainprice = null
         } else {
           this.valid = false;
         }
-        console.log(res)
+        console.log(res, this.formModel.preferredhub)
         this.eachEmail = res.result.profile.email
         console.log(this.eachEmail)
         this.mainprice = this.addPrices.reduce((a,b) => a + b, 0) * 100

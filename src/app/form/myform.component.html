@@ -92,9 +92,10 @@
   <form
     [ngClass]="(family && corporate) || !myself ? 'd-none' : ''"
     #myselfForm="ngForm"
-    (ngSubmit)="myselfForm.form.valid && postMyForm(myselfForm)"
+    (ngSubmit)="myselfForm.form.valid && postMyForm()"
     novalidate
   >
+  {{myselfForm.value | json}}
     <h3 class="text-center new"><strong>For Just Myself</strong></h3>
     <small>
       <p class="text-center text-secondary mb-3">For Yourself Alone</p>
@@ -112,7 +113,7 @@
             id="customRadio"
             name="radioservice"
             value="Home-service"
-            ngModel
+            [(ngModel)] = "formModel.radioservice"
           />
           <label class="custom-control-label" for="customRadio"
             >Home Service</label
@@ -128,7 +129,7 @@
             id="customRadio2"
             name="radioservice"
             value="Hub"
-            ngModel
+            [(ngModel)] ="formModel.radioservice"
           />
           <label class="custom-control-label" for="customRadio2"
             >I will visit the nearby hub</label
@@ -146,7 +147,7 @@
         <select
           class="custom-select"
           #state="ngModel"
-          (click) ="getLga()"
+          (change) ="getLga()"
           [ngClass]="{
             'is-invalid':
               (myselfForm.submitted && state.invalid) ||
