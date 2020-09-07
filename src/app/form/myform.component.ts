@@ -67,9 +67,19 @@ export class MyFormComponent implements OnInit {
     private profileService: ProfileService,
     private http: HttpClient
   ) {}
+  mainprice = null
+  brandtype = [];
   profile: Array<object> = [];
+  
+ 
+  addPrices: Array<number> = this.profileService.price
+  pricesone = this.addPrices.reduce((a,b) => a + b, 0)
+  newmainprice = null
+
   formModel: any = {
-    paymentStatus: 'Not paid'
+    paymentStatus: 'Not paid',
+    brandschosen: this.profileService.brands,
+    totalprice: null
   };
   famModel: any = {
     statefam: '',
@@ -81,8 +91,6 @@ export class MyFormComponent implements OnInit {
     vaccines:[],
     paymentStatus: 'Not paid'
   };
-  brandtype = [];
-  addPrices: Array<number> = this.profileService.price
 
   vaccineList = [];
   selectedItems: Array<any> = [];
@@ -221,7 +229,7 @@ export class MyFormComponent implements OnInit {
     console.log(items);
     console.log(this.addPrices)
   }
-  mainprice = null
+ 
   
   corpModel: any = {};
   nopersons: number = this.profile.length;
@@ -263,23 +271,34 @@ paymentInit() {
 }
 paymentDone(ref: any) {
   this.title = 'Payment successful'
+  let otherurl = `${environment.baseUrl}/email`
   console.log(this.title, ref);
     let url = `${environment.baseUrl}/updatemy`
     this.formModel.paymentStatus = `Payment Done`
     this.http
-      .patch(url, this.formModel)
+      .put(url, this.formModel)
       .toPromise()
       .then((res: any)=>{
         console.log(res)
       }).catch(err => console.log("Error", err))
-  
+      
+      this.http
+      .post(otherurl,this.formModel)
+      .toPromise()
+      .then((res: any) => {
+        console.log(res)
+      })
+      .catch((err) =>{
+        console.log(err)
+      })
+      location.replace('https://www.inocul8.com.ng')
 }
 
 paymentCancel() {
   alert('payment failed');
   this.formModel.paymentStatus = `Payment Unsuccessful`
 }
-newmainprice = null
+
   postForm(val: NgForm) {
     let url = `${environment.baseUrl}/corporate-form`;
     this.loading= true
@@ -306,6 +325,8 @@ newmainprice = null
     let url = `${environment.baseUrl}/my-form`;
     let otherurl = `${environment.baseUrl}/email`
     this.loading= true
+    this.newmainprice = this.addPrices.reduce((a,b) => a + b, 0)
+    this.formModel.totalprice = this.newmainprice
     this.http
       .post(otherurl,this.formModel)
       .toPromise()
