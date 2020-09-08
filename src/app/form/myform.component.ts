@@ -88,7 +88,7 @@ export class MyFormComponent implements OnInit {
     addressfam: '',
     timefam: '',
     profile: this.profile,
-    vaccines:[],
+    totalprice: null,
     paymentStatus: 'Not paid'
   };
 
@@ -238,21 +238,26 @@ export class MyFormComponent implements OnInit {
   //   e.preventDefault();
   //   this.vaccines.push(vacc)
   // }
+
+  profileData: Array<object> = [];
   @Output() profileValues = new EventEmitter<string>();
-  saveProfile = (e, profile: NgForm) => {
+  async saveProfile(e, profile: NgForm){
     e.preventDefault();
+      profile.value.brandschosen = []
+      for(let i =0;i< this.profileService.brands.length; i++){
+        profile.value.brandschosen.push(this.profileService.brands[i])
+      }
     this.profile.push(profile.value);
     console.log(profile.value)
     this.profileValues.emit(profile.value);
-    
+    console.log(this.profile)
     setTimeout(()=>{
       profile.reset();
-      this.profileService.brands.length = 0;
-    }, 500)
+      this.profileService.brands.length = 0
+    }, 1000)
   };
-  
-
-  profileData: Array<object> = [];
+  famPrice =[]
+ 
 
   setProfile = () => {
     this.profileData = this.profileService.profileData;
@@ -272,8 +277,11 @@ paymentInit() {
 paymentDone(ref: any) {
   this.title = 'Payment successful'
   let otherurl = `${environment.baseUrl}/email`
+  let famotherurl = `${environment.baseUrl}/emailfam`
   console.log(this.title, ref);
     let url = `${environment.baseUrl}/updatemy`
+    let famurl = `${environment.baseUrl}/updatefam`
+    if(this.myself === true){
     this.formModel.paymentStatus = `Payment Done`
     this.http
       .put(url, this.formModel)
@@ -292,16 +300,50 @@ paymentDone(ref: any) {
         console.log(err)
       })
       location.replace('https://www.inocul8.com.ng')
+    } else{
+      console.log(null)
+    }
+    if(this.family === true){
+      this.famModel.paymentStatus = `Payment Done`
+      this.http
+        .put(famurl, this.famModel)
+        .toPromise()
+        .then((res: any)=>{
+          console.log(res)
+        }).catch(err => console.log("Error", err))
+        
+        this.http
+        .post(famotherurl,this.famModel)
+        .toPromise()
+        .then((res: any) => {
+          console.log(res)
+        })
+        .catch((err) =>{
+          console.log(err)
+        })
+        location.replace('https://www.inocul8.com.ng')
+    }
 }
 
 paymentCancel() {
   alert('payment failed');
   this.formModel.paymentStatus = `Payment Unsuccessful`
+  location.replace('https://www.inocul8.com.ng')
 }
 
   postForm(val: NgForm) {
     let url = `${environment.baseUrl}/corporate-form`;
     this.loading= true
+    let famotherurl = `${environment.baseUrl}/emailcorp`
+    this.http
+        .post(famotherurl,val.value)
+        .toPromise()
+        .then((res: any) => {
+          console.log(res)
+        })
+        .catch((err) =>{
+          console.log(err)
+        })
     this.http
       .post(url, val.value)
       .toPromise()
@@ -359,6 +401,18 @@ paymentCancel() {
   postFamForm() {
     let url = `${environment.baseUrl}/family-form`;
     this.loading = true
+    this.newmainprice = this.addPrices.reduce((a,b) => a + b, 0)
+    this.famModel.totalprice = this.newmainprice
+    let famotherurl = `${environment.baseUrl}/emailfam`
+    this.http
+        .post(famotherurl,this.famModel)
+        .toPromise()
+        .then((res: any) => {
+          console.log(res)
+        })
+        .catch((err) =>{
+          console.log(err)
+        })
     this.http
       .post(url, this.famModel)
       .toPromise()

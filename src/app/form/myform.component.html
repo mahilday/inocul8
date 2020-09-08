@@ -95,7 +95,6 @@
     (ngSubmit)="myselfForm.form.valid && postMyForm()"
     novalidate
   >
-  {{myselfForm.value | json}}
     <h3 class="text-center new"><strong>For Just Myself</strong></h3>
     <small>
       <p class="text-center text-secondary mb-3">For Yourself Alone</p>
@@ -536,7 +535,7 @@
             id="customRadio3"
             name="radioservice"
             value="Home-service"
-            ngModel
+            [(ngModel)] ="famModel.radioservicefam"
           />
           <label class="custom-control-label" for="customRadio3"
             >Home Service</label
@@ -552,7 +551,7 @@
             id="customRadio4"
             name="radioservice"
             value="Hub"
-            ngModel
+            [(ngModel)] ="famModel.radioservicefam"
           />
           <label class="custom-control-label" for="customRadio4"
             >I will visit the nearby hub</label

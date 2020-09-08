@@ -21,9 +21,11 @@ export class ProfileService {
     this.brandtype.push(event.vaccinetype);
   };
   types=(type)=>{
-    this.brands.push(type)
-     this.price.push(type.price)
     console.log(this.brands)
+    this.brands.push(type)
+    console.log(this.brands)
+     this.price.push(type.price)
+    console.log(type)
     console.log(this.brandt)
   }
   
