@@ -562,7 +562,6 @@
     <!-- select state -->
     <div
       class="statelocal row"
-      (change)="getFamLga()"
       [ngClass]="!hub ? 'd-none' : ''"
     >
       <div class="form-group col">
@@ -570,6 +569,7 @@
         <select
           class="custom-select"
           #statefam="ngModel"
+          (change)="getFamLga()"
           [ngClass]="{
             'is-invalid':
               (familyForm.submitted && statefam.invalid) ||
@@ -885,7 +885,7 @@
             class="proffer my-1"
             *ngFor="let branditem of brandtype; let i = index"
           >
-            <app-vaccdion [brand]="branditem" #brands ="ngModel" [index]="i" [(ngModel)] ="famModel.vaccines.brands"></app-vaccdion>
+            <app-vaccdion [brand]="branditem"></app-vaccdion>
           </div>
             <ng-multiselect-dropdown
               [settings]="vaccSettings"
