@@ -61,7 +61,6 @@ export class MyFormComponent implements OnInit {
     this.home = false
     this.hub = false
     this.localgovt.length = 0
-    location.replace("http://127.0.0.1:4200")
   }
   constructor(
     private profileService: ProfileService,
