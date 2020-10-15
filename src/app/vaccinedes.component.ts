@@ -29,7 +29,7 @@ import { ProfileService } from './services/profile.service';
 
       <p id="brands">Kindly choose a brand</p>
       <form class="form-group" (ngSubmit)="dis(brandsval)" #brandsval="ngForm">
-        <div *ngFor="let type of brand; let i = index">
+        <label class="brandcheck" *ngFor="let type of brand; let i = index">
           <input
             type="radio"
             class="mr-3 rad"
@@ -38,8 +38,8 @@ import { ProfileService } from './services/profile.service';
             value="{name:{{ type.name }}, price:{{ type.price }}}"
             ngModel
           />
-          <label>{{ type.name }} : &#x20a6;{{ type.price }}</label>
-        </div>
+          {{ type.name }} : &#x20a6;{{ type.price }}
+        </label>
         <button
           (click)="closeclick(func)"
           [disabled]="!valid"
@@ -62,6 +62,10 @@ import { ProfileService } from './services/profile.service';
       .rad:focus {
         border: none;
         outline: none;
+      }
+      .brandcheck {
+        cursor: pointer;
+        display: block;
       }
     `,
   ],

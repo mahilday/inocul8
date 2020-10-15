@@ -1173,15 +1173,23 @@
       [value]="loading ? 'Loading ...' : 'Submit'"
     />
   </form>
+  <!-- footer for the form -->
+  <!--  -->
+  <!--  -->
+  <!--  -->
   <footer id="footer" class="cpyryt">
     <small class="text-secondary"
       >© 2020 Inocul8 - All Rights Reserved | Built by
       <a href="https://billztechnologies.com">Billz</a></small
     >
   </footer>
+  <!-- modal after registration -->
+  <!--  -->
+  <!--  -->
+  <!--  -->
   <div
     class="modal"
-    [ngClass]="valid ? 'd-block' : ''"
+    [ngClass]="valid ? 'd-block' : 'd-block'"
     id="exampleModal"
     tabindex="-1"
     role="dialog"
@@ -1214,8 +1222,18 @@
             <p class="text-secondary">
               Your information has been successfully recorded
             </p>
-            <p class="text-dark" [ngClass]="!corporate ? 'd-block' : 'd-none'">
-              Total cost of vaccines is <b>&#x20a6;{{ newmainprice }} </b>
+            <p
+              class="text-dark modnotice"
+              [ngClass]="!corporate ? 'd-block' : 'd-none'"
+            >
+              Total cost of vaccines is <b>&#x20a6;{{ newmainprice }} </b
+              ><br /><br />
+              <small class="text-secondary mt-3 pt-3">
+                Please note that the above is vaccine cost, additional cost for
+                logistics might apply, which will be communicated to you. See
+                our
+                <a href="https://inocul8.com.ng/terms">Terms and conditions</a>.
+              </small>
             </p>
           </div>
         </div>
@@ -1243,7 +1261,7 @@
             [ngClass]="!corporate ? 'd-block' : 'd-none'"
             class="btn btn-primary my-3 px-4"
           >
-            Pay with Paystack
+            Pay Online Now
           </button>
         </div>
       </div>

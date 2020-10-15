@@ -27,6 +27,10 @@ export class MyFormComponent implements OnInit {
   states = ['Lagos State'];
   vaccine: Array<object> = [];
   localgovt = [];
+  allHubs = [
+    { name: 'gorra hub', state: 'Lagos State', lga: 'Alimosho' },
+    { name: 'fara hub', state: 'Lagos State', lga: 'Lekki' },
+  ];
 
   clickHome() {
     this.home = true;
