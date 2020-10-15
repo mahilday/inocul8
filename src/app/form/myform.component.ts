@@ -128,6 +128,10 @@ export class MyFormComponent implements OnInit {
     console.log(this.formModel.vaccinetype);
   };
   useSelected = [];
+  // filter hubs based on the state and lga chosen
+  filterHubs = () => {
+    this.allHubs.filter((hub) => {});
+  };
 
   // deselect items function for individual
   //
