@@ -130,7 +130,9 @@ export class MyFormComponent implements OnInit {
   useSelected = [];
   // filter hubs based on the state and lga chosen
   filterHubs = () => {
-    this.allHubs.filter((hub) => {});
+    this.allHubs.filter((hub) => {
+      return hub.state === this.formModel.state;
+    });
   };
 
   // deselect items function for individual
