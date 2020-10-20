@@ -121,6 +121,10 @@ export class MyFormComponent implements OnInit {
     };
     this.getVaccines();
     this.vaccinetypes();
+    //
+    //
+    // paystack reference
+    //
     this.reference = `ref-${Math.ceil(Math.random() * 10e13)}`;
   }
   vaccinetypes = () => {
@@ -129,11 +133,16 @@ export class MyFormComponent implements OnInit {
   };
   useSelected = [];
   // filter hubs based on the state and lga chosen
+
   filterHubs = () => {
     this.allHubs.filter((hub) => {
       return hub.state === this.formModel.state;
     });
   };
+  //
+  //
+  // store new filtered hubs in newHubs variable
+  newHubs = this.filterHubs;
 
   // deselect items function for individual
   //
