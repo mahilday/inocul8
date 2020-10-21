@@ -21,7 +21,7 @@ export class MyFormComponent implements OnInit {
   myself: boolean = false;
   family: boolean = false;
   corporate: boolean = false;
-  home: boolean = false;
+  home: boolean = true;
   hub: boolean = false;
 
   states = ['Lagos State'];
@@ -29,16 +29,20 @@ export class MyFormComponent implements OnInit {
   localgovt = [];
   allHubs = [
     { name: 'gorra hub', state: 'Lagos State', lga: 'Alimosho' },
-    { name: 'fara hub', state: 'Lagos State', lga: 'Lekki' },
+    { name: 'fara hub', state: 'Lagos State', lga: 'Ibeju-Lekki' },
   ];
 
   clickHome() {
     this.home = true;
     this.hub = false;
+    this.profileService.home = true;
+    this.profileService.hub = false;
   }
   clickHub() {
     this.home = false;
     this.hub = true;
+    this.profileService.home = false;
+    this.profileService.hub = true;
   }
 
   clickMyself() {
@@ -82,13 +86,23 @@ export class MyFormComponent implements OnInit {
   addPrices: Array<number> = this.profileService.price;
   pricesone = this.addPrices.reduce((a, b) => a + b, 0);
   newmainprice = null;
-
+  //
+  //
+  // individual form response object
+  //
+  //
   formModel: any = {
+    state: '',
+    lga: '',
     radioservice: 'Home-service',
     paymentStatus: 'Not paid',
     brandschosen: this.profileService.brands,
     totalprice: null,
   };
+  //
+  // family form response object
+  //
+  //
   famModel: any = {
     radioservicefam: 'Home-service',
     statefam: '',
@@ -129,20 +143,30 @@ export class MyFormComponent implements OnInit {
   }
   vaccinetypes = () => {
     this.formModel.vaccinetype = this.profileService.brandtype;
-    console.log(this.formModel.vaccinetype);
   };
   useSelected = [];
-  // filter hubs based on the state and lga chosen
-
-  filterHubs = () => {
-    this.allHubs.filter((hub) => {
-      return hub.state === this.formModel.state;
-    });
-  };
   //
   //
   // store new filtered hubs in newHubs variable
-  newHubs = this.filterHubs;
+  newHubs = null;
+  //
+  //
+  // filter hubs based on the state and lga chosen
+
+  filterHubs = () => {
+    this.newHubs = this.allHubs.filter(
+      (hub) =>
+        hub.state === this.formModel.state && hub.lga === this.formModel.lga
+    );
+  };
+  //
+  // family filter hubs according to state and lga
+  filterFamHubs = () => {
+    this.newHubs = this.allHubs.filter(
+      (hub) =>
+        hub.state === this.famModel.statefam && hub.lga === this.famModel.lgafam
+    );
+  };
 
   // deselect items function for individual
   //
@@ -242,9 +266,9 @@ export class MyFormComponent implements OnInit {
       }
     }
     // smooth scrolling family form
-    document
-      .getElementById('description')
-      .scrollIntoView({ behavior: 'smooth' });
+    // document
+    //   .getElementById('description')
+    //   .scrollIntoView({ behavior: 'smooth' });
   }
 
   onSelectAll(items: any) {
@@ -383,6 +407,7 @@ export class MyFormComponent implements OnInit {
     let url = `${environment.baseUrl}/my-form`;
     let otherurl = `${environment.baseUrl}/email`;
     this.loading = true;
+    console.log('myself form');
     this.newmainprice = this.addPrices.reduce((a, b) => a + b, 0);
     this.formModel.totalprice = this.newmainprice;
     this.http

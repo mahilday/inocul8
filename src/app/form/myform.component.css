@@ -17,7 +17,7 @@ form {
   position: absolute;
   top: 15%;
   left: 10%;
-  z-index: 100000;
+  z-index: 10000;
 }
 .marginTop {
   margin-top: 1em;
@@ -54,6 +54,7 @@ form {
 /* modal start */
 .modal {
   background: #33333365;
+  z-index: 400000;
 }
 .is-invalid {
   border: 1px solid lightcoral;

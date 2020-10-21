@@ -99,7 +99,6 @@
   <!-- begin form  -->
 
   <form
-    class="forms"
     [ngClass]="(family && corporate) || !myself ? 'd-none' : ''"
     #myselfForm="ngForm"
     (ngSubmit)="myselfForm.form.valid && postMyForm()"
@@ -220,7 +219,8 @@
         [(ngModel)]="formModel.preferredhub"
         [required]="!home"
       >
-        <option *ngFor="let hub of filterHubs">{{ hub.name }}</option>
+        <option>Select preferred hub available in chosen lga</option>
+        <option *ngFor="let hub of newHubs">{{ hub.name }}</option>
       </select>
       <div
         *ngIf="
@@ -617,6 +617,7 @@
         <select
           class="custom-select"
           name="lga"
+          (change)="filterFamHubs()"
           #lgafam="ngModel"
           [ngClass]="{
             'is-invalid':
@@ -656,7 +657,8 @@
         [(ngModel)]="famModel.preferredhubfam"
         [required]="!home"
       >
-        <option *ngFor="let state of states">{{ state }}</option>
+        <option>Select preferred hub available in chosen lga</option>
+        <option *ngFor="let hub of newHubs">{{ hub.name }}</option>
       </select>
       <div
         *ngIf="

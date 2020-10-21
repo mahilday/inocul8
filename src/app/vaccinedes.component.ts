@@ -38,7 +38,12 @@ import { ProfileService } from './services/profile.service';
             value="{name:{{ type.name }}, price:{{ type.price }}}"
             ngModel
           />
-          {{ type.name }} : &#x20a6;{{ type.price }}
+          <!--// // // hub service, dont show price because it will be concluded and
+          paid in the hub // //0-->
+          {{ type.name
+          }}<span [ngClass]="home ? '' : 'd-none'">
+            : &#x20a6;{{ type.price }}</span
+          >
         </label>
         <button
           (click)="closeclick(func)"
@@ -74,6 +79,14 @@ export class VaccineComponent implements OnInit {
   @Input() vaccine: any;
   @Input() index: number;
   @Input() func;
+  //
+  // home service vaccination
+  //
+  home = this.profileService.home;
+  //
+  // hub service vaccination
+  //
+  hub = this.profileService.hub;
 
   dosekeys = [];
   dosevals = [];
@@ -94,20 +107,16 @@ export class VaccineComponent implements OnInit {
   dis(event) {
     this.profileService.dis(event.value);
     // this.brandtype = this.profileService.brandtype;
-    console.log(this.close);
   }
   closenow = false;
   closeclick(func) {
     this.close = this.profileService.close;
     this.profileService.types(this.ty);
-    console.log(this.type);
     this.profileService.prices();
-    func();
   }
   showType = (type) => {
     this.ty = type;
     this.valid = true;
-    console.log(this.ty);
     if (this.ty !== null) {
       this.type.push(this.ty);
     } else {

@@ -28,6 +28,14 @@ export class ProfileService {
     console.log(type);
     console.log(this.brandt);
   };
+  //
+  // home service for vaccination
+  //
+  home = true;
+  //
+  // hub service for vaccination
+  //
+  hub = false;
 
   prices = () => {
     this.newprices = this.price;
