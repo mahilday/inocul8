@@ -523,10 +523,11 @@
       correctly
     </div>
     <input
+      id="submitind"
       type="submit"
       [ngClass]="!myselfForm.valid ? 'disabled' : ''"
       class="btn btnmat col-8"
-      [disabled]="!myselfForm.valid || !loading"
+      [disabled]="!myselfForm.valid || loading"
       [value]="loading ? 'Loading ...' : 'Submit'"
     />
   </form>
@@ -609,7 +610,7 @@
           *ngIf="familyForm.submitted || (statefam.invalid && statefam.touched)"
           class="invalid-feedback"
         >
-          <div *ngIf="statefam.errors.required">State is required</div>
+          <div *ngIf="statefam.errors.required || !home">State is required</div>
         </div>
       </div>
       <div class="form-group col">
@@ -636,7 +637,7 @@
           *ngIf="familyForm.submitted || (lgafam.invalid && lgafam.touched)"
           class="invalid-feedback"
         >
-          <div *ngIf="lgafam.errors.required">LGA is required</div>
+          <div *ngIf="lgafam.errors.required || !home">LGA is required</div>
         </div>
       </div>
     </div>
@@ -667,7 +668,9 @@
         "
         class="invalid-feedback"
       >
-        <div *ngIf="preferredhubfam.errors.required">Hub is required</div>
+        <div *ngIf="preferredhubfam.errors.required || !home">
+          Hub is required
+        </div>
       </div>
     </div>
 
@@ -955,12 +958,18 @@
       The button is still disabled, please make sure all inputs are filled
       correctly
     </div>
+    <div
+      class="alert alert-danger text-center mt-3"
+      [ngClass]="!profileAlert ? 'd-none' : ''"
+    >
+      {{ famProfileError }}
+    </div>
     <input
       id="submitfam"
       type="submit"
       [ngClass]="!familyForm.valid ? 'disabled' : ''"
       class="btn btnmat col-8"
-      [disabled]="!familyForm.valid || loading"
+      [disabled]="profileAlert"
       [value]="loading ? 'Loading ...' : 'Submit'"
     />
   </form>
@@ -1231,8 +1240,9 @@
               d="M8 2.5A5.5 5.5 0 1 0 13.5 8a.5.5 0 0 1 1 0 6.5 6.5 0 1 1-3.25-5.63.5.5 0 1 1-.5.865A5.472 5.472 0 0 0 8 2.5z"
             />
           </svg>
-
-          <div class="text" *ngIf="!hub">
+          <!--  -->
+          <!-- when home service is true, the modal body below shows -->
+          <div class="text" [ngClass]="home ? 'd-block' : 'd-none'">
             <h2>Great!</h2>
             <p class="text-secondary">
               Your information has been successfully recorded
@@ -1251,38 +1261,56 @@
               </small>
             </p>
           </div>
-          <div class="text" *ngIf="hub">
-            <h2>Great!</h2>
-            <p class="text-secondary">
-              Thanks. You have successfully submitted your bookings. We should
-              get in touch with you shortly.
-            </p>
+          <!-- 
+
+           -->
+          <!-- when home service is false, the modal body below shows -->
+
+          <div
+            class="text text-secondary"
+            [ngClass]="home ? 'd-none' : 'd-block'"
+          >
+            <h2>Thanks!</h2>
             <p
-              class="text-dark modnotice"
+              class="text-secondary modnotice"
               [ngClass]="!corporate ? 'd-block' : 'd-none'"
             >
-              Total cost of vaccines is <b>&#x20a6;{{ newmainprice }} </b
-              ><br /><br />
-              <small class="text-secondary mt-3 pt-3">
-                Please note that the above is vaccine cost, additional cost for
-                logistics might apply, which will be communicated to you. See
-                our
-                <a href="https://inocul8.com.ng/terms">Terms and conditions</a>.
-              </small>
+              You have successfully submitted your bookings. We should get in
+              touch with you shortly.
             </p>
           </div>
         </div>
+        <!-- 
+
+         -->
+        <!-- modal footer  -->
         <div class="modal-footer">
           <a href="https://inocul8.com.ng">
             <button
+              *ngIf="!corporate"
               type="button"
               class="btn btn-outline-primary mx-3 my-3 px-5 laterpay"
               data-dismiss="modal"
             >
-              {{ !corporate ? "Pay Later" : "Close" }}
+              {{ !hub ? "Pay Later" : "Close" }}
+            </button>
+            <!--  -->
+            <!-- corporate modal footer button -->
+            <button
+              *ngIf="corporate"
+              type="button"
+              class="btn btn-outline-primary mx-3 my-3 px-5 laterpay"
+              data-dismiss="modal"
+            >
+              Close
             </button>
           </a>
+          <!-- 
+            
+           -->
+          <!-- paystack button showing when all is true except hub and corporate -->
           <button
+            *ngIf="!corporate"
             angular4-paystack
             [key]="'pk_live_2d6743929c8d8594dc4a96ade3774ce6a4de56aa'"
             [email]="eachEmail"
@@ -1293,7 +1321,7 @@
             (paymentInit)="paymentInit()"
             (close)="paymentCancel()"
             (callback)="paymentDone($event)"
-            [ngClass]="!corporate ? 'd-block' : 'd-none'"
+            [ngClass]="!hub ? 'd-block' : 'd-none'"
             class="btn btn-primary my-3 px-4"
           >
             Pay Online Now

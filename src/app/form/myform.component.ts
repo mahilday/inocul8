@@ -85,7 +85,7 @@ export class MyFormComponent implements OnInit {
 
   addPrices: Array<number> = this.profileService.price;
   pricesone = this.addPrices.reduce((a, b) => a + b, 0);
-  newmainprice = null;
+  newmainprice: Number = null;
   //
   //
   // individual form response object
@@ -110,7 +110,7 @@ export class MyFormComponent implements OnInit {
     preferredhubfam: '',
     addressfam: '',
     timefam: '',
-    profile: this.profile,
+    profile: this.profileService.profileData,
     totalprice: null,
     paymentStatus: 'Not paid',
   };
@@ -292,6 +292,7 @@ export class MyFormComponent implements OnInit {
     console.log(profile.value);
     this.profileValues.emit(profile.value);
     console.log(this.profile);
+    this.checkProfLength();
     setTimeout(() => {
       profile.reset();
       this.profileService.brands.length = 0;
@@ -407,8 +408,9 @@ export class MyFormComponent implements OnInit {
     let url = `${environment.baseUrl}/my-form`;
     let otherurl = `${environment.baseUrl}/email`;
     this.loading = true;
-    console.log('myself form');
+
     this.newmainprice = this.addPrices.reduce((a, b) => a + b, 0);
+    console.log(this.newmainprice);
     this.formModel.totalprice = this.newmainprice;
     this.http
       .post(otherurl, this.formModel)
@@ -439,6 +441,13 @@ export class MyFormComponent implements OnInit {
         console.log(err);
       });
   }
+  // check when profiles array length is less than two
+  //
+  profileAlert: boolean = this.profileService.profileAlert;
+  checkProfLength() {
+    this.profileService.checkProfLength();
+  }
+  famProfileError = 'please add at least two(2) profiles for family form';
   postFamForm() {
     let url = `${environment.baseUrl}/family-form`;
     this.loading = true;
@@ -453,6 +462,7 @@ export class MyFormComponent implements OnInit {
       })
       .catch((err) => {
         console.log(err);
+        this.loading = false;
       });
     this.http
       .post(url, this.famModel)
@@ -471,6 +481,7 @@ export class MyFormComponent implements OnInit {
       })
       .catch((err) => {
         console.log(err);
+        this.loading = false;
       });
   }
 

@@ -120,7 +120,7 @@ import { NgForm, FormGroup } from '@angular/forms';
         text-align: center;
         height: 15px;
         width: 15px;
-        margin-top:3px;
+        margin-top: 3px;
         padding: none;
       }
 
@@ -163,6 +163,7 @@ export class AccordionComponent implements OnInit {
   constructor(private profileService: ProfileService) {}
   deleteForm(profile, index) {
     this.deleteItem.emit(profile);
+    this.profileService.checkProfLength();
 
     if (this.profileService.profileData[index]) {
       this.profileService.profileData.splice(index, 1);

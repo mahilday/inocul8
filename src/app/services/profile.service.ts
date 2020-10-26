@@ -13,13 +13,24 @@ export class ProfileService {
   selectedItem = null;
   brandtype = [];
   branddesItems = [];
+  //
+  // chosen brands array
   brands = [];
+  //
   newprices: Array<number> = [];
   price: Array<number> = [];
   close = true;
   dis = (event: any) => {
     this.brandtype.push(event.vaccinetype);
   };
+  //
+  // types function pushing chosen brands into brands array
+  //
+  famprices = this.profileData.filter((prof) => {
+    prof.brandschosen.filter((brand) => {
+      return brand.price;
+    });
+  });
   types = (type) => {
     console.log(this.brands);
     this.brands.push(type);
@@ -28,6 +39,18 @@ export class ProfileService {
     console.log(type);
     console.log(this.brandt);
   };
+  // check profile length
+  //
+  profileAlert = false;
+  checkProfLength() {
+    if (this.profileData.length === 1) {
+      this.profileAlert = true;
+    }
+    if (this.profileData.length >= 2) {
+      this.profileAlert = false;
+    }
+  }
+
   //
   // home service for vaccination
   //
