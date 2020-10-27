@@ -960,10 +960,17 @@
     </div>
     <div
       class="alert alert-danger text-center mt-3"
-      [ngClass]="!profileAlert ? 'd-none' : ''"
+      [ngClass]="!profileService.profileAlert ? 'd-none' : ''"
     >
       {{ famProfileError }}
     </div>
+    <!-- <a
+      class="btn btn-primary"
+      data-toggle="popover"
+      title="Popover Header"
+      data-content="Some content inside the popover"
+      >Toggle popover</a
+    > -->
     <input
       id="submitfam"
       type="submit"

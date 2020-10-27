@@ -10,7 +10,8 @@ import { NgForm, FormGroup } from '@angular/forms';
 import { environment } from '../../environments/environment';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { ProfileService } from '../services/profile.service';
-import { JsonPipe } from '@angular/common';
+import * as $ from 'jquery';
+// declare var $: any;
 
 @Component({
   selector: 'my-form',
@@ -76,7 +77,7 @@ export class MyFormComponent implements OnInit {
     this.localgovt.length = 0;
   }
   constructor(
-    private profileService: ProfileService,
+    public profileService: ProfileService,
     private http: HttpClient
   ) {}
   mainprice = null;
@@ -120,6 +121,7 @@ export class MyFormComponent implements OnInit {
   vaccSettings: IDropdownSettings = {};
 
   ngOnInit() {
+    (<any>$('[data-toggle="popover"]')).popover();
     this.setProfile();
     this.setBrandtype();
     this.vaccineList = [];
@@ -443,10 +445,19 @@ export class MyFormComponent implements OnInit {
   }
   // check when profiles array length is less than two
   //
+
   profileAlert: boolean = this.profileService.profileAlert;
+
   checkProfLength() {
-    this.profileService.checkProfLength();
+    if (this.profileService.profileData.length === 1) {
+      this.profileService.profileAlert = true;
+    }
+    if (this.profileService.profileData.length >= 2) {
+      this.profileService.profileAlert = false;
+    }
+    this.profileAlert = this.profileService.profileAlert;
   }
+
   famProfileError = 'please add at least two(2) profiles for family form';
   postFamForm() {
     let url = `${environment.baseUrl}/family-form`;

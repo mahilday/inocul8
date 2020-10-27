@@ -41,7 +41,7 @@ export class ProfileService {
   };
   // check profile length
   //
-  profileAlert = false;
+  profileAlert = true;
   checkProfLength() {
     if (this.profileData.length === 1) {
       this.profileAlert = true;

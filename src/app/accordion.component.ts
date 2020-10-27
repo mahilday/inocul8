@@ -161,13 +161,25 @@ export class AccordionComponent implements OnInit {
   show: boolean = false;
   ngOnInit() {}
   constructor(private profileService: ProfileService) {}
+  //
+  // check family profile array length
+  checkProfLength() {
+    if (this.profileService.profileData.length === 1) {
+      this.profileService.profileAlert = true;
+    }
+    if (this.profileService.profileData.length >= 2) {
+      this.profileService.profileAlert = false;
+    }
+  }
+  //
+  // delete profile for each added individual, then execute the checkProfLength func in the function below
   deleteForm(profile, index) {
     this.deleteItem.emit(profile);
-    this.profileService.checkProfLength();
 
     if (this.profileService.profileData[index]) {
       this.profileService.profileData.splice(index, 1);
       console.log(this.profileService.profileData);
+      this.checkProfLength();
     } else {
       console.log(null);
     }
