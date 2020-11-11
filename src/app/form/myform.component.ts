@@ -10,7 +10,7 @@ import { NgForm, FormGroup } from '@angular/forms';
 import { environment } from '../../environments/environment';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { ProfileService } from '../services/profile.service';
-import * as $ from 'jquery';
+// import * as $ from 'jquery';
 // declare var $: any;
 
 @Component({
@@ -121,7 +121,7 @@ export class MyFormComponent implements OnInit {
   vaccSettings: IDropdownSettings = {};
 
   ngOnInit() {
-    (<any>$('[data-toggle="popover"]')).popover();
+    // (<any>$('[data-toggle="popover"]')).popover();
     this.setProfile();
     this.setBrandtype();
     this.vaccineList = [];
