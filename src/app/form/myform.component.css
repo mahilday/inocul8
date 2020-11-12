@@ -55,6 +55,7 @@ form {
 .modal {
   background: #33333365;
   z-index: 400000;
+
 }
 .is-invalid {
   border: 1px solid lightcoral;
@@ -223,11 +224,18 @@ body {
 .modal-footer .laterpay {
   border-radius: 30px;
 }
+.modal-footer button{
+  /* font-weight: 14px; */
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
 
 .svg-pharm {
-  position: fixed;
-  top: 7%;
-  left: 47%;
+  position: relative;
+  top: 20%;
+  left: 45%;
+  width:5.5em;
+  height: 5.5em;
 }
 
 @media screen and (max-width: 1100px) {
@@ -240,8 +248,10 @@ body {
     max-width: 70vw;
   }
   .svg-pharm {
-    left: 46%;
-    top: 10%;
+    left: 44.7%;
+    top: 9%;
+    width:5em;
+  height: 5em;
   }
   .newmod img {
     height: 15vh;
@@ -256,6 +266,11 @@ body {
   .displaymedic img {
     width: 14rem;
     height: 13rem;
+  }
+  .modal-footer button{
+    font-weight: 14px;
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
   .fill {
     width: 100%;
@@ -281,7 +296,7 @@ body {
     font-size: 16px;
   }
 }
-@media screen and (max-width: 590px) {
+@media screen and (max-width: 650px) and ( min-width: 351px) {
   .floatedtext {
     width: 63%;
     font-size: 16px;
@@ -309,17 +324,145 @@ body {
     margin: 5rem auto;
   }
   .newmod .thanks {
-    height: 15vh;
+    height: 17vh;
   }
   .svg-pharm {
     left: 43%;
     top: 14%;
-    width: 4em;
-    height: 4em;
+    width: 4.5em;
+    height: 4.5em;
   }
-  .newmod .text {
-    line-height: 2rem;
-    margin: 2rem 1em;
+  
+  .newmod h2 {
+    line-height: 1rem;
+    margin: 1rem .5em;
+    font-size: 22px;
+  }
+  .newmod .inforec{
+    font-size: 15px;
+    line-height: 1rem;
+    margin: 1rem 0em;
+  }
+  .newmod .modnotice .tots{
+    font-size: 15px;
+    line-height: 0rem;
+    /* margin: 1rem 0em; */
+    /* padding: 0.5em 1em; */
+  }
+  .newmod .modnotice{
+    padding: 1em 0em;
+  }
+  .newmod .modnotice small{
+    /* line-height: 1rem; */
+    font-size: 11px;
+    margin: 1rem 0em;
+    padding: 0.5em .5em;
+  }
+  .modal-footer button{
+    /* width:10vw; */
+    font-size: 11px ;
+    padding-left: 1.3rem;
+    padding-right: 1.3rem;
+  }
+  .displaymedic {
+    left: 65%;
+    top: 2%;
+  }
+  .deepblue {
+    height: 15rem;
+  }
+  .displaymedic img {
+    width: 7.5rem;
+    height: 15rem;
+  }
+  .fill {
+    width: 100%;
+  }
+  .new {
+    font-size: 20px;
+  }
+  .choose {
+    width: 100%;
+    left: 0;
+    top: -4rem;
+  }
+  .choose div {
+    width: 70%;
+    margin: 2rem auto;
+    /* transform: translate(15%, 50%); */
+  }
+  .choose div button {
+    width: 100%;
+
+    font-size: 12px;
+  }
+}
+@media screen and (max-width: 350px) {
+  .floatedtext {
+    width: 63%;
+    font-size: 16px;
+    transform: translateX(8%);
+  }
+  .service-offer div {
+    flex-direction: column;
+  }
+  .service-offer div > div:nth-child(2) {
+    margin-left: 0;
+    margin-top: 5px;
+  }
+  form {
+    width: 100%;
+    margin: 0 0;
+    left: 0;
+    top: 12rem;
+    border-top-right-radius: 100px;
+    border-top-left-radius: 0;
+    padding: 2rem;
+    padding-top: 4rem;
+  }
+  .modal-dialog {
+    max-width: 90vw;
+    margin: 5rem auto;
+  }
+  .newmod .thanks {
+    height: 12vh;
+  }
+  .svg-pharm {
+    left: 42%;
+    top: 14%;
+    width: 3em;
+    height: 3em;
+  }
+  .newmod h2 {
+    line-height: 1rem;
+    margin: 1rem .5em;
+    font-size: 22px;
+  }
+  .newmod .inforec{
+    font-size: 15px;
+    line-height: 1rem;
+    margin: 1rem 0em;
+  }
+  .newmod .modnotice .tots{
+    font-size: 15px;
+    line-height: 0rem;
+    /* margin: 1rem 0em; */
+    /* padding: 0.5em 1em; */
+  }
+  .newmod .modnotice{
+    padding: 1em 0em;
+  }
+  .newmod .modnotice small{
+    /* line-height: 1rem; */
+    font-size: 11px;
+    margin: 1rem 0em;
+    padding: 0.5em .5em;
+  }
+  .modal-footer button{
+    /* width:10vw; */
+    font-size: 11px ;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
   .displaymedic {
     left: 65%;

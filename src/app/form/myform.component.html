@@ -471,7 +471,7 @@
         [ngClass]="family ? 'd-none' : ''"
         ngModelGroup="address"
       >
-        <div class="col-8">
+        <div class="col">
           <input
             type="text"
             class="form-control"
@@ -494,7 +494,7 @@
             <div *ngIf="address.errors.required">Address is required</div>
           </div>
         </div>
-        <div class="col">
+        <!-- <div class="col">
           <input
             type="number"
             class="form-control"
@@ -515,7 +515,7 @@
           >
             <div *ngIf="zipcode.errors.required">Zip code is required</div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <div *ngIf="!myselfForm.valid" class="text-danger text-center mt-5">
@@ -1229,7 +1229,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-body newmod">
-          <div class="thanks"></div>
+          <div class="thanks">
           <svg
             width="6em"
             height="6em"
@@ -1247,19 +1247,20 @@
               d="M8 2.5A5.5 5.5 0 1 0 13.5 8a.5.5 0 0 1 1 0 6.5 6.5 0 1 1-3.25-5.63.5.5 0 1 1-.5.865A5.472 5.472 0 0 0 8 2.5z"
             />
           </svg>
+          </div>
           <!--  -->
           <!-- when home service is true, the modal body below shows -->
           <div class="text" [ngClass]="home ? 'd-block' : 'd-none'">
             <h2>Great!</h2>
-            <p class="text-secondary">
+            <p class="text-secondary inforec">
               Your information has been successfully recorded
             </p>
             <p
               class="text-dark modnotice"
               [ngClass]="!corporate ? 'd-block' : 'd-none'"
             >
-              Total cost of vaccines is <b>&#x20a6;{{ newmainprice }} </b
-              ><br /><br />
+              <span class ="tots">Total cost of vaccines is <b>&#x20a6;{{ newmainprice }} </b
+              ></span><br /><br />
               <small class="text-secondary mt-3 pt-3">
                 Please note that the above is vaccine cost, additional cost for
                 logistics might apply, which will be communicated to you. See
@@ -1296,7 +1297,7 @@
             <button
               *ngIf="!corporate"
               type="button"
-              class="btn btn-outline-primary mx-3 my-3 px-5 laterpay"
+              class="btn btn-outline-primary  laterpay"
               data-dismiss="modal"
             >
               {{ !hub ? "Pay Later" : "Close" }}
@@ -1306,7 +1307,7 @@
             <button
               *ngIf="corporate"
               type="button"
-              class="btn btn-outline-primary mx-3 my-3 px-5 laterpay"
+              class="btn btn-outline-primary laterpay"
               data-dismiss="modal"
             >
               Close
@@ -1329,7 +1330,7 @@
             (close)="paymentCancel()"
             (callback)="paymentDone($event)"
             [ngClass]="!hub ? 'd-block' : 'd-none'"
-            class="btn btn-primary my-3 px-4"
+            class="btn btn-primary"
           >
             Pay Online Now
           </button>
