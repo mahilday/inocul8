@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import {environment} from '../../environments/environment'
+import {HttpClient } from "@angular/common/http"
 
 @Injectable({
   providedIn: 'root',
@@ -77,5 +79,19 @@ export class ProfileService {
   tobrand() {
     document.getElementById('email').scrollIntoView({ behavior: 'smooth' });
   }
-  constructor() {}
+  constructor( private http: HttpClient) {}
+
+  // country codes dial codes
+  callCodes: any;
+  getCountryCodes(){
+    this.http.get(`${environment.baseUrl}/getcountrycodes`)
+    .toPromise()
+    .then((res: any)=>{
+      this.callCodes = res;
+      return res
+    })
+    .catch(err=>{
+      return err
+    })
+  }
 }

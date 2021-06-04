@@ -67,7 +67,7 @@ export class MyFormComponent implements OnInit {
     this.myself = false;
     this.family = false;
     this.corporate = false;
-    console.log(this.profile);
+    console.log(this.profiles);
     this.profileService.brands = [];
     this.formModel.vaccines = [];
     this.famModel.vaccines = [];
@@ -82,7 +82,7 @@ export class MyFormComponent implements OnInit {
   ) {}
   mainprice = null;
   brandtype = [];
-  profile: Array<object> = [];
+  profiles: Array<object> = [];
 
   addPrices: Array<number> = this.profileService.price;
   pricesone = this.addPrices.reduce((a, b) => a + b, 0);
@@ -93,8 +93,10 @@ export class MyFormComponent implements OnInit {
   //
   //
   formModel: any = {
-    state: '',
-    lga: '',
+    state: 'Not applicable',
+    lga: 'Not applicable',
+    callcode: '+234'.trim(),
+    phone: ''.trim(),
     radioservice: 'Home-service',
     paymentStatus: 'Not paid',
     brandschosen: this.profileService.brands,
@@ -106,9 +108,11 @@ export class MyFormComponent implements OnInit {
   //
   famModel: any = {
     radioservicefam: 'Home-service',
-    statefam: '',
-    lgafam: '',
-    preferredhubfam: '',
+    statefam: 'Not applicable',
+    lgafam: 'Not applicable',
+    // callcodefam: '+234'.trim(),
+    // phonefam: "".trim(),
+    preferredhubfam: 'Not applicable',
     addressfam: '',
     timefam: '',
     profile: this.profileService.profileData,
@@ -121,7 +125,7 @@ export class MyFormComponent implements OnInit {
   vaccSettings: IDropdownSettings = {};
 
   ngOnInit() {
-    // (<any>$('[data-toggle="popover"]')).popover();
+    this.getCountryCodes()
     this.setProfile();
     this.setBrandtype();
     this.vaccineList = [];
@@ -137,6 +141,7 @@ export class MyFormComponent implements OnInit {
     };
     this.getVaccines();
     this.vaccinetypes();
+    console.log(this.formModel.callcode);
     //
     //
     // paystack reference
@@ -278,10 +283,16 @@ export class MyFormComponent implements OnInit {
     console.log(this.addPrices);
   }
 
-  corpModel: any = {};
-  nopersons: number = this.profile.length;
+  corpModel: any = {
+    callcode: "+234".trim(),
+    phonecorp: "".trim()
+  };
+  nopersons: number = this.profiles.length;
   valid: boolean = false;
 
+// profile object
+  profilecallcode = "+234".trim()
+  profilePhonefam = ''.trim()
   profileData: Array<object> = [];
   @Output() profileValues = new EventEmitter<string>();
   async saveProfile(e, profile: NgForm) {
@@ -290,10 +301,11 @@ export class MyFormComponent implements OnInit {
     for (let i = 0; i < this.profileService.brands.length; i++) {
       profile.value.brandschosen.push(this.profileService.brands[i]);
     }
-    this.profile.push(profile.value);
+    profile.value.phonefam = this.profilecallcode + this.profilePhonefam;
+    this.profiles.push(profile.value);
     console.log(profile.value);
     this.profileValues.emit(profile.value);
-    console.log(this.profile);
+    console.log(this.profiles);
     this.checkProfLength();
     setTimeout(() => {
       profile.reset();
@@ -380,7 +392,7 @@ export class MyFormComponent implements OnInit {
     this.loading = true;
     let famotherurl = `${environment.baseUrl}/emailcorp`;
     this.http
-      .post(famotherurl, val.value)
+      .post(famotherurl, this.corpModel)
       .toPromise()
       .then((res: any) => {
         console.log(res);
@@ -389,7 +401,7 @@ export class MyFormComponent implements OnInit {
         console.log(err);
       });
     this.http
-      .post(url, val.value)
+      .post(url, this.corpModel)
       .toPromise()
       .then((res: any) => {
         this.loading = false;
@@ -576,5 +588,9 @@ export class MyFormComponent implements OnInit {
   closeModal() {
     this.valid = false;
     this.getState();
+  }
+  // get country codes to add to the phone numbers inputted
+  getCountryCodes(){
+    this.profileService.getCountryCodes()
   }
 }

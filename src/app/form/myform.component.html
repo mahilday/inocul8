@@ -332,7 +332,7 @@
         </div>
       </div>
       <div class="row my-3">
-        <div class="col-8">
+        <div class="col">
           <label for="email">Email:</label>
           <input
             type="text"
@@ -360,10 +360,29 @@
             </div>
           </div>
         </div>
+        <div class="col-2">
+          <label>Country code:</label>
+          <div class="input-group input-group-alternative">
+            <select
+              class="form-control"
+              name="callcode"
+              #callcode="ngModel"
+              id="callcode"
+              [(ngModel)]="formModel.callcode"
+            >
+              <option
+                *ngFor="let callcode of profileService.callCodes"
+                value="{{ callcode.dial_code }}"
+              >
+                {{ callcode.name + "  " + callcode.dial_code }}
+              </option>
+            </select>
+          </div>
+        </div>
         <div class="col">
           <label for="phone">Phone:</label>
           <input
-            type="tel"
+            type="number"
             class="form-control"
             placeholder="Phone Number"
             name="phone"
@@ -374,17 +393,22 @@
                 (phone.invalid && phone.touched)
             }"
             [(ngModel)]="formModel.phone"
+            minlength="7"
             required
-            minlength="11"
           />
           <div
-            *ngIf="myselfForm.submitted || (phone.invalid && phone.touched)"
+            *ngIf="
+              myselfForm.submitted ||
+              (phone.invalid && phone.touched) ||
+              phone.invalid ||
+              phone.touched
+            "
             class="invalid-feedback"
           >
-            <div *ngIf="phone.errors.required">Phone number is required</div>
-            <div *ngIf="phone.errors.minlength">
-              Phone number must be at least 11
+            <div *ngIf="phone.hasError('minlength')">
+              Phone number must be at least 7
             </div>
+            <div *ngIf="phone.errors.required">Phone number is required</div>
           </div>
         </div>
       </div>
@@ -736,8 +760,8 @@
     <h5 class="my-1 mt-5 blue"><strong>Profile(s)</strong></h5>
     <div
       class="form-group"
-      #profile="ngModelGroup"
-      [ngModelGroup]="profile.profile"
+      #profilesfam="ngModelGroup"
+      [ngModelGroup]="profilesfam"
     >
       <div class="my-3">
         <small class="text-secondary"
@@ -765,7 +789,7 @@
                 (familyForm.submitted && firstnamefam.invalid) ||
                 (firstnamefam.invalid && firstnamefam.touched)
             }"
-            [(ngModel)]="profile.firstnamefam"
+            [(ngModel)]="profilesfam.firstnamefam"
           />
           <div
             *ngIf="
@@ -792,7 +816,7 @@
                 (familyForm.submitted && lastnamefam.invalid) ||
                 (lastnamefam.invalid && lastnamefam.touched)
             }"
-            [(ngModel)]="profile.lastnamefam"
+            [(ngModel)]="profilesfam.lastnamefam"
           />
           <div
             *ngIf="
@@ -815,7 +839,7 @@
                 (familyForm.submitted && genderfam.invalid) ||
                 (genderfam.invalid && genderfam.touched)
             }"
-            [(ngModel)]="profile.genderfam"
+            [(ngModel)]="profilesfam.genderfam"
           >
             <option selected>Select your Gender</option>
             <option>Male</option>
@@ -832,10 +856,29 @@
         </div>
       </div>
       <div class="row my-3">
+        <div class="col-2">
+          <label>Country code:</label>
+          <div class="input-group input-group-alternative">
+            <select
+              class="form-control"
+              name="callcodefam"
+              #callcodefam="ngModel"
+              id="callcode2"
+              [(ngModel)]="profilecallcode"
+            >
+              <option
+                value="{{ callcode.dial_code }}"
+                *ngFor="let callcode of profileService.callCodes"
+              >
+                {{ callcode.name + "  " + callcode.dial_code }}
+              </option>
+            </select>
+          </div>
+        </div>
         <div class="col">
           <label for="phone">Phone:</label>
           <input
-            type="tel"
+            type="number"
             class="form-control"
             placeholder="Phone Number"
             name="phone"
@@ -845,8 +888,8 @@
                 (familyForm.submitted && phonefam.invalid) ||
                 (phonefam.invalid && phonefam.touched)
             }"
-            [(ngModel)]="profile.phonefam"
-            minlength="11"
+            [(ngModel)]="profilePhonefam"
+            minlength="9"
           />
           <div
             *ngIf="
@@ -856,7 +899,7 @@
           >
             <div *ngIf="phonefam.errors.required">Phone number is required</div>
             <div *ngIf="phonefam.errors.minlength">
-              Phone number must be at least 11
+              Phone number must be at least 9
             </div>
           </div>
         </div>
@@ -874,7 +917,7 @@
                 (familyForm.submitted && agefam.invalid) ||
                 (agefam.invalid && agefam.touched)
             }"
-            [(ngModel)]="profile.agefam"
+            [(ngModel)]="profilesfam.agefam"
           />
           <div
             *ngIf="familyForm.submitted || (agefam.invalid && agefam.touched)"
@@ -897,7 +940,7 @@
                 (familyForm.submitted && emailfam.invalid) ||
                 (emailfam.invalid && emailfam.touched)
             }"
-            [(ngModel)]="profile.emailfam"
+            [(ngModel)]="profilesfam.emailfam"
             email
           />
           <div
@@ -953,7 +996,7 @@
       <button
         id="addperson"
         class="btn btn-primary btn-sm mt-3 px-3"
-        (click)="saveProfile($event, profile)"
+        (click)="saveProfile($event, profilesfam)"
       >
         Add Person
       </button>
@@ -1031,7 +1074,7 @@
       </div>
     </div>
     <div class="row my-3">
-      <div class="col-8">
+      <div class="col">
         <label for="email">Email:</label>
         <input
           type="text"
@@ -1061,10 +1104,29 @@
           </div>
         </div>
       </div>
+      <div class="col-2">
+        <label>Country code:</label>
+        <div class="input-group input-group-alternative">
+          <select
+            class="form-control"
+            name="callcodecorp"
+            #callcodecorp="ngModel"
+            id="callcode3"
+            [(ngModel)]="corpModel.callcode"
+          >
+            <option
+              value="{{ callcode.dial_code }}"
+              *ngFor="let callcode of profileService.callCodes"
+            >
+              {{ callcode.name + "  " + callcode.dial_code }}
+            </option>
+          </select>
+        </div>
+      </div>
       <div class="col">
         <label for="phone">Phone:</label>
         <input
-          type="tel"
+          type="number"
           class="form-control"
           placeholder="Phone Number"
           name="phone"
@@ -1076,7 +1138,7 @@
           }"
           [(ngModel)]="corpModel.phonecorp"
           required
-          minlength="11"
+          minlength="9"
         />
         <div
           *ngIf="
@@ -1086,7 +1148,7 @@
         >
           <div *ngIf="phonecorp.errors.required">Phone number is required</div>
           <div *ngIf="phonecorp.errors.minlength">
-            Phone number must be at least 11
+            Phone number must be at least 9
           </div>
         </div>
       </div>

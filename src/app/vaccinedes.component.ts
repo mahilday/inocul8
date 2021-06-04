@@ -15,12 +15,13 @@ import { ProfileService } from './services/profile.service';
       <p>{{ vaccine.description.firstdes }}</p>
       <p>{{ vaccine.description.givenhowquest }}</p>
       <p>{{ vaccine.description.givenhowanswer }}</p>
+      
       <ol>
         {{
           dose(vaccine)
         }}
         <li *ngFor="let vals of dosevals; let i = index">
-          Dose {{ i + 1 }} : {{ vals }}
+          Dose {{ i + 1 }} : {{ vals }} days to next vaccine stage
         </li>
       </ol>
       <p>{{ vaccine.description.brands.brandquest }}</p>
